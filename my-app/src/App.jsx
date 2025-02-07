@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -8,23 +6,25 @@ function App() {
 
   return (
     <>
-      <div>
-
+      <h2 className="section-title">System Status</h2>
+      <div className="status-grid">
+        <div className="status-card">
+          <div className="status-icon irrigation-status">
+            <i className="fas fa-tint"></i>
+          </div>
+          <div className="status-info">
+            <h3>Irrigation System</h3>
+            <span className="status active">Active</span>
+            <div className="status-details">
+              <span>Water Flow: 2.5 L/min</span>
+              <span>Next Schedule: 2h</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+
+export default App;
