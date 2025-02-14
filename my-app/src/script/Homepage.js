@@ -58,7 +58,7 @@ function updateChart() {
         n: Math.floor(Math.random() * (50 - 40) + 40),
         p: Math.floor(Math.random() * (35 - 25) + 25),
         k: Math.floor(Math.random() * (30 - 20) + 20)
-    };
+    };                                                                  
 
     // Update values
     document.getElementById('n-value').textContent = newData.n + '%';

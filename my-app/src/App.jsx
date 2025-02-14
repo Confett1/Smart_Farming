@@ -1,30 +1,21 @@
-import { useState } from 'react'
-import './App.css'
+import { Routes, Route } from "react-router-dom"
+import Settings from './pages/Settings.jsx';
+import Homepage from './pages/Homepage.jsx';
+import Chart from "./pages/Chart.jsx";
+import { WaterLevel } from "./pages/WaterLevel.jsx";
+import Records from "./pages/Records.jsx";
+import '../src/styles/App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h2 className="section-title">System Status</h2>
-      <div className="status-grid">
-        <div className="status-card">
-          <div className="status-icon irrigation-status">
-            <i className="fas fa-tint"></i>
-          </div>
-          <div className="status-info">
-            <h3>Irrigation System</h3>
-            <span className="status active">Active</span>
-            <div className="status-details">
-              <span>Water Flow: 2.5 L/min</span>
-              <span>Next Schedule: 2h</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      <Routes>
+        <Route path = "/" element={<Homepage />}/>
+        <Route path = "/waterlevel" element={<WaterLevel />}/>
+        <Route path = "/chart" element={<Chart />}/>
+        <Route path = "/records" element={<Records />}/>
+        <Route path = "/settings" element={<Settings />}/>
+      </Routes>
   );
 }
-
 
 export default App;
