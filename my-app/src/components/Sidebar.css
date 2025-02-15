@@ -1,5 +1,5 @@
-/* Sidebar Styles */
-.sidebar {
+    /* Sidebar Styles */
+  .sidebar {
     width: 260px;
     background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
     color: white;
@@ -80,4 +80,3 @@
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateX(5px);
   }
-    
