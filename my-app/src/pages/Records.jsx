@@ -1,5 +1,4 @@
 import '../styles/Records.css'
-import '../script/Records.js'
 import Sidebar from '../components/Sidebar'
 
 const Records = () => {
