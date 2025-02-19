@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import userProfile from '../../../assets/user-profile.jpg';
-import '../../../styles/Sidebar/Sidebar.css'
+import '../../../styles/Sidebar.css'
 
 const Sidebar = () => {
     return (

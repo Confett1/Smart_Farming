@@ -1,4 +1,4 @@
-import '../styles/Records.css'
+import '../../styles/Records.css'
 
 const Records = () => {
     return (

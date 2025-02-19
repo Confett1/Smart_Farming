@@ -1,4 +1,4 @@
-import '../styles/Water Level.css'
+import '../../styles/Water Level.css'
 
 const WaterLevel = () => {
     return (
