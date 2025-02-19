@@ -1,17 +1,17 @@
 import { NavLink } from "react-router-dom";
-import bomel from '../assets/bomel.jpg';
+import userProfile from '../assets/user-profile.jpg';
 import './Sidebar.css'
-
 
 const Sidebar = () => {
     return (
         <>
         <aside className="sidebar">
-          <div className="admin-profile">
-            <div className="admin-avatar">
-              <img src={bomel} alt="Admin" id="adminAvatar"/>
+          <div className="flex flex-col items-center">
+            <div className="w-[80px] h-[80px] overflow-hidden mx-auto rounded-full border-1">
+              <img src={userProfile} alt="Admin" id="adminAvatar" className="object-cover w-full h-full"/>
             </div>
-            <span className="admin-name">Farm Admin</span>
+            <p className="text-xl font-semibold opacity-90">ADMINISTRATOR</p>
+            <p className="text-[16px] font-thin">Main Admin</p>
             <span className="admin-status online">Online</span>
           </div>
           <nav className="sidebar-nav">
