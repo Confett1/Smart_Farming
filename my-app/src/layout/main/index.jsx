@@ -1,5 +1,5 @@
-import Sidebar from "./sidebar/Sidebar";
-import Header from "./top/Header";
+import Sidebar from "./sidebar";
+import Header from "./header";
 import '../../styles/Header.css';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,6 @@ const Main = ( {children} ) => {
         <>
             <Sidebar />
             <Header />
-            
             <div>
                 {children}
             </div>
