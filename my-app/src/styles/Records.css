@@ -42,33 +42,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Header */
-.dashboard-header {
-  background-color: var(--card-background);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-title {
-  font-size: 1.5em;
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -90,7 +63,7 @@ body {
   border: none;
   cursor: pointer;
   color: var(--text-secondary);
-}
+} */
 
 /* Notifications */
 .notifications {

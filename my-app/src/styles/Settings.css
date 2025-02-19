@@ -42,56 +42,6 @@
     overflow-x: hidden;
   }
   
-  /* Header Styles */
-  .dashboard-header {
-    background-color: var(--card-background);
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .header-title {
-    font-size: 1.5em;
-    color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .header-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background-color: var(--background-color);
-    border-radius: 20px;
-    padding: 5px 15px;
-  }
-  
-  .search-bar input {
-    border: none;
-    background: none;
-    padding: 8px;
-    width: 200px;
-    outline: none;
-  }
-  
-  .search-bar button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-secondary);
-  }
-  
   /* Status Overview Section */
   .status-overview {
     padding: 20px;
