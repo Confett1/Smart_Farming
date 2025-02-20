@@ -1,8 +1,18 @@
+import { Typography } from "@mui/material";
+
 const ControlCenter = () => {
     return (
         <>
             <section className="control-center">
-                <h2 className="section-title">Control Center</h2>
+            <Typography
+                    sx={{
+                        textAlign: 'left',
+                        fontWeight: 600,
+                        mb: -1.5
+                    }}
+                >
+                    Control Center
+                </Typography>
                 <div className="control-grid">
                     {/*<!-- Irrigation Control -->*/}
                     <div className="control-card">

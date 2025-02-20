@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
+import { Typography } from '@mui/material';
 
 const RealTimeMonitor = () => {
     const npkChartRef = useRef(null);
@@ -61,7 +62,15 @@ const RealTimeMonitor = () => {
 
     return (
         <section className="monitoring">
-            <h2 className="section-title">Real-time Monitoring</h2>
+            <Typography
+                    sx={{
+                        textAlign: 'left',
+                        fontWeight: 600,
+                        mb: -1.5
+                    }}
+                >
+                    Real-Time Monitoring
+                </Typography>
             <div className="monitoring-grid">
                 {/* NPK Monitoring */}
                 <div className="card">

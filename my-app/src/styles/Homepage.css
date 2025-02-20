@@ -16,12 +16,6 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background-color);
@@ -42,10 +36,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Status Overview Section */
-.status-overview {
-  padding: 20px;
-}
 
 /* Notification Styles */
 .notifications {
@@ -425,12 +415,12 @@ select {
 }
 
 /* Monitoring Section */
-.status-grid {
+/* .status-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   margin-top: 24px;
-}
+} */
 
 .status-card {
   background: var(--card-background);

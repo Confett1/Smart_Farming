@@ -1,66 +1,25 @@
+import { Grid } from "@mui/material";
+import NpkLevels from "./npk-levels/page";
+import Irrigation from "./irrigation/page";
+import Solar from "./solar/page";
+
 const SystemStatus = () => {
     return (
-        <>
-            <section className="status-overview">
-                <h2 className="section-title">System Status</h2>
-                <div className="status-grid">
-                    <div className="status-card">
-                        <div className="status-icon irrigation-status">
-                            <i className="fas fa-tint"></i>
-                        </div>
-                        <div className="status-info">
-                            <h3>Irrigation System</h3>
-                            <span className="status active">Active</span>
-                            <div className="status-details">
-                                <span>Water Flow: 2.5 L/min</span>
-                                <span>Next Schedule: 2h</span>
-                            </div>
-                        </div>
-                    </div>
+        <section className="status-overview">
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={4} xl={4}>
+                    <NpkLevels />
+                </Grid>
 
-                    <div className="status-card">
-                        <div className="status-icon solar-status">
-                            <i className="fas fa-solar-panel"></i>
-                        </div>
-                        <div className="status-info">
-                            <h3>Solar System</h3>
-                            <span className="status active">Generating</span>
-                            <div className="status-details">
-                                <span>Current: 2.8 kW</span>
-                                <span>Daily: 15.5 kWh</span>
-                            </div>
-                        </div>
-                    </div>
+                <Grid item xs={12} md={4} xl={4}>
+                    <Irrigation />
+                </Grid>
 
-                    <div className="status-card">
-                        <div className="status-icon npk-status">
-                            <i className="fas fa-flask"></i>
-                        </div>
-                        <div className="status-info">
-                            <h3>NPK Levels</h3>
-                            <span className="status warning">Check Required</span>
-                            <div className="status-details">
-                                <span>N: 45% P: 32% K: 28%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="status-card">
-                        <div className="status-icon wifi-status">
-                            <i className="fas fa-wifi"></i>
-                        </div>
-                        <div className="status-info">
-                            <h3>Network Status</h3>
-                            <span className="status active">Connected</span>
-                            <div className="status-details">
-                                <span>Signal: Strong</span>
-                                <span>Devices: 8</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
+                <Grid item xs={12} md={4} xl={4}>
+                    <Solar />
+                </Grid>
+            </Grid>
+        </section>
     );
 }
 

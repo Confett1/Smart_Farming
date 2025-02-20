@@ -7,6 +7,7 @@ import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import SnackbarComponent from '../../components/Snackbar/SnackbarComponent';
+import { Stack } from '@mui/material';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,13 +24,17 @@ const Dashboard = () => {
   return (
     <div className="layout">
       <div className="content">
-        <main className="main-content">
+        <Stack
+          sx={{
+            px: 4
+          }}
+        >
           <Breadcrumb />
           <SnackbarComponent />
           <SystemStatus />
           <RealTimeMonitor />
           <ControlCenter />
-        </main>
+        </Stack>
         <Footer />
       </div>
     </div>
