@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import userProfile from '../../../assets/user-profile.jpg';
 import '../../../styles/Sidebar.css'
+import { Divider } from "@mui/material";
 
 const Sidebar = () => {
     return (
@@ -12,8 +13,16 @@ const Sidebar = () => {
             </div>
             <p className="text-xl font-semibold opacity-90">ADMINISTRATOR</p>
             <p className="text-[16px] font-thin">Main Admin</p>
-            <span className="admin-status online">Online</span>
+            {/* <span className="admin-status online">Online</span> */}
           </div>
+          <Divider 
+            sx={{
+              pt: 1,
+              borderColor: "#f5f5f5",
+              opacity: 0.3,
+              mb: -2.5
+            }}
+          />
           <nav className="sidebar-nav">
             <NavLink to="/" className={({isActive}) => (isActive ? "nav-item active" : "nav-item")}>
               <i className="fas fa-home"></i>

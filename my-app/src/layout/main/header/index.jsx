@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Input from '@mui/joy/Input';
 
 const Header = () => {
     const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -27,6 +28,31 @@ const Header = () => {
                 Smart Farming
             </h1>
             <div className="header-controls flex items-center gap-3">
+                
+                <Input
+                    placeholder="Search..."
+                    sx={{
+                        '--Input-focusedInset': 'var(--any, 0)',
+                        '--Input-focusedThickness': '0.25rem',
+                        '--Input-focusedHighlight': 'rgba(13,110,253,.25)',
+                        '& .MuiInput-underline:before': {
+                            borderBottomColor: '#F5F5F5',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#ff5733',
+                        },
+                        '&:focus-within': {
+                            borderColor: '#32CD32',
+                            color: "#138808"
+                        },
+                        backgroundColor: "#F5F5F5",
+                        borderRadius: 12,
+                        fontSize: 14,
+                        px: 2,
+                        py: 1, 
+                        width: 220
+                    }}
+                />
                 <div className="notifications" ref={notifDropdownRef}>
                     <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
                         <i className="fas fa-bell"></i>
@@ -79,12 +105,11 @@ const Header = () => {
                         </div>
                     )}
                 </div>
-                <div className="search-bar">
-                    <input type="search" placeholder="Search..." aria-label="Search" />
+                {/* <div className="search-bar">
                     <button type="submit" aria-label="Submit search">
                         <i className="fas fa-search"></i>
                     </button>
-                </div>
+                </div> */}
             </div>
         </header>
     );
