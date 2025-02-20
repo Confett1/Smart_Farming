@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../styles/Settings.css';
-import PageLoader from '../../components/loader/PageLoader';
+import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
 
 const Settings = () => {
@@ -34,15 +34,7 @@ const Settings = () => {
                                     <label htmlFor="dark-mode">Dark Mode</label>
                                     <input type="checkbox" id="dark-mode" name="dark-mode"></input>
                                 </div>
-                                <div className="setting-item">
-                                    <label htmlFor="language">Language</label>
-                                    <select id="language" name="language">
-                                        <option value="en">English</option>
-                                        <option value="es">Español</option>
-                                        <option value="fr">Français</option>
-                                        <option value="fr">Tagalog</option>
-                                    </select>
-                                </div>
+                              
                             </div>
                             <div className="setting-group">
                                 <h3>Farm Settings</h3>
@@ -62,13 +54,7 @@ const Settings = () => {
                                         <option value="60">Every hour</option>
                                     </select>
                                 </div>
-                                <div className="setting-item">
-                                    <label htmlFor="irrigation-threshold">Irrigation Threshold (%)</label>
-                                    <div className="range-container">
-                                        <input type="range" id="irrigation-threshold" name="irrigation-threshold" min="0" max="100" value="30"></input>
-                                        <output htmlFor="irrigation-threshold">30%</output>
-                                    </div>
-                                </div>
+                             
                             </div>
                             <div className="setting-group">
                                 <h3>Notification Settings</h3>
@@ -87,7 +73,7 @@ const Settings = () => {
                     <Footer />
                 </main>
             </div>
-            <script src="Settings.js"></script>
+            
         </>
     );
 };
