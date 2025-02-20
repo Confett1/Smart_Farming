@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react';
 import '../../styles/Records.css'
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
+import Modal from '../../components/modals';
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true)
+        console.log("Opening Modal"); 
+    };
+    const closeModal = () => setIsModalOpen(false);
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -17,6 +25,10 @@ const Records = () => {
 
     return (
         <>
+            <Modal isOpen={isModalOpen} onClose={closeModal} title="Add New Record">
+                <p>This is the modal content.</p>
+            </Modal>
+
             <div className="layout">
                 <div className="content">
                     {/*<!-- Main Content Section -->*/}
@@ -25,7 +37,7 @@ const Records = () => {
                             <div className="records-header">
                                 <h2>Activity Records</h2>
                                 <div className="records-actions">
-                                    <button className="btn btn-primary">
+                                    <button className="btn btn-primary" onClick={openModal}>
                                         <i className="fas fa-plus"></i> Add New Record
                                     </button>
                                     <div className="filter-dropdown">
