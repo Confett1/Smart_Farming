@@ -6,9 +6,13 @@ export default function LinearLoader() {
     <Box 
       sx={{ 
         width: '100vw', 
-        marginLeft: '16.28rem',
+        marginLeft: {
+          xs: 0,
+          sm: '16.28rem'
+        },
         overflow: 'hidden',
-      }}>
+      }}
+      >
       
       <LinearProgress 
         sx={{

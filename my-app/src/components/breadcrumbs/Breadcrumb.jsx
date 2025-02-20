@@ -4,8 +4,17 @@ import Typography from '@mui/joy/Typography';
 
 export default function Breadcrumb() {
   return (
-    <Breadcrumbs separator="›" aria-label="breadcrumbs">
-      <Link color="primary" href="/">
+    <Breadcrumbs 
+      separator="›" 
+      aria-label="breadcrumbs"
+      sx={{
+        fontSize: {
+          xs: 12,
+          sm: 16
+        }
+      }}
+    >
+      <Link color="primary" href="/" >
         Dashboard
       </Link>
       {['Springfield', 'Simpson'].map((item) => (
