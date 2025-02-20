@@ -1,20 +1,39 @@
+import { useState, useEffect, useRef } from "react";
 
 const Header = () => {
-    return (
-        <>
-            <header className="dashboard-header">
-                <h1 className="header-title">
-                    <i className="fas fa-seedling"></i>
-                    Smart Farming
-                </h1>
-                <div className="header-controls flex items-center gap-3">
+    const [isNotifOpen, setIsNotifOpen] = useState(false);
+    const notifDropdownRef = useRef(null);
 
-                    <div className="notifications">
-                        <button id="notificationBtn" aria-label="Notifications">
-                            <i className="fas fa-bell"></i>
-                            <span className="notification-count pulse">5</span>
-                        </button>
-                        <div className="notification-dropdown">
+    const toggleNotif = (e) => {
+        e.stopPropagation();
+        setIsNotifOpen((prev) => !prev);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (notifDropdownRef.current && !notifDropdownRef.current.contains(event.target)) {
+                setIsNotifOpen(false);
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+
+    return (
+        <header className="dashboard-header">
+            <h1 className="header-title">
+                <i className="fas fa-seedling"></i>
+                Smart Farming
+            </h1>
+            <div className="header-controls flex items-center gap-3">
+                <div className="notifications" ref={notifDropdownRef}>
+                    <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
+                        <i className="fas fa-bell"></i>
+                        <span className="notification-count pulse">5</span>
+                    </button>
+                    {isNotifOpen && (
+                        <div className="notification-dropdown" style={{ display: 'block' }}>
                             <div className="notification-header">
                                 <h3><i className="fas fa-bell"></i> Notifications</h3>
                                 <div className="notification-actions">
@@ -52,23 +71,22 @@ const Header = () => {
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                             <div className="notification-footer">
                                 <a href="#" className="view-all">View All Notifications</a>
                                 <span className="notification-count-text">5 unread notifications</span>
                             </div>
                         </div>
-                    </div>
-                    <div className="search-bar">
-                        <input type="search" placeholder="Search..." aria-label="Search" />
-                        <button type="submit" aria-label="Submit search">
-                            <i className="fas fa-search"></i>
-                        </button>
-                    </div>
+                    )}
                 </div>
-            </header>
-        </>
+                <div className="search-bar">
+                    <input type="search" placeholder="Search..." aria-label="Search" />
+                    <button type="submit" aria-label="Submit search">
+                        <i className="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
     );
 };
 
