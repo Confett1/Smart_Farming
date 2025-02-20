@@ -6,6 +6,7 @@ import '../../styles/Homepage.css';
 import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
+import SnackbarComponent from '../../components/Snackbar/SnackbarComponent';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ const Dashboard = () => {
       <div className="content">
         <main className="main-content">
           <Breadcrumb />
+          <SnackbarComponent />
           <SystemStatus />
           <RealTimeMonitor />
           <ControlCenter />
