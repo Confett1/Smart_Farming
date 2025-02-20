@@ -1,21 +1,82 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from 'chart.js/auto';
 import { Typography } from '@mui/material';
+import API from '../../../../api/api';
 
 const RealTimeMonitor = () => {
     const npkChartRef = useRef(null);
+    const npkChartInstance = useRef(null)
     const solarChartRef = useRef(null);
+    const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
+    const [latestNPKReading, setLatestNPKReading] = useState({
+        nitrogen: "--",
+        phosphorus: "--",
+        potassium: "--",
+    });
+
+    const fetchLatestReading = () => {
+        API.get("/npk/latest")
+        .then((response) => {
+            setLatestNPKReading(response.data);
+        })
+        .catch(error => console.error("Error fetching NPK data", error));
+    }
+
+    const fetchFiveLatestReadings = async () => {
+        try {
+            const response = await API.get("/npk/latest5");
+            setFiveLatestReadings(response.data);
+        } catch (error) {
+            console.error("Error fetching NPK readings", error);
+            
+        }
+    }
 
     useEffect(() => {
+        fetchLatestReading();
+        fetchFiveLatestReadings();
+
+        const interval = setInterval(fetchLatestReading, 10000);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (fiveLatestReadings.length > 0) {
+            updateChart(fiveLatestReadings);
+        }   
+    }, [fiveLatestReadings])
+
+    const updateChart = (readings) => {
+
+        if (!npkChartRef.current) return;
+
+        // Destroy previous chart instance if it exists
+        if (npkChartInstance.current) {
+            npkChartInstance.current.destroy();
+        }
+
+        const ctx = npkChartRef.current.getContext("2d");
+
+        const labels = readings.map(reading => 
+            new Date(reading.timestamp).toLocaleTimeString("en-US",{
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+            })
+        );
+        const nitrogenData = readings.map(reading => reading.nitrogen);
+        const phosphorusData = readings.map(reading => reading.phosphorous);
+        const potassiumData = readings.map(reading => reading.potassium);
+
         if (npkChartRef.current) {
-            const npkChart = new Chart(npkChartRef.current, {
+            npkChartInstance.current = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
+                    labels,
                     datasets: [
-                        { label: 'Nitrogen', data: [45, 42, 47, 45, 43], borderColor: '#2196F3', fill: false },
-                        { label: 'Phosphorus', data: [32, 31, 33, 32, 34], borderColor: '#4CAF50', fill: false },
-                        { label: 'Potassium', data: [28, 29, 27, 28, 28], borderColor: '#FFA000', fill: false },
+                        { label: 'Nitrogen', data: nitrogenData, borderColor: '#2196F3', fill: false },
+                        { label: 'Phosphorus', data: phosphorusData, borderColor: '#4CAF50', fill: false },
+                        { label: 'Potassium', data: potassiumData, borderColor: '#FFA000', fill: false },
                     ],
                 },
                 options: {
@@ -25,14 +86,12 @@ const RealTimeMonitor = () => {
                         legend: { position: 'bottom' },
                     },
                     scales: {
-                        y: { beginAtZero: true, max: 100 },
+                        y: { min: 80, max: 250 },
                     },
                 },
             });
-
-            return () => npkChart.destroy();
         }
-    }, []);
+    }
 
     useEffect(() => {
         if (solarChartRef.current) {
@@ -81,9 +140,9 @@ const RealTimeMonitor = () => {
                         </button>
                     </div>
                     <div className="npk-values">
-                        <div className="value-box"><span>N</span><div id="n-value">45%</div></div>
-                        <div className="value-box"><span>P</span><div id="p-value">32%</div></div>
-                        <div className="value-box"><span>K</span><div id="k-value">28%</div></div>
+                        <div className="value-box"><span>N</span><div id="n-value">{latestNPKReading.nitrogen}</div></div>
+                        <div className="value-box"><span>P</span><div id="p-value">{latestNPKReading.phosphorous}</div></div>
+                        <div className="value-box"><span>K</span><div id="k-value">{latestNPKReading.potassium}</div></div>
                     </div>
                     <div className="card-body">
                         <canvas ref={npkChartRef}></canvas>
