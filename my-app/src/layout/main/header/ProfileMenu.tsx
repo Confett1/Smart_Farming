@@ -152,7 +152,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import ListItemIcon from '@mui/material/ListItemIcon';
-// import ProfileImage from '../../../assets/user-profile.jpg';
 import { Divider } from '@mui/material';
 import IconifyIcon from '../../../components/base/IconifyIcon';
 
@@ -161,13 +160,13 @@ const menuItems = [
     id: 1,
     title: 'Account Settings',
     icon: 'ic:outline-manage-accounts',
-    path: '/account-settings',
+    path: '/settings',
   },
   {
     id: 3,
     title: 'Logout',
     icon: 'ic:baseline-logout',
-    path: '/',
+    path: '/login',
   },
 ];
 
@@ -182,6 +181,16 @@ const ProfileMenu = ( {ProfileImage} ) => {
 
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
+  };
+
+    const handleMenuItemClick = (path) => {
+    if (path === "/login") {
+      localStorage.clear();
+      // setUser({ username: '', password: null, userID: '', token: null, role: null, email: null, firstName: null, lastName: null, phoneNumber: null});
+    }
+
+    handleProfileMenuClose();
+    navigate(path);
   };
 
   return (
@@ -241,7 +250,7 @@ const ProfileMenu = ( {ProfileImage} ) => {
           {menuItems.map((item) => (
             <MenuItem
               key={item.id}
-              // onClick={() => handleMenuItemClick(item.path)}
+              onClick={() => handleMenuItemClick(item.path)}
               sx={{ py: 1 }}
             >
               <ListItemIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 'h5.fontSize' }}>
