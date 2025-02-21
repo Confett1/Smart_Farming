@@ -4,6 +4,7 @@ import PageLoader from "../components/loader/MainLoader";
 import Main from "../layout/main/index";
 import AuthLayout from "../layout/auth-layout";
 import Login from "../pages/authentication/login/Login";
+import NotFound from "../pages/not-found/NotFound";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const WaterLevel = lazy(() => import("../pages/water-level/WaterLevel"));
@@ -59,6 +60,13 @@ const Router = () => {
                   <Login />
               </AuthLayout>
             } />
+
+            <Route
+              path="*"
+              element={
+                <NotFound />
+              }
+            />
         </Routes>
       </Suspense>
     </>
