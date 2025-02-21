@@ -29,25 +29,6 @@ body {
   line-height: 1.6;
 }
 
-/* Layout */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* Main Content */
-.content {
-  flex: 1;
-  margin-left: 260px;
-  padding: 0px;
-  overflow-x: hidden;
-}
-
-/* Control Center*/
-.control-center {
-  padding: 20px;
-}
-
 .control-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
