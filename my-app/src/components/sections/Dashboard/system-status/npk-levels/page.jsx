@@ -1,4 +1,26 @@
+import { useEffect, useState } from "react";
+import API from "../../../../../api/api";
+
 const NpkLevels = () => {
+    const [latestNPKReading, setLatestNPKReading] = useState({
+        nitrogen: "--",
+        phosphorus: "--",
+        potassium: "--",
+    })
+
+    const fetchLatestReading = () => {
+        API.get("/npk/latest")
+        .then(response => setLatestNPKReading(response.data))
+        .catch(error => console.error("Error fetching NPK data", error));
+    }
+
+    useEffect(() => {
+        fetchLatestReading();
+
+        const interval = setTimeout(fetchLatestReading, 10000)
+        return () => clearInterval(interval);
+    }, [])
+
     return (
         <>
             <div className="status-card">
@@ -9,7 +31,7 @@ const NpkLevels = () => {
                     <h3>NPK Levels</h3>
                     <span className="status warning">Check Required</span>
                     <div className="status-details">
-                        <span>N: 45% P: 32% K: 28%</span>
+                        <span>N: {latestNPKReading.nitrogen} P: {latestNPKReading.phosphorous} K: {latestNPKReading.potassium}</span>
                     </div>
                 </div>
             </div>
