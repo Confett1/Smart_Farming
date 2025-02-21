@@ -1,6 +1,9 @@
+import RecordTable from './Table';
+
 const RecordsContent = () => {
     return (
         <>
+            <RecordTable />
             <div className="table-container">
                 <table className="records-table">
                     <thead>

@@ -27,21 +27,13 @@
     gap: 20px;
   }
 
-
-  
 /* Notification Styles */
-.notifications {
-  position: relative;
-  margin-right: 20px;
-}
-
 #notificationBtn {
   background: none;
   border: none;
   color: #666;
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 12px;
   position: relative;
   transition: all 0.3s ease;
   border-radius: 50%;
@@ -54,8 +46,8 @@
 
 .notification-count {
   position: absolute;
-  top: 10px;
-  right: 5px;
+  top: -4px;
+  right: -7px;
   background-color: #ff4444;
   color: white;
   border-radius: 12px;
@@ -91,7 +83,7 @@
 .notification-dropdown {
   position: absolute;
   top: calc(100% + 10px);
-  right: -10px;
+  right: 212px;
   width: 380px;
   background: white;
   border-radius: 12px;
@@ -130,7 +122,6 @@
   color: #666;
   cursor: pointer;
   font-size: 0.9rem;
-  padding: 5px 10px;
   border-radius: 5px;
   display: flex;
   align-items: center;

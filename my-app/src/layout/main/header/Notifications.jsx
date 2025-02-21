@@ -21,7 +21,7 @@ const Notifications = () => {
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
     return (
-        <div className="notifications" ref={notifDropdownRef}>
+        <div ref={notifDropdownRef}>
             <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
                 <i className="fas fa-bell"></i>
                 <span className="notification-count pulse">5</span>

@@ -1,4 +1,22 @@
- /* Sidebar Styles */
+:root {
+  --primary-color: #2E7D32;
+  --secondary-color: #4CAF50;
+  --accent-color: #81C784;
+  --background-color: #F5F5F5;
+  --card-background: #FFFFFF;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --danger-color: #F44336;
+  --warning-color: #FFA000;
+  --success-color: #4CAF50;
+  --border-radius: 16px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Styles */
 .sidebar {
   width: 260px;
   background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));

@@ -19,7 +19,8 @@ const Main = ({ children }) => {
                         lg: '260px'
                     },
                     flex: 1,
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    bgcolor: '#F3F3F3'
                 }}
             >
                 {children}

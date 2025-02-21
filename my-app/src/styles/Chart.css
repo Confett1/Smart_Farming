@@ -1,46 +1,3 @@
-:root {
-  --primary-color: #2E7D32;
-  --secondary-color: #4CAF50;
-  --accent-color: #81C784;
-  --success-color: #4CAF50;
-  --background-color: #F5F5F5;
-  --card-background: #FFFFFF;
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-color: #1f2937;
-  --muted-color: #6b7280;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-primary);
-  line-height: 1.6;
-}
-
-/* Layout */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* Main Content */
-.content {
-  flex: 1;
-  margin-left: 260px;
-  overflow-x: hidden;
-}
-
-/* Status Overview Section */
-.status-overview {
-  padding: 20px;
-}
 
 /*Content*/
 .container {
@@ -57,16 +14,6 @@ header {
   margin-left: 750px;
   display: flex;
   gap: 1rem;
-}
-
-select,
-button {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--muted-color);
-  border-radius: 0.25rem;
-  background-color: var(--card-background);
-  color: var(--text-color);
-  cursor: pointer;
 }
 
 button:hover {

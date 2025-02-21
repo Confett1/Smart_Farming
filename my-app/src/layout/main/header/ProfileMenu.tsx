@@ -197,7 +197,12 @@ const ProfileMenu = ( {userProfile} ) => {
   return (
     <>
       <ButtonBase
-        sx={{ ml: 1 }}
+        sx={{ 
+          '&:hover': {
+            bgcolor: 'transparent',
+            color: '#000'
+          }
+        }}
         onClick={handleProfileClick}
         aria-controls={open ? 'account-menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
@@ -209,8 +214,11 @@ const ProfileMenu = ( {userProfile} ) => {
           sx={{
             height: 44,
             width: 44,
+            bgcolor: '',
           }}
         />
+       <Typography variant='body2' pl={1}>John Lee Indino</Typography>
+       <IconifyIcon sx={{ fontSize: 30, ml: -0.6 }} icon={open ? 'material-symbols-light:arrow-drop-up-rounded' : 'material-symbols-light:arrow-drop-down-rounded'} />
       </ButtonBase>
 
       <Menu
@@ -220,7 +228,7 @@ const ProfileMenu = ( {userProfile} ) => {
         onClose={handleProfileMenuClose}
         onClick={handleProfileMenuClose}
         sx={{
-          mt: 1.5,
+          mt: 1.6,
           '& .MuiList-root': {
             p: 0,
             width: 'auto',
@@ -229,9 +237,14 @@ const ProfileMenu = ( {userProfile} ) => {
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        PaperProps={{
+          sx: {
+            borderRadius: 2, // Apply border radius here
+          },
+        }}
       >
         <Box p={1}>
-          <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { bgcolor: 'info.dark' } }}>
+          <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { borderRadius: 3 } }}>
             <Avatar src={userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
             <Stack direction="column">
               <Typography variant="body2" color="text.primary" fontWeight={600}>
@@ -251,7 +264,7 @@ const ProfileMenu = ( {userProfile} ) => {
             <MenuItem
               key={item.id}
               onClick={() => handleMenuItemClick(item.path)}
-              sx={{ py: 1 }}
+              sx={{ py: 1 , '&:hover': { borderRadius: 3 } }}
             >
               <ListItemIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 'h5.fontSize' }}>
                 <IconifyIcon icon={item.icon} />

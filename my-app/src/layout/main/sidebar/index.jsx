@@ -41,6 +41,7 @@ const Sidebar = ({userProfile}) => {
           }}
         />
         <nav className="sidebar-nav">
+          <Typography fontSize={12} textAlign={'left'} sx={{opacity: 0.9, pb: 1}}>MENU</Typography>
           <NavLink to="/" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             <i className="fas fa-home"></i>
             <span>Dashboard</span>
