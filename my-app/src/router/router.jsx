@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom"
 import { lazy, Suspense } from "react";
 import PageLoader from "../components/loader/MainLoader";
 import Main from "../layout/main/index";
+import AuthLayout from "../layout/auth-layout";
+import Login from "../pages/authentication/login/Login";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const WaterLevel = lazy(() => import("../pages/water-level/WaterLevel"));
@@ -47,6 +49,15 @@ const Router = () => {
               <Main>
                   <Settings />
               </Main>
+            } />
+
+
+            <Route
+            path="/login"
+            element={
+              <AuthLayout>
+                  <Login />
+              </AuthLayout>
             } />
         </Routes>
       </Suspense>
