@@ -334,3 +334,21 @@
       display: none;
     }
   }
+
+  @media (max-width: 900px) {
+    .dashboard-header {
+      margin-left: 0;
+    }
+
+    .header-title {
+      font-size: 14px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-bar {
+      display: none;
+    }
+  }

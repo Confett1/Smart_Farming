@@ -12,7 +12,12 @@ const Main = ({ children }) => {
             <Header userProfile={ProfileImage} />
             <Stack
                 sx={{
-                    ml: '260px',
+                    ml: {
+                        xs: 0,
+                        sm: 0,
+                        md: '260px',
+                        lg: '260px'
+                    },
                     flex: 1,
                     overflow: 'hidden'
                 }}
