@@ -18,7 +18,7 @@ const NotFound = () => {
         We are sorry, but the page you requested was not found
       </Typography>
       <br />
-      <Button variant="contained" onClick={goBack} sx={{fontSize: 10, borderRadius: 10, my: 1}}>
+      <Button variant="contained" onClick={goBack} sx={{fontSize: 10, borderRadius: 10, my: 1, bgcolor: '#00A550'}}>
         Go Back
       </Button>
     </Box>
