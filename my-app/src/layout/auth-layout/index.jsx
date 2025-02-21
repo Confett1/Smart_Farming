@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 const AuthLayout = ( {children} ) => {
     return (
         <>
-            <div>SMART FARMING</div>
+            <div className="bg-green-700 text-white text-xl font-bold p-1 shadow-lg flex justify-center items-center">
+                SMART FARMING
+                </div>
+
             {children}
         </>
     );
