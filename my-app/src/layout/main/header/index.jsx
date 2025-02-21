@@ -31,11 +31,11 @@ const Header = ({userProfile}) => {
                                 color: "#138808"
                             },
                             backgroundColor: "#F5F5F5",
-                            borderRadius: 12,
+                            borderRadius: 30,
                             fontSize: 14,
                             px: 2,
                             py: 1,
-                            width: 220
+                            width: 250
                         }}
                     />
                 </div>

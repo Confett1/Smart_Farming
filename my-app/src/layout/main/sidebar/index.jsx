@@ -40,7 +40,7 @@ const Sidebar = ({userProfile}) => {
             mb: -2.5
           }}
         />
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav text-sm">
           <Typography fontSize={12} textAlign={'left'} sx={{opacity: 0.9, pb: 1}}>MENU</Typography>
           <NavLink to="/" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             <i className="fas fa-home"></i>
