@@ -42,29 +42,6 @@ body {
   overflow-x: hidden;
 }
 
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: var(--background-color);
-  border-radius: 20px;
-  padding: 5px 15px;
-}
-
-.search-bar input {
-  border: none;
-  background: none;
-  padding: 8px;
-  width: 200px;
-  outline: none;
-}
-
-.search-bar button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-} 
-
 /* Records Section Styles */
 .main-content {
     padding: 2rem;
