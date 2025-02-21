@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../../styles/Water Level.css'
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
+import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 
 const WaterLevel = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,10 +19,8 @@ const WaterLevel = () => {
   return (
     <>
       <div className="layout">
-        {/*<!-- Main Content -->*/}
         <div className="content">
-
-          {/*<!-- Body content -->*/}
+          <Breadcrumb PageName={"Irrigation"} />
 
           {/*<!-- Real-time Monitoring -->*/}
           <section className="monitoring">

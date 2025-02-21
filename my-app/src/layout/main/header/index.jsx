@@ -1,9 +1,9 @@
 import Input from '@mui/joy/Input';
 import ProfileMenu from "./ProfileMenu";
-import ProfileImage from '../../../assets/images/user-profile.jpg';
 import Notifications from './Notifications';
+import PropTypes from 'prop-types';
 
-const Header = () => {
+const Header = ({userProfile}) => {
 
     return (
         <header className="dashboard-header">
@@ -41,10 +41,14 @@ const Header = () => {
                 </div>
                 
                 <Notifications />
-                <ProfileMenu image={ProfileImage} />
+                <ProfileMenu image={userProfile} userProfile={userProfile} />
             </div>
         </header>
     );
 };
+
+Header.propTypes = {
+    userProfile: PropTypes.any.isRequired
+}
 
 export default Header;

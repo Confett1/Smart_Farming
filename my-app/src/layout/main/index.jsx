@@ -3,13 +3,20 @@ import Header from "./header";
 import '../../styles/Header.css';
 import PropTypes from 'prop-types';
 import { Stack } from "@mui/material";
+import ProfileImage from '../../assets/images/john lee.jpg';
 
-const Main = ( {children} ) => {
+const Main = ({ children }) => {
     return (
         <>
-            <Sidebar />
-            <Header />
-            <Stack>
+            <Sidebar userProfile={ProfileImage} />
+            <Header userProfile={ProfileImage} />
+            <Stack
+                sx={{
+                    ml: '260px',
+                    flex: 1,
+                    overflow: 'hidden'
+                }}
+            >
                 {children}
             </Stack>
         </>
@@ -17,7 +24,7 @@ const Main = ( {children} ) => {
 };
 
 Main.propTypes = {
-    children: PropTypes.node.isRequired, 
-  };
+    children: PropTypes.node.isRequired,
+};
 
 export default Main;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../../styles/Settings.css';
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
+import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 
 const Settings = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +21,7 @@ const Settings = () => {
             <div className="dashboard">
                 {/* Main Content Area */}
                 <main className="content">
-
+                    <Breadcrumb PageName={"Settings"} />
                     <section className="settings-section">
                         <h2>Settings</h2>
                         <htmlForm className="settings-htmlForm">

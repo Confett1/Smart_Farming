@@ -3,16 +3,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 export default function LinearLoader() {
   return (
-    <Box 
-      sx={{ 
-        width: '100vw', 
-        marginLeft: {
-          xs: 0,
-          sm: '16.28rem'
-        },
-        overflow: 'hidden',
-      }}
-      >
+    <Box>
       
       <LinearProgress 
         sx={{

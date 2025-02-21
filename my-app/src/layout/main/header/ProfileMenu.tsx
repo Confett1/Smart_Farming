@@ -154,6 +154,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Divider } from '@mui/material';
 import IconifyIcon from '../../../components/base/IconifyIcon';
+import PropTypes from 'prop-types';
 
 const menuItems = [
   {
@@ -170,7 +171,7 @@ const menuItems = [
   },
 ];
 
-const ProfileMenu = ( {ProfileImage} ) => {
+const ProfileMenu = ( {userProfile} ) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -204,11 +205,10 @@ const ProfileMenu = ( {ProfileImage} ) => {
         disableRipple
       >
         <Avatar
-          src={ProfileImage}
+          src={userProfile}
           sx={{
             height: 44,
             width: 44,
-            bgcolor: 'primary.main',
           }}
         />
       </ButtonBase>
@@ -232,7 +232,7 @@ const ProfileMenu = ( {ProfileImage} ) => {
       >
         <Box p={1}>
           <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { bgcolor: 'info.dark' } }}>
-            <Avatar src={ProfileImage} sx={{ mr: 1, height: 42, width: 42 }} />
+            <Avatar src={userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
             <Stack direction="column">
               <Typography variant="body2" color="text.primary" fontWeight={600}>
                 MAIN ADMIN
@@ -266,5 +266,9 @@ const ProfileMenu = ( {ProfileImage} ) => {
     </>
   );
 };
+
+ProfileMenu.propTypes = {
+  userProfile: PropTypes.any.isRequired
+}
 
 export default ProfileMenu;

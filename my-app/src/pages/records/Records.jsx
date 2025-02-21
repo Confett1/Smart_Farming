@@ -3,6 +3,7 @@ import '../../styles/Records.css'
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
 import Modal from '../../components/modals';
+import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ const Records = () => {
 
             <div className="layout">
                 <div className="content">
+                    <Breadcrumb PageName={"Records"} />
                     {/*<!-- Main Content Section -->*/}
                     <main className="main-content">
                         <section className="records-section">

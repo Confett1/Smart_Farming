@@ -23,19 +23,6 @@ body {
   line-height: 1.6;
 }
 
-/* Layout */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* Main Content */
-.content {
-  flex: 1;
-  margin-left: 260px;
-  overflow-x: hidden;
-}
-
 
 /* Control Center*/
 .control-center {

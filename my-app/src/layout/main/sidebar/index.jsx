@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import userProfile from '../../../assets/images/user-profile.jpg';
 import '../../../styles/Sidebar.css'
 import { Divider, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
-const Sidebar = () => {
+const Sidebar = ({userProfile}) => {
   return (
     <>
       <aside className="sidebar">
@@ -66,5 +66,9 @@ const Sidebar = () => {
     </>
   );
 };
+
+Sidebar.propTypes = {
+  userProfile: PropTypes.any.isRequired,
+}
 
 export default Sidebar;

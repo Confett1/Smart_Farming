@@ -5,7 +5,6 @@ import PageLoader from '../../components/loader/LinearLoader';
 import '../../styles/Homepage.css';
 import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
-import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import SnackbarComponent from '../../components/Snackbar/SnackbarComponent';
 import { Stack } from '@mui/material';
 
@@ -22,22 +21,15 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="layout">
-      <div className="content">
-        <Stack
-          sx={{
-            px: 4
-          }}
-        >
-          <Breadcrumb />
-          <SnackbarComponent />
-          <SystemStatus />
-          <RealTimeMonitor />
-          <ControlCenter />
-        </Stack>
-        <Footer />
-      </div>
-    </div>
+    <>
+      <Stack p={2.7}>
+        <SnackbarComponent />
+        <SystemStatus />
+        <RealTimeMonitor />
+        <ControlCenter />
+      </Stack>
+      <Footer />
+    </>
   );
 };
 
