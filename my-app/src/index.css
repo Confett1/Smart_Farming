@@ -3,3 +3,10 @@
 #root {
     font-family: 'Poppins', 'DM Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+
+.page-name h2 {
+    font-size: 27px;
+    color: #2c3e50;
+    font-weight: 600;
+    text-align: left;
+}

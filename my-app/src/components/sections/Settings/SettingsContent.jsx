@@ -2,7 +2,6 @@ const SettingsContent = () => {
     return (
         <>
             <section className="settings-section">
-                <h2>Settings</h2>
                 <htmlForm className="settings-htmlForm">
                     <div className="setting-group">
                         <h3>General Settings</h3>

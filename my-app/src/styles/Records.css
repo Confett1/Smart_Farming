@@ -7,12 +7,6 @@
     border-bottom: 2px solid #f0f0f0;
 }
 
-.records-header h2 {
-    font-size: 1.5rem;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
 .records-actions {
     display: flex;
     gap: 1rem;

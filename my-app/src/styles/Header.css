@@ -282,31 +282,9 @@
 }
 
 .notification-list::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: #999999;
 }
-  
-  /* .search-bar {
-    display: flex;
-    align-items: center;
-    background-color: var(--background-color);
-    border-radius: 20px;
-    padding: 5px 15px;
-  }
-  
-  .search-bar input {
-    border: none;
-    background: none;
-    padding: 8px;
-    width: 200px;
-    outline: none;
-  }
-  
-  .search-bar button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-secondary);
-  } */
+
 
   @media (max-width: 768px) {
     .dashboard-header {

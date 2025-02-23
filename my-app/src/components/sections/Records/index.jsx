@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
 import RecordsContent from "./RecordsData";
 
-const RecordsComponent = ({openModal}) => {
+const RecordsComponent = ({ openModal }) => {
     return (
         <>
             <div className="records-header">
-                <h2>Activity Records</h2>
+                <div className="page-name">
+                    <h2>Activity Records</h2>
+                </div>
                 <div className="records-actions">
-                    <button className="btn btn-primary" onClick={openModal}>
+                    <button className="btn btn-primary" style={{ backgroundColor: '#4CAF50', border: 'none' }} onClick={openModal}>
                         <i className="fas fa-plus"></i> Add New Record
                     </button>
                     <div className="filter-dropdown">

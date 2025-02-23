@@ -4,6 +4,9 @@ const ChartsComponent = () => {
     return (
         <>
             <header>
+                <div className="page-name">                    
+                    <h2>Charts Statistics</h2>
+                </div>
                 <div className="controls">
                     <select id="period-select">
                         <option value="lastWeek">Last Week</option>

@@ -15,8 +15,8 @@ export default function Breadcrumb({PageName}) {
     >
       <Typography 
         color="success"
-        fontSize={18}
-        fontWeight={630}
+        fontSize={17}
+        fontWeight={500}
       >
         {PageName}
       </Typography>

@@ -1,10 +1,34 @@
+import { useEffect, useState } from "react";
 import IrrigationContent from "./IrrigationData";
 
 const IrrigationComponent = () => {
+    const [weatherData, setWeatherData] = useState(null);
+
+    // Use the correct prefix for Vite: import.meta.env.VITE_...
+    const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
+
+    useEffect(() => {
+        const fetchWeatherData = async () => {
+            const city = 'Catarman'; // You can dynamically change this
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApi}&units=metric`; // Include the units for temperature in °C
+
+            const response = await fetch(url);
+            const data = await response.json();
+            setWeatherData(data);
+        };
+
+        fetchWeatherData();
+    }, [openWeatherApi]);
+
+    if (!weatherData) {
+        return <div>Loading...</div>;
+    }
     return (
         <>
             <section>
-                <h2 className="section-title">Real-time Monitoring</h2>
+                <div className="page-name">
+                    <h2 className="text-left">Real-time Monitoring</h2>
+                </div>
                 <div className="monitoring-grid">
                     {/*<!-- Field Water Level Monitoring Card -->*/}
                     <div className="card field-water-card">
@@ -77,32 +101,19 @@ const IrrigationComponent = () => {
                                         <i className="fas fa-sun"></i>
                                     </div>
                                     <div className="weather-info">
-                                        <div className="temperature">28°C</div>
-                                        <div className="condition">Sunny</div>
+                                        <div className="temperature">{weatherData.main.temp}°C</div>
+                                        <div className="condition">{weatherData.weather[0].description}</div>
                                     </div>
                                 </div>
                                 <div className="weather-details">
                                     <div className="detail-item">
                                         <i className="fas fa-tint"></i>
-                                        <span>Humidity: 75%</span>
+                                        <span>Humidity: {weatherData.main.humidity}%</span>
                                     </div>
                                     <div className="detail-item">
                                         <i className="fas fa-wind"></i>
-                                        <span>Wind: 5 km/h</span>
+                                        <span>Wind: {weatherData.wind.speed} km/h</span>
                                     </div>
-                                    <div className="detail-item">
-                                        <i className="fas fa-cloud-rain"></i>
-                                        <span>Rain Chance: 20%</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <i className="fas fa-sun"></i>
-                                        <span>UV Index: 6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="forecast-grid">
-                                <div className="forecast-day">
-                                    <span className="day">Monday</span>
                                 </div>
                             </div>
                         </div>
