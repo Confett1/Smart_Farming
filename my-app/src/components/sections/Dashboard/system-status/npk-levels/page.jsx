@@ -4,7 +4,7 @@ import API from "../../../../../api/api";
 const NpkLevels = () => {
     const [latestNPKReading, setLatestNPKReading] = useState({
         nitrogen: "--",
-        phosphorus: "--",
+        phosphorous: "--",
         potassium: "--",
     })
 

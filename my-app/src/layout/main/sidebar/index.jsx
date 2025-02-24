@@ -51,8 +51,8 @@ const Sidebar = ({userProfile}) => {
             <span>Chart</span>
           </NavLink>
           <NavLink to="/waterlevel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            <i className="fas fa-water"></i>
-            <span>Irrigation</span>
+            <i class="fa-solid fa-sliders"></i>
+            <span>Control Panel</span>
           </NavLink>
           <NavLink to="/records" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             <i className="fas fa-history"></i>

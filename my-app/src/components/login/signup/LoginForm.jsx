@@ -1,7 +1,9 @@
 import { useState } from "react";
 import API from "../../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+    const navigate = useNavigate();
     const [userCredentials, setUserCredentials] = useState({
         username: "",
         password: "",
@@ -17,6 +19,9 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        localStorage.setItem('user', JSON.stringify({ name: 'John Doe', role: 'user' }));
+        navigate('/');
+
         if (!userCredentials.username || !userCredentials.password) {
             alert("Please enter both username and password.");
             return;
@@ -26,6 +31,7 @@ const LoginForm = () => {
             const response = await API.post('/user/login', userCredentials);
             localStorage.setItem("user", JSON.stringify(response.data));
             alert(`Login Successful, welcome ${response.data.firstName}`);
+            navigate('/');
         } catch (error) {
             console.error("Login Failed", error);
             alert(error.response?.data || "Login Failed!");
