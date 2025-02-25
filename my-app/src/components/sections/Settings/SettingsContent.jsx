@@ -1,20 +1,23 @@
 const SettingsContent = () => {
     return (
-        <>
+        <div className="settings-container">
             <section className="settings-section">
-                <htmlForm className="settings-htmlForm">
+                <form className="settings-form">
+
+                    {/* General Settings */}
                     <div className="setting-group">
                         <h3>General Settings</h3>
                         <div className="setting-item">
                             <label htmlFor="notifications">Enable Notifications</label>
-                            <input type="checkbox" id="notifications" name="notifications" checked></input>
+                            <input type="checkbox" id="notifications" name="notifications" />
                         </div>
                         <div className="setting-item">
                             <label htmlFor="dark-mode">Dark Mode</label>
-                            <input type="checkbox" id="dark-mode" name="dark-mode"></input>
+                            <input type="checkbox" id="dark-mode" name="dark-mode" />
                         </div>
-
                     </div>
+
+                    {/* Farm Settings */}
                     <div className="setting-group">
                         <h3>Farm Settings</h3>
                         <div className="setting-item">
@@ -33,23 +36,26 @@ const SettingsContent = () => {
                                 <option value="60">Every hour</option>
                             </select>
                         </div>
-
                     </div>
+
+                    {/* Notification Settings */}
                     <div className="setting-group">
                         <h3>Notification Settings</h3>
                         <div className="setting-item">
                             <label htmlFor="email">Email Notifications</label>
-                            <input type="email" id="email" name="email" placeholder="Enter your email"></input>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" />
                         </div>
                         <div className="setting-item">
                             <label htmlFor="sms">SMS Notifications</label>
-                            <input type="tel" id="sms" name="sms" placeholder="Enter your phone number"></input>
+                            <input type="tel" id="sms" name="sms" placeholder="Enter your phone number" />
                         </div>
                     </div>
+
+                    {/* Save Button */}
                     <button type="submit" className="btn btn-primary">Save Settings</button>
-                </htmlForm>
+                </form>
             </section>
-        </>
+        </div>
     );
 };
 
