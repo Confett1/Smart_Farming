@@ -8,8 +8,8 @@ const ChartsContent = () => {
                         <span className="icon">📅</span>
                     </div>
                     <div className="card-content">
-                        <div className="value">18,800 kg</div>
-                        <p className="trend">+20% from last period</p>
+                        <div className="value">0 kg</div>
+                        <p className="trend">0% from last period</p>
                     </div>
                 </div>
                 <div className="card">
@@ -18,8 +18,8 @@ const ChartsContent = () => {
                         <span className="icon">💧</span>
                     </div>
                     <div className="card-content">
-                        <div className="value">10,150 L</div>
-                        <p className="trend">-5% from last period</p>
+                        <div className="value">0 L</div>
+                        <p className="trend">0% from last period</p>
                     </div>
                 </div>
                 <div className="card">
@@ -28,8 +28,8 @@ const ChartsContent = () => {
                         <span className="icon">🌱</span>
                     </div>
                     <div className="card-content">
-                        <div className="value">1,830 L</div>
-                        <p className="trend">+2% from last period</p>
+                        <div className="value">0 L</div>
+                        <p className="trend">0% from last period</p>
                     </div>
                 </div>
                 <div className="card">
@@ -38,8 +38,8 @@ const ChartsContent = () => {
                         <span className="icon">⚡</span>
                     </div>
                     <div className="card-content">
-                        <div className="value">187 kWh</div>
-                        <p className="trend">+15% from last period</p>
+                        <div className="value">0 kWh</div>
+                        <p className="trend">0% from last period</p>
                     </div>
                 </div>
             </div>
