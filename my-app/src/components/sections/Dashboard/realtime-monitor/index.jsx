@@ -260,7 +260,7 @@ const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
     const [latestNPKReading, setLatestNPKReading] = useState({
         nitrogen: "--",
-        phosphorus: "--",
+        phosphorous: "--",
         potassium: "--",
     });
 

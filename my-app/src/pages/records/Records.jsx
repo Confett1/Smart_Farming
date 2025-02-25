@@ -6,8 +6,10 @@ import Modal from '../../components/modals';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import { Stack } from '@mui/material';
 import RecordsComponent from '../../components/sections/Records';
+import useAuth from '../../hooks/useAuth';
 
 const Records = () => {
+    const user = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
