@@ -1,145 +1,197 @@
-/* Center the entire settings section */
 .settings-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Full screen height */
-  padding: 20px; /* Prevents content from touching edges */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-/* Settings Section */
-.settings-section {
-  background-color: var(--card-background);
-  border-radius: var(--border-radius);
-  padding: 25px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-
-.settings-section:hover {
-  box-shadow: var(--shadow-lg);
+.settings-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  height: 100%;
 }
 
-/* Form */
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Consistent spacing */
+.settings-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Setting Groups */
-.setting-group {
-  background-color: var(--background-color);
-  padding: 20px;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: var(--transition);
-  text-align: left;
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
 }
 
-.setting-group:hover {
-  border-color: var(--primary-color);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Section Titles */
-.setting-group h3 {
-  color: var(--primary-color);
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  font-weight: 500;
+.card-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
-.setting-group h3::before {
-  content: "🔧";
-  font-size: 1rem;
+.card-description {
+  margin: 0.5rem 0 0;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-/* Individual Setting Items */
+.card-content {
+  padding: 1.5rem;
+}
+
 .setting-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: var(--transition);
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
 }
 
-.setting-item:hover {
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+.setting-item:last-child {
+  border-bottom: none;
 }
 
-.setting-item label {
+.setting-info {
   flex: 1;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  font-weight: 500;
 }
 
-.setting-item select,
-.setting-item input[type="email"],
-.setting-item input[type="tel"] {
+.setting-info label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.setting-description {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.password-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.password-inputs .text-input {
   width: 250px;
-  padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.text-input,
+.select-input {
+  width: 250px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 0.9rem;
-  background-color: var(--background-color);
-  transition: var(--transition);
+  transition: border-color 0.3s ease;
 }
 
-.setting-item select:focus,
-.setting-item input[type="email"]:focus,
-.setting-item input[type="tel"]:focus {
-  border-color: var(--primary-color);
+.text-input:focus,
+.select-input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Button */
-.btn-primary {
-  padding: 12px;
-  font-size: 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: var(--border-radius);
-  border: none;
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  appearance: none;
+  background: #eee;
+  border-radius: 12px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: background 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: var(--secondary-color);
+.toggle-switch:checked {
+  background: var(--primary-color);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch:checked::before {
+  transform: translateX(26px);
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+  background: var(--secondary-color);
+}
+
+@media (max-width: 1024px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-container {
+    padding: 1rem;
+  }
+
   .setting-item {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
   }
 
-  .setting-item select,
-  .setting-item input[type="email"],
-  .setting-item input[type="tel"] {
-      width: 100%;
+  .text-input,
+  .select-input,
+  .password-inputs {
+    width: 100%;
   }
 
-  .btn-primary {
-      width: 100%;
+  .password-inputs {
+    flex-direction: column;
   }
+
+  .password-inputs .text-input {
+    width: 100%;
+  }
+
+  .toggle-switch {
+    align-self: flex-start;
+  }
+}
+
+.page-name{
+  margin-top: 10px;
+  margin-left: 30px;
 }
