@@ -167,6 +167,7 @@
 #include <Adafruit_SSD1306.h>
 #include <DHT.h>  // DHT sensor library for temperature and humidity
 
+
 #define SCREEN_WIDTH 128    // OLED display width, in pixels
 #define SCREEN_HEIGHT 64    // OLED display height, in pixels
 #define OLED_RESET -1       // Reset pin # (or -1 if sharing Arduino reset pin)
@@ -181,6 +182,7 @@ const byte phos[] = {0x01, 0x03, 0x00, 0x1f, 0x00, 0x01, 0xb5, 0xcc};
 const byte pota[] = {0x01, 0x03, 0x00, 0x20, 0x00, 0x01, 0x85, 0xc0};
 
 byte values[11];
+SoftwareSerial espSerial(4, 5);
 SoftwareSerial mod(2, 3);  // RX, TX pins for the sensor communication
 
 #define DHTPIN 4      // DHT sensor pin
@@ -233,20 +235,36 @@ void loop() {
   phValue = map(phValue, 0, 1023, 0, 14); // Map to pH scale (0-14)
 
   // Print all data to Serial Monitor
-  Serial.print("N:");
-  Serial.print(val1);
-  Serial.print(",P:");
-  Serial.print(val2);
-  Serial.print(",K:");
-  Serial.print(val3);
-  Serial.print(",T:");
-  Serial.print(temperature);
-  Serial.print(",H:");
-  Serial.print(humidity);
-  Serial.print(",M:");
-  Serial.print(moisture);
-  Serial.print(",pH:");
-  Serial.println(phValue);
+  // Serial.print("N:");
+  // Serial.print(val1);
+  // Serial.print(",P:");
+  // Serial.print(val2);
+  // Serial.print(",K:");
+  // Serial.print(val3);
+  // Serial.print(",T:");
+  // Serial.print(temperature);
+  // Serial.print(",H:");
+  // Serial.print(humidity);
+  // Serial.print(",M:");
+  // Serial.print(moisture);
+  // Serial.print(",pH:");
+  // Serial.println(phValue);
+
+  espSerial.print("N:");
+  espSerial.print(val1);
+  espSerial.print(",P:");
+  espSerial.print(val2);
+  espSerial.print(",K:");
+  espSerial.print(val3);
+  espSerial.print(",T:");
+  espSerial.print(temperature);
+  espSerial.print(",H:");
+  espSerial.print(humidity);
+  espSerial.print(",M:");
+  espSerial.print(moisture);
+  espSerial.print(",pH:");
+  espSerial.println(phValue);
+
 
   delay(5000);  // Wait for 5 seconds before updating the display
 
@@ -330,6 +348,230 @@ byte potassium() {
   return values[4];  // Return Potassium value from response
 }
 
+
+
+
+
+// #include <SoftwareSerial.h>
+// #include <Wire.h>
+// #include <Adafruit_GFX.h>
+// #include <Adafruit_SSD1306.h>
+// #include <DHT.h>
+// #include <WiFi.h>
+// #include <WebServer.h> // ESP32 Web Server Library
+
+// // WiFi Credentials
+// const char* ssid = "TAIY0'S Wifi";       // Replace with your WiFi SSID
+// const char* password = "khyledenyse25"; // Replace with your WiFi password
+
+// WebServer server(80); // HTTP Server on Port 80
+
+// #define SCREEN_WIDTH 128
+// #define SCREEN_HEIGHT 64
+// #define OLED_RESET -1
+// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// #define RE 8
+// #define DE 7
+
+// // NPK sensor commands
+// const byte nitro[] = {0x01, 0x03, 0x00, 0x1e, 0x00, 0x01, 0xe4, 0x0c};
+// const byte phos[] = {0x01, 0x03, 0x00, 0x1f, 0x00, 0x01, 0xb5, 0xcc};
+// const byte pota[] = {0x01, 0x03, 0x00, 0x20, 0x00, 0x01, 0x85, 0xc0};
+
+// byte values[11];
+// SoftwareSerial mod(2, 3);
+
+// #define DHTPIN 4
+// #define DHTTYPE DHT11
+// DHT dht(DHTPIN, DHTTYPE);
+
+// #define MOISTURE_PIN A0
+
+// // Sensor values
+// float temperature, humidity, moisture, phValue;
+// byte val1, val2, val3;
+
+// // Function to handle web requests
+// void handleRoot() {
+//   String page = "<html><body>";
+//   page += "<h1>Sensor Data</h1>";
+//   page += "<p><b>Nitrogen:</b> " + String(val1) + " mg/kg</p>";
+//   page += "<p><b>Phosphorous:</b> " + String(val2) + " mg/kg</p>";
+//   page += "<p><b>Potassium:</b> " + String(val3) + " mg/kg</p>";
+//   page += "<p><b>Temperature:</b> " + String(temperature) + " °C</p>";
+//   page += "<p><b>Humidity:</b> " + String(humidity) + " %</p>";
+//   page += "<p><b>Moisture:</b> " + String(moisture) + " %</p>";
+//   page += "<p><b>pH Level:</b> " + String(phValue) + "</p>";
+//   page += "</body></html>";
+
+//   server.send(200, "text/html", page);
+// }
+
+// void setup() {
+//   Serial.begin(115200);
+//   mod.begin(9600);
+//   pinMode(RE, OUTPUT);
+//   pinMode(DE, OUTPUT);
+  
+//   // Initialize OLED Display
+//   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+//   delay(500);
+//   display.clearDisplay();
+//   display.setCursor(25, 15);
+//   display.setTextSize(1);
+//   display.setTextColor(WHITE);
+//   display.println("NPK Sensor");
+//   display.setCursor(25, 35);
+//   display.print("Initializing...");
+//   display.display();
+//   delay(3000);
+
+//   dht.begin(); 
+
+//   // Connect to WiFi
+//   WiFi.begin(ssid, password);
+//   Serial.print("Connecting to WiFi");
+//   display.setCursor(25, 50);
+//   display.print("WiFi Connecting...");
+//   display.display();
+  
+//   while (WiFi.status() != WL_CONNECTED) {
+//     delay(500);
+//     Serial.print(".");
+//   }
+  
+//   Serial.println("\nConnected to WiFi!");
+//   Serial.print("IP Address: ");
+//   Serial.println(WiFi.localIP());
+
+//   display.clearDisplay();
+//   display.setCursor(10, 20);
+//   display.print("WiFi Connected!");
+//   display.setCursor(10, 40);
+//   display.print(WiFi.localIP());
+//   display.display();
+
+//   // Start the web server
+//   server.on("/", handleRoot);
+//   server.begin();
+// }
+
+// void loop() {
+//   server.handleClient();
+
+//   val1 = nitrogen();
+//   delay(250);
+//   val2 = phosphorous();
+//   delay(250);
+//   val3 = potassium();
+//   delay(250);
+
+//   temperature = dht.readTemperature();
+//   humidity = dht.readHumidity();
+//   moisture = analogRead(MOISTURE_PIN);
+//   moisture = map(moisture, 0, 1023, 0, 100);
+  // phValue = analogRead(A1);
+  // phValue = map(phValue, 0, 1023, 0, 14);
+
+//   // Print sensor data to Serial Monitor
+//   Serial.print("N:");
+//   Serial.print(val1);
+//   Serial.print(",P:");
+//   Serial.print(val2);
+//   Serial.print(",K:");
+//   Serial.print(val3);
+//   Serial.print(",T:");
+//   Serial.print(temperature);
+//   Serial.print(",H:");
+//   Serial.print(humidity);
+//   Serial.print(",M:");
+//   Serial.print(moisture);
+//   Serial.print(",pH:");
+//   Serial.println(phValue);
+
+//   // Update OLED Display
+//   display.clearDisplay();
+//   display.setTextSize(1);
+//   display.setCursor(0, 5);
+//   display.print("N: ");
+//   display.print(val1);
+//   display.print(" mg/kg");
+
+//   display.setCursor(0, 15);
+//   display.print("P: ");
+//   display.print(val2);
+//   display.print(" mg/kg");
+
+//   display.setCursor(0, 25);
+//   display.print("K: ");
+//   display.print(val3);
+//   display.print(" mg/kg");
+
+//   display.setCursor(0, 35);
+//   display.print("T: ");
+//   display.print(temperature);
+//   display.print("C");
+
+//   display.setCursor(60, 35);
+//   display.print("H: ");
+//   display.print(humidity);
+//   display.print("%");
+
+//   display.setCursor(0, 45);
+//   display.print("M: ");
+//   display.print(moisture);
+//   display.print("%");
+
+//   display.setCursor(60, 45);
+//   display.print("pH: ");
+//   display.print(phValue);
+
+//   display.display();
+//   delay(5000);
+// }
+
+// byte nitrogen() {
+//   digitalWrite(DE, HIGH);
+//   digitalWrite(RE, HIGH);
+//   delay(10);
+//   if (mod.write(nitro, sizeof(nitro)) == 8) {  
+//     digitalWrite(DE, LOW);
+//     digitalWrite(RE, LOW);
+//     for (byte i = 0; i < 7; i++) {
+//       values[i] = mod.read();
+//     }
+//   }
+//   return values[4];  
+// }
+
+// byte phosphorous() {
+//   digitalWrite(DE, HIGH);
+//   digitalWrite(RE, HIGH);
+//   delay(10);
+//   if (mod.write(phos, sizeof(phos)) == 8) {  
+//     digitalWrite(DE, LOW);
+//     digitalWrite(RE, LOW);
+//     for (byte i = 0; i < 7; i++) {
+//       values[i] = mod.read();
+//     }
+//   }
+//   return values[4];  
+// }
+
+// byte potassium() {
+//   digitalWrite(DE, HIGH);
+//   digitalWrite(RE, HIGH);
+//   delay(10);
+//   if (mod.write(pota, sizeof(pota)) == 8) {  
+//     digitalWrite(DE, LOW);
+//     digitalWrite(RE, LOW);
+//     for (byte i = 0; i < 7; i++) {
+//       values[i] = mod.read();
+//     }
+//   }
+//   return values[4];  
+// }
 
 
 
