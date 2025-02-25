@@ -5,15 +5,18 @@ import PageLoader from '../../components/loader/LinearLoader';
 import '../../styles/Homepage.css';
 import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
-import SnackbarComponent from '../../components/Snackbar/SnackbarComponent';
+// import SnackbarComponent from '../../components/Snackbar/SnackbarComponent';
 import { Stack } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
+import { signedIn } from '../../utils/toast';
 
 const Dashboard = () => {
   const user = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    signedIn();
+
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -25,7 +28,7 @@ const Dashboard = () => {
   return (
     <>
       <Stack p={2.7}>
-        <SnackbarComponent />
+        {/* <SnackbarComponent /> */}
         <SystemStatus />
         <RealTimeMonitor />
         <ControlCenter />

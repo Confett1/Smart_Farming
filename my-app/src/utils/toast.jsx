@@ -32,7 +32,7 @@ export const toast = (text, title, icon) =>
    export const signedIn = () => {
     const Toast = swal.mixin({
       toast: true,
-      position: "top-end",
+      position: "bottom-end",
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
