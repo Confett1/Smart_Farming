@@ -155,6 +155,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { Divider } from '@mui/material';
 import IconifyIcon from '../../../components/base/IconifyIcon';
 import PropTypes from 'prop-types';
+import bomel from '../../../assets/images/bomel.jpg'
 
 const menuItems = [
   {
@@ -210,14 +211,14 @@ const ProfileMenu = ( {userProfile} ) => {
         disableRipple
       >
         <Avatar
-          src={userProfile}
+          src={userProfile?.userProfile ? userProfile.userProfile : bomel}
           sx={{
             height: 44,
             width: 44,
             bgcolor: '',
           }}
         />
-       <Typography variant='body2' pl={1}>John Lee Indino</Typography>
+       <Typography variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography>
        <IconifyIcon sx={{ fontSize: 30, ml: -0.6 }} icon={open ? 'material-symbols-light:arrow-drop-up-rounded' : 'material-symbols-light:arrow-drop-down-rounded'} />
       </ButtonBase>
 
@@ -245,13 +246,13 @@ const ProfileMenu = ( {userProfile} ) => {
       >
         <Box p={1}>
           <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { borderRadius: 3 } }}>
-            <Avatar src={userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
+            <Avatar src={userProfile?.userProfile ? userProfile.userProfile : bomel} sx={{ mr: 1, height: 42, width: 42 }} />
             <Stack direction="column">
               <Typography variant="body2" color="text.primary" fontWeight={600}>
-                MAIN ADMIN
+                {userProfile.firstName} {userProfile.lastName}
               </Typography>
               <Typography variant="caption" color="text.secondary" fontWeight={400}>
-                johndoe@gmail.com
+                {userProfile.email}
               </Typography>
             </Stack>
           </MenuItem>

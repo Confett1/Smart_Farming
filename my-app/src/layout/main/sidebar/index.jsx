@@ -2,14 +2,19 @@ import { NavLink } from "react-router-dom";
 import '../../../styles/Sidebar.css'
 import { Divider, Typography } from "@mui/material";
 import PropTypes from "prop-types";
+import bomel from '../../../assets/images/bomel.jpg'
+import { useEffect } from "react";
 
 const Sidebar = ({userProfile}) => {
-  return (
+  useEffect(() => {
+    
+  })
+  return (  
     <>
       <aside className="sidebar">
         <div className="flex flex-col items-center">
           <div className="w-[80px] h-[80px] overflow-hidden mx-auto rounded-full border-1">
-            <img src={userProfile} alt="Admin" id="adminAvatar" className="object-cover w-full h-full" />
+            <img src={userProfile?.userProfile ? userProfile.userProfile : bomel} alt="Admin" id="adminAvatar" onError={(e) => { e.target.src = bomel; }} className="object-cover w-full h-full" />
           </div>
           <Typography
             sx={{
@@ -19,7 +24,7 @@ const Sidebar = ({userProfile}) => {
               opacity: 0.9
             }}
           >
-            ADMINISTRATOR
+            {userProfile.role.toUpperCase()}
           </Typography>
           <Typography 
             sx={{
@@ -28,7 +33,7 @@ const Sidebar = ({userProfile}) => {
               opacity: 0.9
             }}
           >
-            Main Admin
+            {userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}
           </Typography>
           {/* <span className="admin-status online">Online</span> */}
         </div>
@@ -51,7 +56,7 @@ const Sidebar = ({userProfile}) => {
             <span>Chart</span>
           </NavLink>
           <NavLink to="/waterlevel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            <i class="fa-solid fa-sliders"></i>
+            <i className="fa-solid fa-sliders"></i>
             <span>Control Panel</span>
           </NavLink>
           <NavLink to="/records" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>

@@ -3,13 +3,19 @@ import Header from "./header";
 import '../../styles/Header.css';
 import PropTypes from 'prop-types';
 import { Stack } from "@mui/material";
-import ProfileImage from '../../assets/images/john lee.jpg';
+import useAuth from "../../hooks/useAuth";
 
 const Main = ({ children }) => {
+    const user = useAuth();
+
+    if (!user) {
+        return null;
+    }
+
     return (
         <>
-            <Sidebar userProfile={ProfileImage} />
-            <Header userProfile={ProfileImage} />
+            <Sidebar userProfile={user} />
+            <Header userProfile={user} />
             <Stack
                 sx={{
                     ml: {

@@ -20,9 +20,6 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        localStorage.setItem('user', JSON.stringify({ name: 'John Doe', role: 'user' }));
-        navigate('/');
-
         if (!userCredentials.username || !userCredentials.password) {
             // alert("Please enter both username and password.");
             toast("Please enter both username and password.", "", "error");
