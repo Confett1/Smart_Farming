@@ -5,10 +5,8 @@ import Footer from '../../layout/main/footer';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import IrrigationComponent from '../../components/sections/Irrigation';
 import { Stack } from '@mui/material';
-import useAuth from '../../hooks/useAuth';
 
 const WaterLevel = () => {
-  const user = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

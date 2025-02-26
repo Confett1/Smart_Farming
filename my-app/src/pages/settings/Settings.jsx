@@ -5,10 +5,8 @@ import Footer from '../../layout/main/footer';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import { Stack } from '@mui/material';
 import SettingsComponent from '../../components/sections/Settings';
-import useAuth from '../../hooks/useAuth';
 
 const Settings = () => {
-    const user = useAuth();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
