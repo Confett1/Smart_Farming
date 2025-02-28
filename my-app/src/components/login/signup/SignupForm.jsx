@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../../../api/api";
+import PropTypes from "prop-types";
 
 const SignupForm = ({onSignupSuccess}) => {
     const [userDetails, setUserDetails] = useState({
@@ -85,5 +86,9 @@ const SignupForm = ({onSignupSuccess}) => {
           </form>
     );
 }
+
+SignupForm.propTypes = {
+  onSignupSuccess: PropTypes.func.isRequired,
+};
 
 export default SignupForm;
