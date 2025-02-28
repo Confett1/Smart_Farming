@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-const Modal = ({ isOpen, onClose, title, children }) => {
+const Modal = ({ isOpen, onClose, onSave, title, children }) => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                             >
                                 Close
                             </button>
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn btn-primary" onClick={onSave}>
                                 Save changes
                             </button>
                         </div>
@@ -79,6 +79,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 Modal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
 };
