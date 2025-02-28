@@ -288,7 +288,6 @@ const SignupForm = () => {
                 required
               />
             </div>
-            
             {/* <div className="w-full pl-2 pt-2">
               <label htmlFor="password" className="block text-xs font-normal text-[#6c746c]">Password</label>
               <input
