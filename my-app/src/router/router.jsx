@@ -3,7 +3,8 @@ import { lazy, Suspense } from "react";
 import PageLoader from "../components/loader/MainLoader";
 import Main from "../layout/main/index";
 import AuthLayout from "../layout/auth-layout";
-import Login from "../pages/authentication/login/Login";
+import Login from "../pages/authentication/Login";
+import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
@@ -58,6 +59,14 @@ const Router = () => {
             element={
               <AuthLayout>
                   <Login />
+              </AuthLayout>
+            } />
+
+<Route
+            path="/register"
+            element={
+              <AuthLayout>
+                  <Signup />
               </AuthLayout>
             } />
 

@@ -142,7 +142,6 @@
 
 
 
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -155,7 +154,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { Divider } from '@mui/material';
 import IconifyIcon from '../../../components/base/IconifyIcon';
 import PropTypes from 'prop-types';
-import bomel from '../../../assets/images/bomel.jpg'
+import { useState } from 'react';
 
 const menuItems = [
   {
@@ -211,7 +210,7 @@ const ProfileMenu = ( {userProfile} ) => {
         disableRipple
       >
         <Avatar
-          src={userProfile?.userProfile ? userProfile.userProfile : bomel}
+          src={userProfile?.userProfile ? userProfile.userProfile : userProfile}
           sx={{
             height: 44,
             width: 44,
@@ -246,7 +245,7 @@ const ProfileMenu = ( {userProfile} ) => {
       >
         <Box p={1}>
           <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { borderRadius: 3 } }}>
-            <Avatar src={userProfile?.userProfile ? userProfile.userProfile : bomel} sx={{ mr: 1, height: 42, width: 42 }} />
+            <Avatar src={userProfile?.userProfile ? userProfile.userProfile : userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
             <Stack direction="column">
               <Typography variant="body2" color="text.primary" fontWeight={600}>
                 {userProfile.firstName} {userProfile.lastName}
