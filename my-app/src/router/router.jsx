@@ -7,6 +7,7 @@ import Login from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
 import NotificationPage from "../pages/NotificationPage/NotificationPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
@@ -59,6 +60,14 @@ const Router = () => {
             element={
               <Main>
                 <NotificationPage />
+              </Main>
+            } />
+
+          <Route
+            path="/profile"
+            element={
+              <Main>
+                <ProfilePage />
               </Main>
             } />
 
