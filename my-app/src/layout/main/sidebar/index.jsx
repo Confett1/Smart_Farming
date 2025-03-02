@@ -24,7 +24,7 @@ const Sidebar = ({userProfile}) => {
               opacity: 0.9
             }}
           >
-            {userProfile.role}
+            {(userProfile.role).toUpperCase()}
           </Typography>
           <Typography 
             sx={{

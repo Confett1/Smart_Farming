@@ -1,22 +1,60 @@
 import { useEffect, useState } from "react";
 import PageLoader from "../../../loader/PageLoader";
+import API from "../../../../api/api";
 
 const WeatherForecast = () => {
     const [weatherData, setWeatherData] = useState(null);
     const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
-        const fetchWeatherData = async () => {
-            const city = 'Catarman'; // You can dynamically change this
-            const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApi}&units=metric`; // Include the units for temperature in °C
+            const fetchWeatherData = async () => {
+                try {
+                    const city = 'Catarman'; // You can dynamically change this
+                    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApi}&units=metric`; // Include the units for temperature in °C
+        
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    setWeatherData(data);
+                    
+                    const humidity = data.main.humidity;
+                    let newNotification = null;
 
-            const response = await fetch(url);
-            const data = await response.json();
-            setWeatherData(data);
-        };
+                    if (humidity >= 90) {
+                        newNotification = {
+                            title: "Extreme Humidity Alert!",
+                            messageBody: "Humidity has reached 95%, significantly increasing the chance of rain. Be prepared!",
+                            type: "Alert"
+                        };
+                    } else if (humidity >= 80) {
+                        newNotification = {
+                            title: "High Humidity Warning",
+                            messageBody: "Humidity is at 80%. Please monitor conditions.",
+                            type: "Warning"
+                        };
+                    } 
 
+                    if (newNotification) {
+                        setNotification(newNotification);
+                        notifyAdmins(newNotification);
+                    }
+                        
+                } catch (error) {
+                    console.error("Error fetching weather data: ", error);
+                    
+                }
+            }
+        
         fetchWeatherData();
     }, [openWeatherApi]);
+
+    const notifyAdmins = async (notificationData) => {
+        try {
+            await API.post("/notifications", notificationData)
+        } catch(error) {
+            console.error("Error sending notification: ", error);            
+        }
+    }
 
     if (!weatherData) {
         return <div className="-ml-[300px]"><PageLoader /></div>;
