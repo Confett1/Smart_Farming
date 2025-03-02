@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Typography } from "@mui/material";
+import {Link} from "react-router-dom"
 
 const Notifications = () => {
     const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -67,7 +68,7 @@ const Notifications = () => {
                         </div>
                     </div>
                     <div className="notification-footer">
-                        <a href="#" className="view-all text-xs">View All Notifications</a>
+                        <Link to="/notifications" className="view-all text-xs">View All Notifications</Link>
                         <span className="text-xs">5 unread notifications</span>
                     </div>
                 </div>

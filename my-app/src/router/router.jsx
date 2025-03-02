@@ -6,6 +6,7 @@ import AuthLayout from "../layout/auth-layout";
 import Login from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
+import NotificationPage from "../pages/NotificationPage/NotificationPage";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
@@ -53,6 +54,13 @@ const Router = () => {
               </Main>
             } />
 
+          <Route
+            path="/notifications"
+            element={
+              <Main>
+                <NotificationPage />
+              </Main>
+            } />
 
           <Route
             path="/login"
