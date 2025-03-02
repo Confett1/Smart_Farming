@@ -8,7 +8,7 @@ import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
-const WaterLevel = lazy(() => import("../pages/water-level/WaterLevel"));
+const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
 const Chart = lazy(() => import("../pages/chart/Chart"));
 const Records = lazy(() => import("../pages/records/Records"));
 const Settings = lazy(() => import("../pages/settings/Settings"));
@@ -25,10 +25,10 @@ const Router = () => {
                 <Dashboard />
               </Main>} />
           <Route
-            path="/waterlevel"
+            path="/control-panel"
             element={
               <Main>
-                <WaterLevel />
+                <ControlPanel />
               </Main>
             } />
           <Route

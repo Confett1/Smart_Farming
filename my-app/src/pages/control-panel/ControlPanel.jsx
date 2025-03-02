@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import '../../styles/Water Level.css'
+import '../../styles/Homepage.css'
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
-import IrrigationComponent from '../../components/sections/Irrigation';
+import IrrigationComponent from '../../components/sections/ControlPanel';
 import { Stack } from '@mui/material';
 
 const WaterLevel = () => {
