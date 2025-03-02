@@ -6,9 +6,11 @@ import AuthLayout from "../layout/auth-layout";
 import Login from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
+import NotificationPage from "../pages/NotificationPage/NotificationPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
-const WaterLevel = lazy(() => import("../pages/water-level/WaterLevel"));
+const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
 const Chart = lazy(() => import("../pages/chart/Chart"));
 const Records = lazy(() => import("../pages/records/Records"));
 const Settings = lazy(() => import("../pages/settings/Settings"));
@@ -25,10 +27,10 @@ const Router = () => {
                 <Dashboard />
               </Main>} />
           <Route
-            path="/waterlevel"
+            path="/control-panel"
             element={
               <Main>
-                <WaterLevel />
+                <ControlPanel />
               </Main>
             } />
           <Route
@@ -53,6 +55,21 @@ const Router = () => {
               </Main>
             } />
 
+          <Route
+            path="/notifications"
+            element={
+              <Main>
+                <NotificationPage />
+              </Main>
+            } />
+
+          <Route
+            path="/profile"
+            element={
+              <Main>
+                <ProfilePage />
+              </Main>
+            } />
 
           <Route
             path="/login"

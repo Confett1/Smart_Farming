@@ -1,11 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import GeneralSettings from "./GeneralSettings"
+import FarmSettings from "./FarmSettings"
+import SecuritySettings from "./Security"
+import NotificationSettings from "./NotificationSettings"
 
 const SettingsContent = () => {
   const [formData, setFormData] = useState({
-    notifications: true,
-    darkMode: false,
+    notifications: "",
+    darkMode: "",
     units: "metric",
     syncFrequency: "15",
     email: "",
@@ -30,50 +34,18 @@ const SettingsContent = () => {
   }
 
   return (
-    <div className="settings-container">
-      <form onSubmit={handleSubmit} className="settings-grid">
-        {/* General Settings */}
-        <div className="settings-card">
-          <div className="card-header">
-            <h3>🔔 General Settings</h3>
-            <p className="card-description">Manage your general preferences</p>
-          </div>
-          <div className="card-content">
-            <div className="setting-item">
-              <div className="setting-info">
-                <label htmlFor="notifications">Notifications</label>
-                <span className="setting-description">Receive notifications about important updates</span>
-              </div>
-              <input
-                type="checkbox"
-                id="notifications"
-                name="notifications"
-                checked={formData.notifications}
-                onChange={handleChange}
-                className="toggle-switch"
-              />
-            </div>
-            <div className="setting-item">
-              <div className="setting-info">
-                <label htmlFor="darkMode">Dark Mode</label>
-                <span className="setting-description">Enable dark mode for better viewing at night</span>
-              </div>
-              <input
-                type="checkbox"
-                id="darkMode"
-                name="darkMode"
-                checked={formData.darkMode}
-                onChange={handleChange}
-                className="toggle-switch"
-              />
-            </div>
-          </div>
-        </div>
+    <div>
+      <form onSubmit={handleSubmit} className="grid grid-cols-[1fr,1fr] gap-2.5">
+        <GeneralSettings formData={formData.notifications} handleChange={handleChange}  />
+        <FarmSettings />
+        <SecuritySettings />
+        <NotificationSettings />
+
 
         {/* Farm Settings */}
-        <div className="settings-card">
-          <div className="card-header">
-            <h3>🚜 Farm Settings</h3>
+        {/* <div className="settings-card">
+          <div className="m-4 border-b border-gray-100">
+            <h3 className="text-lg">🚜 Farm Settings</h3>
             <p className="card-description">Configure your farm preferences</p>
           </div>
           <div className="card-content">
@@ -104,12 +76,12 @@ const SettingsContent = () => {
               </select>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Security & Privacy */}
-        <div className="settings-card">
-          <div className="card-header">
-            <h3>🔒 Security & Privacy</h3>
+        {/* <div className="settings-card">
+          <div className="m-4 border-b border-gray-100">
+            <h3 className="text-lg">🔒 Security & Privacy</h3>
             <p className="card-description">Manage your security settings</p>
           </div>
           <div className="card-content">
@@ -160,12 +132,12 @@ const SettingsContent = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Notification Preferences */}
-        <div className="settings-card">
-          <div className="card-header">
-            <h3>📧 Notification Preferences</h3>
+        {/* <div className="settings-card">
+          <div className="m-4 border-b border-gray-100">
+            <h3 className="text-lg">📧 Notification Preferences</h3>
             <p className="card-description">Configure how you receive notifications</p>
           </div>
           <div className="card-content">
@@ -204,7 +176,7 @@ const SettingsContent = () => {
           <button type="submit" className="submit-button">
             Save Changes
           </button>
-        </div>
+        </div> */}
       </form>
     </div>
   )

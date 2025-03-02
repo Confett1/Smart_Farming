@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef} from "react";
 import { Typography } from "@mui/material";
+import {Link} from "react-router-dom"
 import API from "../../../api/api";
 import PropTypes from "prop-types";
 import { toastConfirm } from "../../../utils/toast";
@@ -142,7 +143,7 @@ const Notifications = ( {userProfile} ) => {
                         )}
                     </div>
                     <div className="notification-footer">
-                        <a href="#" className="view-all text-xs">View All Notifications</a>
+                        <Link to="/notifications" className="view-all text-xs">View All Notifications</Link>
                         <span className="text-xs">{notifications.length} notifications</span>
                     </div>
                 </div>

@@ -55,7 +55,7 @@ const Sidebar = ({userProfile}) => {
             <i className="fas fa-chart-line"></i>
             <span>Chart</span>
           </NavLink>
-          <NavLink to="/waterlevel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+          <NavLink to="/control-panel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             <i className="fa-solid fa-sliders"></i>
             <span>Control Panel</span>
           </NavLink>
