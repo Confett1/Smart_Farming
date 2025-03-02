@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ControlCenter from '../../components/sections/Dashboard/control-center';
 import SystemStatus from '../../components/sections/Dashboard/system-status';
 import PageLoader from '../../components/loader/LinearLoader';
 import '../../styles/Homepage.css';
@@ -29,7 +28,6 @@ const Dashboard = () => {
       <Stack p={2.7}>
         <SystemStatus />
         <RealTimeMonitor />
-        <ControlCenter />
       </Stack>
       <Footer />
     </>
