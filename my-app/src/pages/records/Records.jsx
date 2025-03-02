@@ -7,6 +7,7 @@ import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import { Stack } from '@mui/material';
 import RecordsComponent from '../../components/sections/Records';
 import API from '../../api/api';
+import { toast } from '../../utils/toast';
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +27,12 @@ const Records = () => {
                 duration: "",
                 status: "",
             })
+
+            toast("You successfully added a new record", "Added New Record", "success");
         } catch (error) {
             console.error("Error adding record: ", error);
+
+            toast("Failed to add new record", "", "error");
         }
         closeModal();
     };

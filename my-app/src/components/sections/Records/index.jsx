@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import RecordsContent from "./RecordsData";
+import RecordsContent from "./Table";
 
 const RecordsComponent = ({ openModal }) => {
     return (

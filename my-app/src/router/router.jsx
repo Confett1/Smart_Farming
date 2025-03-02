@@ -16,66 +16,66 @@ const Settings = lazy(() => import("../pages/settings/Settings"));
 const Router = () => {
   return (
     <>
-      <Suspense fallback={ <PageLoader /> }>
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route
             path="/"
             element={
               <Main>
-                  <Dashboard />
+                <Dashboard />
               </Main>} />
           <Route
             path="/waterlevel"
             element={
               <Main>
-                  <WaterLevel />
+                <WaterLevel />
               </Main>
             } />
           <Route
             path="/chart"
             element={
               <Main>
-                  <Chart />
+                <Chart />
               </Main>
             } />
           <Route
             path="/records"
             element={
               <Main>
-                  <Records />
+                <Records />
               </Main>
             } />
           <Route
             path="/settings"
             element={
               <Main>
-                  <Settings />
+                <Settings />
               </Main>
             } />
 
 
-            <Route
+          <Route
             path="/login"
             element={
               <AuthLayout>
-                  <Login />
+                <Login />
               </AuthLayout>
             } />
 
-<Route
+          <Route
             path="/register"
             element={
               <AuthLayout>
-                  <Signup />
+                <Signup />
               </AuthLayout>
             } />
 
-            <Route
-              path="*"
-              element={
-                <NotFound />
-              }
-            />
+          <Route
+            path="*"
+            element={
+              <NotFound />
+            }
+          />
         </Routes>
       </Suspense>
     </>

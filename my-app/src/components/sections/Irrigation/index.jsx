@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import IrrigationContent from "./IrrigationData";
+import PageLoader from "../../loader/PageLoader";
 
 const IrrigationComponent = () => {
     const [weatherData, setWeatherData] = useState(null);
@@ -21,7 +22,7 @@ const IrrigationComponent = () => {
     }, [openWeatherApi]);
 
     if (!weatherData) {
-        return <div>Loading...</div>;
+        return <div className="-ml-[300px]"><PageLoader /></div>;
     }
     return (
         <>

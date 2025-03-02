@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const Sidebar = ({userProfile}) => {
   useEffect(() => {
-    
+    console.log(userProfile)
   })
   return (  
     <>
@@ -24,7 +24,7 @@ const Sidebar = ({userProfile}) => {
               opacity: 0.9
             }}
           >
-            {userProfile.role.toUpperCase()}
+            {userProfile.role}
           </Typography>
           <Typography 
             sx={{

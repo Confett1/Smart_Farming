@@ -54,6 +54,9 @@ const Modal = ({ isOpen, onClose, onSave, title, children }) => {
                             {children}
                         </div>
                         <div className="modal-footer">
+                            <button type="button" className="btn btn-success" onClick={onSave}>
+                                Save
+                            </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
@@ -61,9 +64,6 @@ const Modal = ({ isOpen, onClose, onSave, title, children }) => {
                                 onClick={onClose}
                             >
                                 Close
-                            </button>
-                            <button type="button" className="btn btn-primary" onClick={onSave}>
-                                Save changes
                             </button>
                         </div>
                     </div>
