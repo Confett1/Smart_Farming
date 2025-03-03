@@ -144,7 +144,7 @@ const Notifications = ( {userProfile} ) => {
                     </div>
                     <div className="notification-footer">
                         <Link to="/notifications" className="view-all text-xs">View All Notifications</Link>
-                        <span className="text-xs">{notifications.length} notifications</span>
+                        <span className="text-xs">{notifications.filter(notification => !notification.isRead).length} unread notifications</span>
                     </div>
                 </div>
             )}

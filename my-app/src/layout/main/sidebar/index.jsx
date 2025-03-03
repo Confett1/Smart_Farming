@@ -8,7 +8,8 @@ import { useEffect } from "react";
 const Sidebar = ({userProfile}) => {
   useEffect(() => {
     console.log(userProfile)
-  })
+  }, [userProfile])
+
   return (  
     <>
       <aside className="sidebar">
@@ -33,7 +34,7 @@ const Sidebar = ({userProfile}) => {
               opacity: 0.9
             }}
           >
-            {userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}
+            {`${userProfile.firstName || ''} ${userProfile.middleName || ''} ${userProfile.lastName || ''} ${userProfile.suffix || ''}`}
           </Typography>
           {/* <span className="admin-status online">Online</span> */}
         </div>
@@ -45,6 +46,7 @@ const Sidebar = ({userProfile}) => {
             mb: -2.5
           }}
         />
+        
         <nav className="sidebar-nav text-sm">
           <Typography fontSize={12} textAlign={'left'} sx={{opacity: 0.9, pb: 1}}>MENU</Typography>
           <NavLink to="/" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
@@ -55,14 +57,18 @@ const Sidebar = ({userProfile}) => {
             <i className="fas fa-chart-line"></i>
             <span>Chart</span>
           </NavLink>
-          <NavLink to="/control-panel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            <i className="fa-solid fa-sliders"></i>
-            <span>Control Panel</span>
-          </NavLink>
-          <NavLink to="/records" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            <i className="fas fa-history"></i>
-            <span>Records</span>
-          </NavLink>
+          {userProfile.role === "admin" && (
+            <>
+              <NavLink to="/control-panel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+              <i className="fa-solid fa-sliders"></i>
+              <span>Control Panel</span>
+              </NavLink>
+              <NavLink to="/records" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+                <i className="fas fa-history"></i>
+                <span>Records</span>
+              </NavLink>
+            </>
+          ) }
           <NavLink to="/settings" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             <i className="fas fa-cog"></i>
             <span>Settings</span>

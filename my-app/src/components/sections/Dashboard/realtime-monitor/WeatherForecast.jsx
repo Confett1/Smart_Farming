@@ -23,14 +23,14 @@ const WeatherForecast = () => {
                     if (humidity >= 90) {
                         newNotification = {
                             title: "Extreme Humidity Alert!",
-                            messageBody: "Humidity has reached 95%, significantly increasing the chance of rain. Be prepared!",
-                            type: "Alert"
+                            messageBody: `Humidity has reached ${humidity}%, significantly increasing the chance of rain. Be prepared!`,
+                            type: "alert"
                         };
                     } else if (humidity >= 80) {
                         newNotification = {
                             title: "High Humidity Warning",
-                            messageBody: "Humidity is at 80%. Please monitor conditions.",
-                            type: "Warning"
+                            messageBody: `Humidity is at ${humidity}%. Please monitor conditions.`,
+                            type: "warning"
                         };
                     } 
 

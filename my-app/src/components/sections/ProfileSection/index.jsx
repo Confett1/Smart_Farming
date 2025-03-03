@@ -1,7 +1,10 @@
 import { FaFacebook, FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa';
-import userProfile from "../../../assets/images/bomel.jpg"
+import profilePic from "../../../assets/images/bomel.jpg"
+import PropTypes from 'prop-types';
 
-const Profile = () => {
+const Profile = ({profile}) => {
+  console.log(profile);
+  
   return (
     <div className="min-h-screen">
       {/* Main Profile Card */}
@@ -10,7 +13,7 @@ const Profile = () => {
         <div className="relative">
           <div className="w-full h-56 bg-gradient-to-r from-indigo-600 to-indigo-800 rounded-t-xl">
             <img
-              src={userProfile}
+              src={profile?.userProfile || profilePic}
               alt="Profile Banner"
               className="w-full h-full object-cover rounded-t-xl"
             />
@@ -19,7 +22,7 @@ const Profile = () => {
           <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 flex justify-center">
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
               <img
-                src={userProfile}
+                src={profile.userProfile? profile.userProfile : profilePic}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -29,7 +32,7 @@ const Profile = () => {
 
         {/* Profile Info */}
         <div className="px-8 py-6 text-center">
-          <h2 className="text-2xl font-semibold text-gray-800">Bomel Morado</h2>
+          <h2 className="text-2xl font-semibold text-gray-800">{`${profile.firstName} ${profile.middleName || ''} ${profile.lastName} ${profile.suffix || ''}`}</h2>
           <p className="text-gray-600 text-sm">Software Developer</p>
 
           {/* Social Links */}
@@ -56,10 +59,10 @@ const Profile = () => {
             <div className="border border-gray-300 p-6 rounded-xl">
               <h3 className="text-lg font-semibold text-gray-800">Personal Information</h3>
               <div className="mt-4 text-gray-600 text-sm leading-6.5">
-                <p><span className='font-semibold'>First Name:</span> Bomel</p>
-                <p><span className='font-semibold'>Last Name:</span> Morado</p>
-                <p><span className='font-semibold'>Email:</span> sample@example.com</p>
-                <p><span className='font-semibold'>Phone:</span> +1 (234) 567-890</p>
+                <p><span className='font-semibold'>First Name:</span> {profile.firstName}</p>
+                <p><span className='font-semibold'>Last Name:</span> {profile.lastName}</p>
+                <p><span className='font-semibold'>Email:</span> {profile.email}</p>
+                <p><span className='font-semibold'>Phone:</span>+1 (234) 567-890</p>
                 <p><span className='font-semibold'>Location:</span> Pambujan, Northern Samar</p>
               </div>
             </div>
@@ -111,5 +114,9 @@ const Profile = () => {
     </div>
   );
 };
+
+Profile.propTypes = {
+  profile: PropTypes.any.isRequired
+}
 
 export default Profile;

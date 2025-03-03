@@ -7,6 +7,7 @@ import Profile from "../../components/sections/ProfileSection";
 
 const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const profile = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
     
@@ -22,7 +23,7 @@ const ProfilePage = () => {
         <>
             <Stack p={2.7}>
                 <Breadcrumb PageName={"Profile"} />
-                <Profile />
+                <Profile profile={profile} />
             </Stack>
             <Footer />
         </>

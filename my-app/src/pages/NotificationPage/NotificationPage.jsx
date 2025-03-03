@@ -7,6 +7,7 @@ import PageLoader from '../../components/loader/LinearLoader';
 
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const profile = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
     
@@ -22,7 +23,7 @@ const NotificationPage = () => {
         <>
             <Stack p={2.7}>
                 <Breadcrumb PageName={"Notification"} />
-                <Notifications />
+                <Notifications profile={profile} />
             </Stack>
             <Footer />
         </>
