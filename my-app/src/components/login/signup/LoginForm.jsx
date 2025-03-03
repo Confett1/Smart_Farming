@@ -67,9 +67,17 @@
 
 
 import { useState } from "react";
-import API from "../../../api/api";
+// import API from "../../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../../utils/toast";
+
+const login = [
+  {
+    username: "user1",
+    password: "pass123",
+    role: "user"
+  }
+]
 
 const LoginForm = () => {
       const navigate = useNavigate();
@@ -93,14 +101,19 @@ const LoginForm = () => {
             toast("Please enter both username and password.", "", "error");
             // return;
         } else {
-            try {
-                const response = await API.post('/user/login', userCredentials);
-                localStorage.setItem("user", JSON.stringify(response.data));
-                alert(`Login Successful, welcome ${response.data.firstName}`);
-                navigate('/');
-            } catch (error) {
-                console.error("Login Failed", error);
-                alert(error.response?.data || "Login Failed!");
+            // try {
+            //     const response = await API.post('/user/login', userCredentials);
+            //     localStorage.setItem("user", JSON.stringify(response.data));
+            //     alert(`Login Successful, welcome ${response.data.firstName}`);
+            //     navigate('/');
+            // } catch (error) {
+            //     console.error("Login Failed", error);
+            //     alert(error.response?.data || "Login Failed!");
+            // }
+
+            if (userCredentials.username == "user1" && userCredentials.password == "pass123") {
+              localStorage.setItem("user", JSON.stringify(login));
+              navigate('/');
             }
         }
     }
@@ -137,7 +150,12 @@ const LoginForm = () => {
           id="password" 
           className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"/>
 
-        <button type="submit" className="mt-[15px] w-full py-2 border bg-[#45c44b] text-[#f0f0f0] text-lg font-semibold rounded-full cursor-pointer duration-300 hover:bg-green-400 hover:duration-300">Log In</button>
+        <button 
+          type="submit" 
+          className="mt-[15px] w-full py-2 border bg-[#45c44b] text-[#f0f0f0] text-md font-semibold rounded-full cursor-pointer duration-300 hover:bg-green-400 hover:duration-300"
+        >
+          Login
+          </button>
         
         <div className="text-xs text-center mt-6 -mb-4">
           <p>Dont have an account yet?
