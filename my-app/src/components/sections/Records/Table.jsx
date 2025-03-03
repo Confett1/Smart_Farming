@@ -246,11 +246,11 @@ export default function RecordTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = selected.includes(row.id);
+                const isItemSelected = selected.includes(row.recordId);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow hover onClick={(event) => handleClick(event, row.id)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.id} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
+                  <TableRow hover onClick={(event) => handleClick(event, row.recordId)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.recordId} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
                     <TableCell padding="checkbox">
                       <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                     </TableCell>
