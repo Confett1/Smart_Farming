@@ -8,6 +8,7 @@ import Signup from "../pages/authentication/Register";
 import NotFound from "../pages/not-found/NotFound";
 import NotificationPage from "../pages/NotificationPage/NotificationPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import ProfileEditPage from "../pages/ProfilePage/ProfileEditPage";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
@@ -68,6 +69,14 @@ const Router = () => {
             element={
               <Main>
                 <ProfilePage />
+              </Main>
+            } />
+
+          <Route
+            path="/profile/edit"
+            element={
+              <Main>
+                <ProfileEditPage />
               </Main>
             } />
 

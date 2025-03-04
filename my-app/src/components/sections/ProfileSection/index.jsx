@@ -1,9 +1,21 @@
 import { FaFacebook, FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa';
 import profilePic from "../../../assets/images/bomel.jpg"
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = ({profile}) => {
   console.log(profile);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  const handleEdit = () => {
+    navigate('/profile/edit');
+  };
+  
   
   return (
     <div className="min-h-screen">
@@ -62,8 +74,8 @@ const Profile = ({profile}) => {
                 <p><span className='font-semibold'>First Name:</span> {profile.firstName}</p>
                 <p><span className='font-semibold'>Last Name:</span> {profile.lastName}</p>
                 <p><span className='font-semibold'>Email:</span> {profile.email}</p>
-                <p><span className='font-semibold'>Phone:</span>+1 (234) 567-890</p>
-                <p><span className='font-semibold'>Location:</span> Pambujan, Northern Samar</p>
+                <p><span className='font-semibold'>Phone:</span> {profile.phoneNumber || ''}</p>
+                <p><span className='font-semibold'>Location:</span> Brgy {profile.barangay || ''} {profile.municipality || ''}, {profile.province || ''} </p>
               </div>
             </div>
 
@@ -72,8 +84,7 @@ const Profile = ({profile}) => {
               <h3 className="text-lg font-semibold text-gray-800">About</h3>
               <div className="mt-2 text-gray-600 text-sm">
                 <p>
-                  I'm a software developer with a passion for building user-friendly web
-                  applications. I specialize in frontend development with React and Tailwind CSS.
+                  {profile.bio || "No bio yet."}
                 </p>
               </div>
             </div>
@@ -100,16 +111,16 @@ const Profile = ({profile}) => {
         </div> */}
 
         {/* Settings & Actions */}
-        {/* <div className="px-8 py-6 bg-gray-100 rounded-b-xl">
+         <div className="px-8 py-6 bg-gray-100 rounded-b-xl">
           <div className="flex justify-between">
-            <button className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">
+            <button className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all" onClick={() => handleEdit()}>
               Edit Profile
             </button>
-            <button className="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition-all">
+            <button className="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition-all" onClick={() => handleLogOut()}>
               Logout
             </button>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
