@@ -4,9 +4,16 @@ import UserRecords from "../../components/sections/UserRecords";
 import Footer from "../../layout/main/footer";
 import { useEffect, useState } from "react";
 import LinearLoader from "../../components/loader/LinearLoader";
+import { useNavigate } from "react-router-dom";
 
 const UserRecordsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+  
+    if (user.role !== 'admin') {
+      navigate('/login');
+    }
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 1000);

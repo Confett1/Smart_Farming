@@ -9,6 +9,7 @@ import RecordsComponent from '../../components/sections/Records';
 import API from '../../api/api';
 import { toast } from '../../utils/toast';
 import { TextField } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +19,12 @@ const Records = () => {
         duration: "",
         status: "",
     });
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+  
+    if (user.role !== 'admin') {
+      navigate('/login');
+    }
 
     const addRecord = async () => {
         try {
