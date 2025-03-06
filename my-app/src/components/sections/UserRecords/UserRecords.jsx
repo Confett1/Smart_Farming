@@ -19,30 +19,10 @@ import { visuallyHidden } from '@mui/utils';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import PropTypes from 'prop-types';  // Importing PropTypes
-import { FormControlLabel, Switch } from '@mui/material';
+import { FormControlLabel, MenuItem, Switch } from '@mui/material';
 import API from '../../../api/api';
-
-// function createData(id, name, calories, fat, carbs) {
-//   return { id, name, calories, fat, carbs };
-// }
-
-
-
-// const rows = [
-//   createData(1, 'Cupcake', 305, 3.7, 67),
-//   createData(2, 'Donut', 452, 25.0, 51 ),
-//   createData(3, 'Eclair', 262, 16.0, 24),
-//   createData(4, 'Frozen yoghurt', 159, 6.0, 24),
-//   createData(5, 'Gingerbread', 356, 16.0, 49),
-//   createData(6, 'Honeycomb', 408, 3.2, 87),
-//   createData(7, 'Ice cream sandwich', 237, 9.0, 37),
-//   createData(8, 'Jelly Bean', 375, 0.0, 94),
-//   createData(9, 'KitKat', 518, 26.0, 65),
-//   createData(10, 'Lollipop', 392, 0.2, 98),
-//   createData(11, 'Marshmallow', 318, 0, 81),
-//   createData(12, 'Nougat', 360, 19.0, 9),
-//   createData(13, 'Oreo', 437, 18.0, 63),
-// ];
+import { MoreVerticalIcon } from 'lucide-react';
+import { Menu } from '@mui/joy';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -61,10 +41,11 @@ function getComparator(order, orderBy) {
 }
 
 const headCells = [
-  { id: 'activityName', numeric: false, disablePadding: true, label: 'Activity Name' },
-  { id: 'timestamp', numeric: true, disablePadding: false, label: 'Date' },
-  { id: 'duration', numeric: true, disablePadding: false, label: 'Duration' },
-  { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
+  { id: 'userProfile', numeric: false, disablePadding: true, label: 'User Name' },
+  { id: 'dateCreated', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'role', numeric: true, disablePadding: false, label: 'Role' },
+  { id: 'userStatus', numeric: true, disablePadding: false, label: 'Status' },
+  { id: 'action', numeric: true, disablePadding: false, label: 'Action' },
 ];
 
 function EnhancedTableHead(props) {
@@ -127,7 +108,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          RECORDS
+          USERS
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -148,33 +129,106 @@ function EnhancedTableToolbar(props) {
 }
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,  // Adding prop validation
+  numSelected: PropTypes.number.isRequired, 
 };
 
-export default function RecordTable() {
+
+
+export default function UsersRecordTable() {
   const [order, setOrder] = React.useState('desc');
-  const [orderBy, setOrderBy] = React.useState('timestamp');
+  const [orderBy, setOrderBy] = React.useState('userStatus');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [hoveredRow, setHoveredRow] = React.useState(null);
 
   useEffect(() => {
-    const fetchRecordData = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await API.get('/records');
-        setRows(response.data);
+        const response = await API.get('/user');
+        setRows(response.data); 
       } catch (error) {
-        console.error("Error fetching Records", error);
+        console.error("Error fetching User Records", error);
         
       }
     }
-    fetchRecordData();
-
-    const interval = setInterval(fetchRecordData, 10000);
-    return () => clearInterval(interval);
+    fetchUserData();
   }, [])
+
+  const handleMenuOpen = (event, userId) => {
+    setAnchorEl(event.currentTarget);
+    setHoveredRow(userId);
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setHoveredRow(null);
+  };
+
+  const handleAccept = async (userId) => {
+    try {
+    const response = await API.post(`/user/accept/${userId}`);
+    console.log(userId);
+    
+    console.log(response.data);
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.userId === userId ? { ...row, userStatus: 'ACTIVE' } : row
+      )
+    );
+    } catch (err) {
+      console.error("Error acceoting user application: ", err);
+    }
+    handleMenuClose();
+  }
+
+  const handleReject = async (userId) => {
+    try {
+      const response = await API.post(`user/reject/${userId}`);
+      console.log(response.data);
+      setRows((prevRows) =>
+        prevRows.filter((row) =>
+          row.userId !== userId
+        )
+      );
+    } catch (err) {
+      console.error("Error rejecting application: ", err); 
+    }
+    handleMenuClose();
+  }
+  
+  const handleDemote = async (userId) => {
+    try{
+      const response = await API.post(`/user/demote/${userId}`);
+      console.log(response.data);
+      setRows((prevRows) =>
+        prevRows.map((row) =>
+          row.userId === userId ? { ...row, role: 'member' } : row
+        )
+      );
+    } catch (err){
+      console.error("Error promoting user: ", err);
+    }
+    handleMenuClose(); 
+  }
+
+  const handlePromote = async (userId) => {
+    try{
+      const response = await API.post(`/user/promote/${userId}`);
+      console.log(response.data);
+      setRows((prevRows) =>
+        prevRows.map((row) =>
+          row.userId === userId ? { ...row, role: 'admin' } : row
+        )
+      );
+    } catch (err){
+      console.error("Error promoting user: ", err);
+    }
+    handleMenuClose(); 
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -246,20 +300,49 @@ export default function RecordTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = selected.includes(row.recordId);
+                const isItemSelected = selected.includes(row.userId);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow hover onClick={(event) => handleClick(event, row.recordId)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.recordId} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
+                  <TableRow hover onClick={(event) => handleClick(event, row.userId)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.userId} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
                     <TableCell padding="checkbox">
                       <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                     </TableCell>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
-                      {row.activityName}
+                    <TableCell sx={{textTransform: "capitalize"}} component="th" id={labelId} scope="row" padding="none">
+                      {row.lastName}, {row.firstName} {row.suffix || ''} {row.middleName}
                     </TableCell>
-                    <TableCell align="right">{new Date(row.timestamp).toLocaleDateString()}</TableCell>
-                    <TableCell align="right">{row.duration} {row.duration === 1 ? "Minute" : "Minutes"}</TableCell>
-                    <TableCell align="right">{row.status}</TableCell>
+                    <TableCell align="right">{new Date(row.dateCreated).toLocaleDateString()}</TableCell>
+                    <TableCell align="right">{row.role? row.role.toUpperCase() : ''}</TableCell>
+                    <TableCell align="right">{row.userStatus}</TableCell>
+                    <TableCell align="right">
+                      <IconButton 
+                          onMouseEnter={(event) => handleMenuOpen(event, row.userId)}
+                        >
+                          <MoreVerticalIcon />
+                        </IconButton>
+                        <Menu 
+                          anchorEl={hoveredRow === row.userId ? anchorEl : null}
+                          open={Boolean(anchorEl) && hoveredRow === row.userId}
+                          onMouseLeave={handleMenuClose}
+                        >
+                          {row.userStatus === 'PENDING' && (
+                            <>
+                              <MenuItem onClick={() => handleAccept(row.userId)}>Accept</MenuItem>
+                              <MenuItem onClick={() => handleReject(row.userId)}>Reject</MenuItem>
+                            </>
+                          )}
+                          
+                          {row.userStatus === 'ACTIVE' && row.role === 'member'  && (
+                            <MenuItem onClick={() => handlePromote(row.userId)}>Promote to Admin</MenuItem>
+                          )}
+
+                          {row.role === 'admin' && (
+                            <>
+                              <MenuItem onClick={() => handleDemote(row.userId)}>Demote to Member</MenuItem>
+                            </>
+                          )}
+                        </Menu>
+                    </TableCell>
                   </TableRow>
                 );
               })}

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import API from "../../../api/api";
 import PropTypes from "prop-types";
 import { toastConfirm } from "../../../utils/toast";
+import Swal from "sweetalert2";
 
 const Notifications = ( {userProfile} ) => {
     const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -22,13 +23,28 @@ const Notifications = ( {userProfile} ) => {
     };
 
     const deleteNotification = async (notificationId) => {
-        toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning");
+        const result = await toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning");
+        if(result.isConfirmed) {
             try {
                 await API.delete(`/notifications/${notificationId}`);
                 setNotifications((prevNotifications) => prevNotifications.filter(n => n.notificationId !== notificationId));
+                
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "The notification has been deleted.",
+                    icon: "success"
+                });
+
             } catch (err) {
                 console.error("Error deleting notification: ", err);
+
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete notification.",
+                    icon: "error"
+                });
             }
+        }
     }
 
     const readNotification = async (notificationId) => {
@@ -85,7 +101,9 @@ const Notifications = ( {userProfile} ) => {
         <div ref={notifDropdownRef} className="mx-3">
             <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
                 <i className="fas fa-bell"></i>
-                <span className="notification-count pulse">{notifications.length}</span>
+                {notifications.filter(notification => !notification.isRead).length > 0 && (
+                    <span className="notification-count pulse">{notifications.filter(notification => !notification.isRead).length}</span>
+                )}
             </button>
             {isNotifOpen && (
                 <div className="notification-dropdown" style={{ display: 'block' }}>

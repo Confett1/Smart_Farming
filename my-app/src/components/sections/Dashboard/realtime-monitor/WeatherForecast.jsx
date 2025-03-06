@@ -5,10 +5,10 @@ import API from "../../../../api/api";
 const WeatherForecast = () => {
     const [weatherData, setWeatherData] = useState(null);
     const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
-    const [notification, setNotification] = useState(null);
+    const notification = useState(null);
     const lastNotificationTime = useRef(localStorage.getItem("lastNotificationTime") || 0); // Persist last notification time
 
-    const NOTIFICATION_COOLDOWN = 6 * 60 * 60 * 1000; // 12 hours in milliseconds
+    const NOTIFICATION_COOLDOWN = 6 * 60 * 60 * 1000; 
 
     useEffect(() => {
             const fetchWeatherData = async () => {
@@ -40,7 +40,7 @@ const WeatherForecast = () => {
                     if (newNotification) {
                         const now = Date.now();
                         if (now - lastNotificationTime.current >= NOTIFICATION_COOLDOWN) {
-                            setNotification(newNotification);
+                            notification(newNotification);
                             notifyAdmins(newNotification);
                             lastNotificationTime.current = now;
                             localStorage.setItem("lastNotificationTime", now); // Store timestamp

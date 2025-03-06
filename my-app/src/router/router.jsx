@@ -9,6 +9,7 @@ import NotFound from "../pages/not-found/NotFound";
 import NotificationPage from "../pages/NotificationPage/NotificationPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ProfileEditPage from "../pages/ProfilePage/ProfileEditPage";
+import UserRecordsPage from "../pages/userRecords/UserRecordsPage";
 
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"));
 const ControlPanel = lazy(() => import("../pages/control-panel/ControlPanel"));
@@ -48,6 +49,15 @@ const Router = () => {
                 <Records />
               </Main>
             } />
+
+            <Route
+            path="/userrecords"
+            element={
+              <Main>
+                <UserRecordsPage />
+              </Main>
+            } />
+
           <Route
             path="/settings"
             element={

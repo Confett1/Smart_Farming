@@ -31,7 +31,8 @@ const Sidebar = ({userProfile}) => {
             sx={{
               fontSize: '15px',
               fontWeight: 100,
-              opacity: 0.9
+              opacity: 0.9,
+              textTransform: "capitalize"
             }}
           >
             {`${userProfile.firstName || ''} ${userProfile.middleName || ''} ${userProfile.lastName || ''} ${userProfile.suffix || ''}`}
@@ -67,6 +68,10 @@ const Sidebar = ({userProfile}) => {
                 <i className="fas fa-history"></i>
                 <span>Records</span>
               </NavLink>
+              <NavLink to="/userrecords" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+                <i className="fas fa-users"></i>
+                <span>User Records</span>
+              </NavLink>  
             </>
           ) }
           <NavLink to="/settings" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>

@@ -22,14 +22,13 @@ const Records = () => {
     const addRecord = async () => {
         try {
             const response = await API.post("/records/add", recordDetails);
-            alert(response.data);
             setRecordDetails({
                 activityName: "",
                 duration: "",
                 status: "",
             })
 
-            toast("You successfully added a new record", "Added New Record", "success");
+            toast(response.data, "Added New Record", "success");
         } catch (error) {
             console.error("Error adding record: ", error);
 

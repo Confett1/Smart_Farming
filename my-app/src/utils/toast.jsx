@@ -19,14 +19,15 @@ export const toast = (text, title, icon) =>
       confirmButtonColor: "#22c55e",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        swal.fire({
-          title: "Deleted!",
-          icon: "success"
-        });
-      }
-    });
+    })
+    // .then((result) => {
+    //   if (result.isConfirmed) {
+    //     swal.fire({
+    //       title: "Deleted!",
+    //       icon: "success"
+    //     });
+    //   }
+    // });
 
    export const signedIn = () => {
     const Toast = swal.mixin({
