@@ -10,9 +10,10 @@ const Notifications = ({profile}) => {
 
     useEffect(() => {
         const fetchNotifications = async () => {
-            if(!profile?.id) return;
+            if(!profile?.userId) return;
             try {
-                const response = await API.get(`user/notifications/${profile.id}`);
+                const response = await API.get(`user/notifications/${profile.userId}`);
+                setIsLoading(false);
                 setNotification(response.data);
             } catch (err) {
                 console.error("Error fetching notifications: ", err);
@@ -23,7 +24,7 @@ const Notifications = ({profile}) => {
         }
         fetchNotifications();
 
-    }, [profile?.id])
+    }, [profile?.userId])
 
     const getIcon = (type) => {
         switch (type) {

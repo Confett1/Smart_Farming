@@ -61,7 +61,7 @@ const Notifications = ( {userProfile} ) => {
 
         const fetchNotifications = async () => {
             try {
-                const response = await API.get(`/user/notifications/${userProfile.id}`);
+                const response = await API.get(`/user/notifications/${userProfile.userId}`);
                 setNotifications(response.data || []);
             } catch (error) {
                 console.error("Error retrieving notifications: ", error);

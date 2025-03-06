@@ -70,6 +70,7 @@ import { useState } from "react";
 // import API from "../../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../../utils/toast";
+import API from "../../../api/api";
 
 const login = [
   {
@@ -99,17 +100,17 @@ const LoginForm = () => {
         if (!userCredentials.username || !userCredentials.password) {
             // alert("Please enter both username and password.");
             toast("Please enter both username and password.", "", "error");
-            // return;
+            return;
         } else {
-            // try {
-            //     const response = await API.post('/user/login', userCredentials);
-            //     localStorage.setItem("user", JSON.stringify(response.data));
-            //     alert(`Login Successful, welcome ${response.data.firstName}`);
-            //     navigate('/');
-            // } catch (error) {
-            //     console.error("Login Failed", error);
-            //     alert(error.response?.data || "Login Failed!");
-            // }
+            try {
+                const response = await API.post('/user/login', userCredentials);
+                localStorage.setItem("user", JSON.stringify(response.data));
+                alert(`Login Successful, welcome ${response.data.firstName}`);
+                navigate('/');
+            } catch (error) {
+                console.error("Login Failed", error);
+                alert(error.response?.data || "Login Failed!");
+            }
 
             if (userCredentials.username == "user1" && userCredentials.password == "pass123") {
               localStorage.setItem("user", JSON.stringify(login));

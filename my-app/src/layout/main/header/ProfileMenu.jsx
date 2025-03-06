@@ -161,7 +161,7 @@ const menuItems = [
     id: 1,
     title: 'Account Settings',
     icon: 'ic:outline-manage-accounts',
-    path: '/settings',
+    path: '/profile',
   },
   {
     id: 3,
@@ -171,7 +171,8 @@ const menuItems = [
   },
 ];
 
-const ProfileMenu = ( {userProfile} ) => {
+const ProfileMenu = () => {
+  const userProfile = JSON.parse(localStorage.getItem('user'));
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -210,7 +211,7 @@ const ProfileMenu = ( {userProfile} ) => {
         disableRipple
       >
         <Avatar
-          src={userProfile?.userProfile ? userProfile.userProfile : userProfile}
+          src={userProfile?.userProfile || userProfile}
           sx={{
             height: 44,
             width: 44,
