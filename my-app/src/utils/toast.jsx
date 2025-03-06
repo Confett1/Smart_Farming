@@ -23,7 +23,6 @@ export const toast = (text, title, icon) =>
       if (result.isConfirmed) {
         swal.fire({
           title: "Deleted!",
-          text,
           icon: "success"
         });
       }

@@ -1,0 +1,40 @@
+// content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}']
+
+// module.exports = {
+//   content: [
+//     "./src/**/*.{html,js,jsx,ts,tsx}",
+//   ],
+//   theme: {
+//     extend: {
+//       backdropFilter: {
+//         none: "none",
+//         blur: "blur(10px)", // You can define more filter utilities if needed
+//       },
+//     },
+//   },
+//   plugins: [
+//     require('tailwindcss-filters'),
+//   ],
+// }
+
+
+
+
+
+// tailwind.config.js
+export default {
+    content: [
+      "./src/**/*.{html,js,jsx}",
+    ],
+    theme: {
+      extend: {
+        backdropFilter: {
+          none: "none",
+          blur: "blur(10px)",
+        },
+      },
+    },
+    plugins: [
+      import('tailwindcss-filters'), // use `import` instead of `require`
+    ],
+  }

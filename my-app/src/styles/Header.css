@@ -1,31 +1,31 @@
 /* Header Styles */
 .dashboard-header {
-    background-color: var(--card-background);
-    padding: 5px 20px 5px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    margin-left: 16.3rem;
-    margin-bottom: 0 !important;
-  }
-  
-  .header-title {
-    font-size: 1.5em;
-    color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .header-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
+  background-color: var(--card-background);
+  padding: 5px 20px 5px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-left: 16.3rem;
+  margin-bottom: 0 !important;
+}
+
+.header-title {
+  font-size: 1.5em;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 /* Notification Styles */
 #notificationBtn {
@@ -56,7 +56,7 @@
   width: 15px;
   height: 15px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Pulse animation for notification count */
@@ -70,10 +70,12 @@
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
   }
+
   70% {
     transform: scale(1.1);
     box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
   }
+
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
@@ -83,11 +85,11 @@
 .notification-dropdown {
   position: absolute;
   top: calc(100% + 10px);
-  right: 212px;
+  right: 111px;
   width: 380px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   display: none;
   z-index: 1000;
   animation: slideDown 0.3s ease forwards;
@@ -98,6 +100,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -113,10 +116,11 @@
   height: 12px;
   background: white;
   transform: rotate(45deg);
-  box-shadow: -2px -2px 5px rgba(0,0,0,0.04);
+  box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.04);
 }
 
-.mark-all-read, .notification-settings {
+.mark-all-read,
+.notification-settings {
   background: none;
   border: none;
   color: #666;
@@ -129,7 +133,8 @@
   transition: all 0.3s ease;
 }
 
-.mark-all-read:hover, .notification-settings:hover {
+.mark-all-read:hover,
+.notification-settings:hover {
   background-color: #f0f0f0;
   color: var(--primary-color);
 }
@@ -286,38 +291,38 @@
 }
 
 
-  @media (max-width: 768px) {
-    .dashboard-header {
-      margin-left: 0;
-    }
-
-    .header-title {
-      font-size: 14px;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-bar {
-      display: none;
-    }
+@media (max-width: 768px) {
+  .dashboard-header {
+    margin-left: 0;
   }
 
-  @media (max-width: 900px) {
-    .dashboard-header {
-      margin-left: 0;
-    }
-
-    .header-title {
-      font-size: 14px;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-bar {
-      display: none;
-    }
+  .header-title {
+    font-size: 14px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
+
+  .search-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-header {
+    margin-left: 0;
+  }
+
+  .header-title {
+    font-size: 14px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-bar {
+    display: none;
+  }
+}

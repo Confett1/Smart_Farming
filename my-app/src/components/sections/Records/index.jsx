@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-import RecordsContent from "./RecordsData";
+import RecordsContent from "./Table";
+import { Button } from "@mui/material";
+import { Plus } from "lucide-react";
 
 const RecordsComponent = ({ openModal }) => {
     return (
@@ -9,9 +11,22 @@ const RecordsComponent = ({ openModal }) => {
                     <h2>Activity Records</h2>
                 </div>
                 <div className="records-actions">
-                    <button className="btn btn-primary" style={{ backgroundColor: '#4CAF50', border: 'none' }} onClick={openModal}>
-                        <i className="fas fa-plus"></i> Add New Record
-                    </button>
+                    <Button
+                        onClick={openModal}
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        color="success"
+                        startIcon={<Plus />}
+                    >
+                        Add New Record
+                        {/* <VisuallyHiddenInput
+                            type="file"
+                            onChange={(event) => console.log(event.target.files)}
+                            multiple
+                        /> */}
+                    </Button>
                     <div className="filter-dropdown">
                         <button className="btn btn-secondary">
                             <i className="fas fa-filter"></i> Filter By

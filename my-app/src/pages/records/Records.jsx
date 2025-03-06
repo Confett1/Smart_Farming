@@ -6,10 +6,44 @@ import Modal from '../../components/modals';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
 import { Stack } from '@mui/material';
 import RecordsComponent from '../../components/sections/Records';
+import API from '../../api/api';
+import { toast } from '../../utils/toast';
+import { TextField } from "@mui/material";
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [recordDetails, setRecordDetails] = useState({
+        activityName: "",
+        duration: "",
+        status: "",
+    });
+
+    const addRecord = async () => {
+        try {
+            const response = await API.post("/records/add", recordDetails);
+            alert(response.data);
+            setRecordDetails({
+                activityName: "",
+                duration: "",
+                status: "",
+            })
+
+            toast("You successfully added a new record", "Added New Record", "success");
+        } catch (error) {
+            console.error("Error adding record: ", error);
+
+            toast("Failed to add new record", "", "error");
+        }
+        closeModal();
+    };
+
+    const handleChange = (e) => {
+        setRecordDetails({
+            ...recordDetails,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const openModal = () => {
         setIsModalOpen(true)
@@ -28,13 +62,120 @@ const Records = () => {
 
     return (
         <>
-            <Modal isOpen={isModalOpen} onClose={closeModal} title="Add New Record">
-                <p>This is the modal content.</p>
+            <Modal isOpen={isModalOpen} onClose={closeModal} onSave={addRecord} title="Add New Record">
+                <form>
+                    <TextField
+                        fullWidth
+                        onChange={handleChange}
+                        name='activityName'
+                        value={recordDetails.activityName}
+                        label="Activity Name"
+                        id="fullWidth"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "&:hover fieldset": {
+                                    borderColor: "green", // Border color on hover
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "green", // Border color when focused
+                                },
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "gray", 
+                                "&.Mui-focused": {
+                                    color: "green", // Label color when focused
+                                },
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "green", // Optional: Change the input text color when focused
+                            },
+                        }}
+                    />
+                    <TextField
+                        fullWidth
+                        onChange={handleChange}
+                        value={recordDetails.duration}
+                        name='duration'
+                        label="Duration"
+                        id="fullWidth"
+                        sx={{
+                            my: 1.6,
+                            "& .MuiOutlinedInput-root": {
+                                "&:hover fieldset": {
+                                    borderColor: "green", // Border color on hover
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "green", // Border color when focused
+                                },
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "gray", 
+                                "&.Mui-focused": {
+                                    color: "green", // Label color when focused
+                                },
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "green", // Optional: Change the input text color when focused
+                            },
+                        }}
+                    />
+
+                    <TextField
+                        fullWidth
+                        onChange={handleChange}
+                        value={recordDetails.status}
+                        name='status'
+                        label="Status"
+                        id="fullWidth"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "&:hover fieldset": {
+                                    borderColor: "green", // Border color on hover
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "green", // Border color when focused
+                                },
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "gray", 
+                                "&.Mui-focused": {
+                                    color: "green", // Label color when focused
+                                },
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "green", // Optional: Change the input text color when focused
+                            },
+                        }}
+                    />
+                    {/* <input
+                        type="text"
+                        placeholder="Activity Name"
+                        name="activityName"
+                        onChange={handleChange}
+                        value={recordDetails.activityName}
+                        className="w-full p-2 mb-2 border rounded"
+                    />
+                    <input
+                        type="number"
+                        placeholder="Duration"
+                        name="duration"
+                        onChange={handleChange}
+                        value={recordDetails.duration}
+                        className="w-full p-2 mb-2 border rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Status"
+                        name="status"
+                        onChange={handleChange}
+                        value={recordDetails.status}
+                        className="w-full p-2 mb-2 border rounded"
+                    /> */}
+                </form>
             </Modal>
 
             <Stack mx={2.7} my={1}>
                 <Breadcrumb PageName={"Records"} />
-
                 <RecordsComponent openModal={openModal} />
             </Stack>
             <Footer />

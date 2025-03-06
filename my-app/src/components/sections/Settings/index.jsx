@@ -3,9 +3,9 @@ import SettingsContent from "./SettingsContent";
 const SettingsComponent = () => {
     return (
         <>
-            <div className="page-name">
+            {/* <div className="page-name">
                 <h2>Settings</h2>
-            </div>
+            </div> */}
             <SettingsContent />
         </>
     );
