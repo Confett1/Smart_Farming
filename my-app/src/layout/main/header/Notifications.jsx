@@ -114,7 +114,7 @@ const Notifications = ( {userProfile} ) => {
         };
 
         document.addEventListener("click", handleClickOutside);
-        r   eturn () => document.removeEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
     }, [userProfile]);
 
 
