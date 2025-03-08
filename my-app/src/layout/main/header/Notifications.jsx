@@ -11,6 +11,7 @@ const Notifications = ( {userProfile} ) => {
     const notifDropdownRef = useRef(null);
     const [notifications, setNotifications] = useState([]);
     const [viewedNotificationId, setViewedNotificationId] = useState(null);
+    const [filterType, setFilterType] = useState("all");
 
     const toggleViewMessage = (notificationId) => {
         setViewedNotificationId(prevId => (prevId === notificationId ? null : notificationId));
@@ -73,6 +74,26 @@ const Notifications = ( {userProfile} ) => {
         }
     };
 
+    const filterAlert = (type) => {
+        setFilterType(type);
+    };
+
+    // Filter notifications based on selected type
+    const filteredNotifications =
+        filterType === "all" ? notifications : notifications.filter((notif) => notif.type === filterType);
+
+
+
+    const getIcon = (type) => {
+        switch (type) {
+            case "alert": return "fas fa-exclamation-circle text-red-500";
+            case "warning": return "fas fa-exclamation-triangle text-yellow-500";
+            case "info": return "fas fa-info-circle text-blue-500";
+            case "success": return "fas fa-check-circle text-green-500";
+            default: return "fas fa-bell text-gray-500";
+        }
+    };
+
     useEffect(() => {
 
         const fetchNotifications = async () => {
@@ -93,7 +114,7 @@ const Notifications = ( {userProfile} ) => {
         };
 
         document.addEventListener("click", handleClickOutside);
-        return () => document.removeEventListener("click", handleClickOutside);
+        r   eturn () => document.removeEventListener("click", handleClickOutside);
     }, [userProfile]);
 
 
@@ -120,17 +141,17 @@ const Notifications = ( {userProfile} ) => {
                         </div>
                     </div>
                     <div className="flex gap-2 border-b border-gray-200 py-1 px-6">
-                        <button className="filter-btn active" data-filter="all">All</button>
-                        <button className="filter-btn" data-filter="alert">Alerts</button>
-                        <button className="filter-btn" data-filter="warning">Warnings</button>
-                        <button className="filter-btn" data-filter="info">Info</button>
+                        <button className={`filter-btn ${filterType === "all" ? "active" : ""}`} data-filter="all" onClick={() => filterAlert("all")}>All</button>
+                        <button className={`filter-btn ${filterType === "alert" ? "active" : ""}`} data-filter="alert" onClick={() => filterAlert("alert")} >Alerts</button>
+                        <button className={`filter-btn ${filterType === "warning" ? "active" : ""}`} data-filter="warning" onClick={() => filterAlert("warning")}>Warnings</button>
+                        <button className={`filter-btn ${filterType === "info" ? "active" : ""}`} data-filter="info" onClick={() => filterAlert("info")} >Info</button>
                     </div>
                     <div className="notification-list">
-                        {notifications.length > 0 ? (
-                            notifications.map((notification) => (
+                        {filteredNotifications.length > 0 ? (
+                            filteredNotifications.map((notification) => (
                                 <div key={notification.notificationId} className={`notification-item ${notification.isRead ? "read" : "unread"} alert`}>
                                     <div className="notification-icon">
-                                        <i className="fas fa-exclamation-circle"></i>
+                                        <i className={`${getIcon(notification.type)}`}></i>
                                     </div>
                                     <div className="notification-content">
                                         <div className="text-left text-sm font-bold">{notification.title}</div>

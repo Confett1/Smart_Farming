@@ -105,11 +105,15 @@ const LoginForm = () => {
             try {
                 const response = await API.post('/user/login', userCredentials);
                 localStorage.setItem("user", JSON.stringify(response.data));
-                alert(`Login Successful, welcome ${response.data.firstName}`);
+                const toastResponse = await toast(`Login Successful, welcome ${response.data.firstName}`, "", "success");
+
+                if (toastResponse.isConfirmed) {
+                  navigate('/');
+                }
                 navigate('/');
             } catch (error) {
                 console.error("Login Failed", error);
-                alert(error.response?.data || "Login Failed!");
+                toast(error.response?.data || "Login Failed!", "", "error");
             }
 
             if (userCredentials.username == "user1" && userCredentials.password == "pass123") {

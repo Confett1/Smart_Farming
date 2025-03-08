@@ -3,24 +3,26 @@ import { Typography } from '@mui/material';
 import API from '../../../../api/api';
 import NpkChart from './NpkChart';
 import WeatherForecast from './WeatherForecast';
-import WaterLevel from './WaterLevel';
-import Fertilizer from './Fertilizer';
+// import WaterLevel from './WaterLevel';
+// import Fertilizer from './Fertilizer';
+import HumidityTemperature from './HumidityTemperature';
+import NPKLatest from './NPKLatest';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
-    const [latestNPKReading, setLatestNPKReading] = useState({
-        nitrogen: "--",
-        phosphorous: "--",
-        potassium: "--",
-    });
+    // const [latestNPKReading, setLatestNPKReading] = useState({
+    //     nitrogen: "--",
+    //     phosphorous: "--",
+    //     potassium: "--",
+    // });
 
-    const fetchLatestReading = () => {
-        API.get("/npk/latest")
-        .then((response) => {
-            setLatestNPKReading(response.data);
-        })
-        .catch(error => console.error("Error fetching NPK data", error));
-    }
+    // const fetchLatestReading = () => {
+    //     API.get("/npk/latest")
+    //     .then((response) => {
+    //         setLatestNPKReading(response.data);
+    //     })
+    //     .catch(error => console.error("Error fetching NPK data", error));
+    // }
 
     const fetchFiveLatestReadings = async () => {
         try {
@@ -32,10 +34,10 @@ const RealTimeMonitor = () => {
     }
 
     useEffect(() => {
-        fetchLatestReading();
+        // fetchLatestReading();
         fetchFiveLatestReadings();
 
-        const interval = setInterval(fetchLatestReading, 10000);
+        const interval = setInterval(fetchFiveLatestReadings, 10000);
         return () => clearInterval(interval);
     }, []);
 
@@ -44,7 +46,7 @@ const RealTimeMonitor = () => {
             <Typography sx={{ textAlign: 'left', fontWeight: 600, mb: -1.5 }}>Real-Time Monitoring</Typography>
             <div className="monitoring-grid">
                 {/* NPK Monitoring */}
-                <div className="card">
+                {/* <div className="card">
                     <div className="card-header">
                         <h3>NPK Monitoring</h3>
                     </div>
@@ -53,13 +55,15 @@ const RealTimeMonitor = () => {
                         <div className="value-box"><span>P</span><div id="p-value">{latestNPKReading.phosphorous}</div></div>
                         <div className="value-box"><span>K</span><div id="k-value">{latestNPKReading.potassium}</div></div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* NPK Chart */}
+                <NPKLatest />
+                <HumidityTemperature />
                 <NpkChart readings={fiveLatestReadings} />
-                <WaterLevel />
+                {/* <WaterLevel /> */}
                 <WeatherForecast />
-                <Fertilizer />
+                {/* <Fertilizer /> */}
             </div>
         </section>
     );

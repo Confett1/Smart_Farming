@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../../../../api/api";
+import { capitalize, Typography } from "@mui/material";
 
 const NpkLevels = () => {
     const [latestNPKReading, setLatestNPKReading] = useState({
@@ -31,7 +32,11 @@ const NpkLevels = () => {
                     <h3>NPK Levels</h3>
                     <span className="status warning">Check Required</span>
                     <div className="status-details">
-                        <span>N: {latestNPKReading.nitrogen} P: {latestNPKReading.phosphorous} K: {latestNPKReading.potassium}</span>
+                        <Typography sx={{textTransform: "capitalize"}} >
+                            <Typography component="span" sx={{ fontWeight: "bold" }}>N</Typography>: {latestNPKReading.nitrogen} &nbsp;        
+                            <Typography component="span" sx={{ fontWeight: "bold" }}>P</Typography>: {latestNPKReading.phosphorous} &nbsp;
+                            <Typography component="span" sx={{ fontWeight: "bold" }}>K</Typography>: {latestNPKReading.potassium}
+                        </Typography>
                     </div>
                 </div>
             </div>

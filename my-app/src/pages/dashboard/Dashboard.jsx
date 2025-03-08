@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import SystemStatus from '../../components/sections/Dashboard/system-status';
+// import SystemStatus from '../../components/sections/Dashboard/system-status';
 import PageLoader from '../../components/loader/LinearLoader';
 import '../../styles/Homepage.css';
 import Footer from '../../layout/main/footer';
@@ -26,7 +26,7 @@ const Dashboard = () => {
   return (
     <>
       <Stack p={2.7}>
-        <SystemStatus />
+        {/* <SystemStatus /> */}
         <RealTimeMonitor />
       </Stack>
       <Footer />

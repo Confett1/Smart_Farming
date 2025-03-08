@@ -5,7 +5,7 @@ import API from "../../../../api/api";
 const WeatherForecast = () => {
     const [weatherData, setWeatherData] = useState(null);
     const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
-    const notification = useState(null);
+    const [notification, setNotification] = useState(null);
     const lastNotificationTime = useRef(localStorage.getItem("lastNotificationTime") || 0); // Persist last notification time
 
     const NOTIFICATION_COOLDOWN = 6 * 60 * 60 * 1000; 
@@ -40,7 +40,7 @@ const WeatherForecast = () => {
                     if (newNotification) {
                         const now = Date.now();
                         if (now - lastNotificationTime.current >= NOTIFICATION_COOLDOWN) {
-                            notification(newNotification);
+                            setNotification(newNotification);
                             notifyAdmins(newNotification);
                             lastNotificationTime.current = now;
                             localStorage.setItem("lastNotificationTime", now); // Store timestamp

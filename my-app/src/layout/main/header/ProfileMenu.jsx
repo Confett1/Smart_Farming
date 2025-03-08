@@ -218,7 +218,7 @@ const ProfileMenu = () => {
             bgcolor: '',
           }}
         />
-       <Typography sx={{textTransform: "capitalize"}} variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography>
+       {/* <Typography sx={{textTransform: "capitalize"}} variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography> */}
        <IconifyIcon sx={{ fontSize: 30, ml: -0.6 }} icon={open ? 'material-symbols-light:arrow-drop-up-rounded' : 'material-symbols-light:arrow-drop-down-rounded'} />
       </ButtonBase>
 
