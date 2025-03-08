@@ -103,8 +103,8 @@ select {
 
 /* Control Elements */
 .control-btn {
-  
-  width: 30% !important;
+  width: 50% ;
+  height: 12rem;
   padding: 14px;
   border: none; 
   border-radius: 50%;
