@@ -28,13 +28,13 @@ const Router = () => {
               <Main>
                 <Dashboard />
               </Main>} />
-          <Route
+          {/* <Route
             path="/control-panel"
             element={
               <Main>
                 <ControlPanel />
               </Main>
-            } />
+            } /> */}
           <Route
             path="/chart"
             element={

@@ -60,10 +60,10 @@ const Sidebar = ({userProfile}) => {
           </NavLink>
           {userProfile.role === "admin" && (
             <>
-              <NavLink to="/control-panel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+              {/* <NavLink to="/control-panel" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
               <i className="fa-solid fa-sliders"></i>
               <span>Control Panel</span>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/records" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
                 <i className="fas fa-history"></i>
                 <span>Records</span>

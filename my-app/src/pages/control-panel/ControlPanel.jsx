@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../../styles/Homepage.css'
+import '../../styles/Water level.css'
 import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
