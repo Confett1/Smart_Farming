@@ -17,7 +17,7 @@ const GeneralSettings = ( formData, handleChange ) => {
               type="checkbox"
               id="notifications"
               name="notifications"
-              checked={formData}
+              checked={formData.notification}
               onChange={handleChange}
               className="toggle-switch"
             />
