@@ -8,7 +8,7 @@ const WeatherForecast = () => {
     const [notification, setNotification] = useState(null);
     const lastNotificationTime = useRef(localStorage.getItem("lastNotificationTime") || 0); // Persist last notification time
 
-    const NOTIFICATION_COOLDOWN = 6 * 60 * 60 * 1000; 
+    const NOTIFICATION_COOLDOWN = 12 * 60 * 60 * 1000; 
 
     useEffect(() => {
             const fetchWeatherData = async () => {

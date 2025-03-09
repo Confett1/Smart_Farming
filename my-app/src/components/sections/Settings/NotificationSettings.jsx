@@ -17,7 +17,7 @@ const NotificationSettings = ( formData, handleChange ) => {
               type="checkbox"
               id="notifications"
               name="notifications"
-              checked={formData}
+              checked={formData.email}
               onChange={handleChange}
               className="toggle-switch"
             />
@@ -32,7 +32,7 @@ const NotificationSettings = ( formData, handleChange ) => {
               type="checkbox"
               id="darkMode"
               name="darkMode"
-              checked={formData.darkMode}
+              checked={formData.SMS}
               onChange={handleChange}
               className="toggle-switch"
             />

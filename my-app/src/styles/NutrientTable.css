@@ -1,9 +1,9 @@
 
 
-    /* Grid table */
+    /* Grid table
     .grid {
-        width: 150%;
-        max-width: 90%;
+        width: 240%;
+        max-width: 100%;
         gap: 20px;
         flex-wrap: wrap;
         display: grid;
@@ -11,7 +11,7 @@
         grid-template-rows: auto;
         overflow: hidden;
         background-color: rgb(176, 176, 176, .15);
-    }
+    } */
 
     /* Tablet: 2 columns */
     @media (max-width: 1024px) {
