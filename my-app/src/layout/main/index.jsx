@@ -26,7 +26,8 @@ const Main = ({ children }) => {
                     },
                     flex: 1,
                     overflow: 'hidden',
-                    bgcolor: '#F3F3F3'
+                    bgcolor: '#F3F3F3',
+                    minHeight: "91vh"
                 }}
             >
                 {children}

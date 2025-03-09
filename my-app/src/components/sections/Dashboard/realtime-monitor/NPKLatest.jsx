@@ -39,7 +39,7 @@
 
         return (
             <>
-            <div className="grid">
+            <div className="nutrient-grid">
                 <div className="nutrient-table">
                     <table>
                         <thead>
