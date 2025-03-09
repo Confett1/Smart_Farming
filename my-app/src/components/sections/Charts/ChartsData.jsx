@@ -1,10 +1,10 @@
 const ChartsContent = () => {
     return (
         <>
-            <div className="summary-cards">
-                <div className="card">
-                    <div className="card-header">
-                        <h3>Total Harvest</h3>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 mb-8">
+                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Total Harvest</h3>
                         <span className="icon">📅</span>
                     </div>
                     <div className="card-content">
@@ -12,9 +12,9 @@ const ChartsContent = () => {
                         <p className="trend">0% from last period</p>
                     </div>
                 </div>
-                <div className="card">
-                    <div className="card-header">
-                        <h3>Water Usage</h3>
+                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Water Usage</h3>
                         <span className="icon">💧</span>
                     </div>
                     <div className="card-content">
@@ -22,9 +22,9 @@ const ChartsContent = () => {
                         <p className="trend">0% from last period</p>
                     </div>
                 </div>
-                <div className="card">
-                    <div className="card-header">
-                        <h3>Fertilizer Used</h3>
+                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Fertilizer Used</h3>
                         <span className="icon">🌱</span>
                     </div>
                     <div className="card-content">
@@ -32,9 +32,9 @@ const ChartsContent = () => {
                         <p className="trend">0% from last period</p>
                     </div>
                 </div>
-                <div className="card">
-                    <div className="card-header">
-                        <h3>Solar Energy</h3>
+                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Solar Energy</h3>
                         <span className="icon">⚡</span>
                     </div>
                     <div className="card-content">
