@@ -1,0 +1,94 @@
+
+
+    /* Grid table */
+    .nutrient-grid {
+        width: 150%;
+        max-width: 90%;
+        gap: 20px;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        overflow: hidden;
+        background-color: rgb(176, 176, 176, .15);
+    }
+
+    /* Tablet: 2 columns */
+    @media (max-width: 1024px) {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* Mobile: 1 column */
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    /* Nutrient Table */
+    .nutrient-table {
+        transform: translate(0%, 0%);
+        border-radius: 8px;
+        padding: 20px;
+        color: black;
+        font-family: "Lato", sans-serif;
+        z-index: 1000;
+        animation: table-fade-in 2s 11s forwards;
+        box-shadow: 0 0 10px rgba(44, 238, 252, 0.4);
+        border: 1px solid rgba(44, 238, 252, 0.3);
+    }
+
+    .nutrient-table table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .nutrient-table th,
+    .nutrient-table td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nutrient-table th {
+        background-color: rgba(24, 146, 58, 0.6);
+        color: black;
+    }
+
+    .nutrient-table tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nutrient-table tr:hover {
+        background-color: rgba(44, 238, 252, 0.1);
+    }
+
+    .nutrient-level {
+        display: inline-block;
+        width: 215px;
+        align-items: center;
+        justify-content: center;
+        height: 10px;
+        background-color: #ded6d6;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .nutrient-level-fill {
+        height: 100%;
+        background: linear-gradient(to right, #23f0ff, #1eaf4a);
+    }
+
+    .high {
+        width: 90%;
+    }
+
+    .medium {
+        width: 60%;
+    }
+
+    .low {
+        width: 30%;
+    }
