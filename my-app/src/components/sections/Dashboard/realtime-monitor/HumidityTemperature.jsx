@@ -1,8 +1,13 @@
 import { Divider } from "@mui/material";
 import Humidity from "./HumidityPercentage";
 import Temperature from "./Temperature";
+import PropTypes from "prop-types";
 
-const HumidityTemperature = () => {
+const HumidityTemperature = ({readings}) => {
+
+    const temperature = readings?.temperature || "";
+    const huimidity = readings?.humidity || ""; 
+ 
 
     return (
         <>
@@ -12,7 +17,7 @@ const HumidityTemperature = () => {
             <div className="flex mt-6 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
-                    <Temperature />
+                    <Temperature temperature={temperature} />
                     {/* <div className="w-[150px] h-[150px] rounded-full bg-black/30 relative overflow-hidden shadow-lg">
                         
                         <div className="absolute top-1/2 left-1/2 w-full h-full flex justify-center items-center">
@@ -38,7 +43,7 @@ const HumidityTemperature = () => {
                 {/* Humidity Gauge */}
                 <div className="relative w-[45%] h-[200px] flex flex-col items-center">
                     <div className="m-6 bg-black shadow-lg rounded-full">
-                        <Humidity />
+                        <Humidity humidity={huimidity} />
                     </div>
                 </div>  
             </div>
@@ -46,5 +51,9 @@ const HumidityTemperature = () => {
         </>
     );
 };
+
+HumidityTemperature.propTypes = {
+    readings: PropTypes.any.isRequired
+}
 
 export default HumidityTemperature;

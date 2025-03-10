@@ -1,9 +1,8 @@
+import PropTypes from "prop-types";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const humidity = 25;
-
-const Humidity = () => {
+const Humidity = ({humidity}) => {
     return (
         <>
             <div className="w-36 h-36 items-center">
@@ -25,5 +24,9 @@ const Humidity = () => {
         </>
     );
 };
+
+Humidity.propTypes = {
+    humidity: PropTypes.any.isRequired
+}
 
 export default Humidity;

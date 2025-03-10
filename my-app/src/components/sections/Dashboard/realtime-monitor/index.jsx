@@ -11,19 +11,19 @@ import SoilMoisture from './SoilMoisture';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
-    // const [latestNPKReading, setLatestNPKReading] = useState({
-    //     nitrogen: "--",
-    //     phosphorous: "--",
-    //     potassium: "--",
-    // });
+    const [latestNPKReading, setLatestNPKReading] = useState({
+        nitrogen: "--",
+        phosphorous: "--",
+        potassium: "--",
+    });
 
-    // const fetchLatestReading = () => {
-    //     API.get("/npk/latest")
-    //     .then((response) => {
-    //         setLatestNPKReading(response.data);
-    //     })
-    //     .catch(error => console.error("Error fetching NPK data", error));
-    // }
+    const fetchLatestReading = () => {
+        API.get("/npk/latest")
+        .then((response) => {
+            setLatestNPKReading(response.data);
+        })
+        .catch(error => console.error("Error fetching NPK data", error));
+    }
 
     const fetchFiveLatestReadings = async () => {
         try {
@@ -35,9 +35,10 @@ const RealTimeMonitor = () => {
     }
 
     useEffect(() => {
-        // fetchLatestReading();
+        fetchLatestReading();
         fetchFiveLatestReadings();
-
+        console.log(latestNPKReading);
+        
         const interval = setInterval(fetchFiveLatestReadings, 10000);
         return () => clearInterval(interval);
     }, []);
@@ -61,7 +62,7 @@ const RealTimeMonitor = () => {
                 {/* NPK Chart */}
                 <NPKLatest />
                 <SoilMoisture />
-                <HumidityTemperature />
+                <HumidityTemperature readings={latestNPKReading} />
                 <NpkChart readings={fiveLatestReadings} />
                 {/* <WaterLevel /> */}
                 <WeatherForecast />
