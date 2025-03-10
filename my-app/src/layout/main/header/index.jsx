@@ -6,13 +6,13 @@ import logo from '../../../assets/images/logo.png'
 import { Typography } from '@mui/material';
 
 const Header = ({userProfile}) => {
-
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
     return (
-        <header className="dashboard-header">
-            <div className="header-title">
+        <header className={`dashboard-header ${darkModePref ? "bg-gray-100 text-green-600" : "bg-gray-600 text-green-300"}`}>
+            <div className="flex items-center">
                 {/* <i className="fas fa-seedling"></i> */}
                 <img src={logo} className='w-11' alt="logo" />
-                <Typography variant='h6'>SmartFarm Hub</Typography>
+                <Typography variant='h6' className='pl-3'>SmartFarm Hub</Typography>
             </div>
             <div className="header-controls flex items-center gap-3">
 

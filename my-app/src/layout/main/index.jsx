@@ -12,9 +12,11 @@ const Main = ({ children }) => {
         return null;
     }
 
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+
     return (
         <>
-            <Sidebar userProfile={user} />
+            <Sidebar userProfile={user} darkModePref={darkModePref} />
             <Header userProfile={user} />
             <Stack
                 sx={{
@@ -26,7 +28,7 @@ const Main = ({ children }) => {
                     },
                     flex: 1,
                     overflow: 'hidden',
-                    bgcolor: '#F3F3F3',
+                    bgcolor: `${darkModePref ? "#F3F3F3" : "#0000"}`,
                     minHeight: "91vh"
                 }}
             >
