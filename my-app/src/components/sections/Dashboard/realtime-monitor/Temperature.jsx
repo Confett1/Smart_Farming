@@ -1,5 +1,4 @@
 import Thermometer from "react-thermometer-component";
-import "../../../../styles/Temperature.css"
 
 
 const Temperature = () => {
@@ -15,6 +14,7 @@ const Temperature = () => {
                     size="normal"
                     height="180"
                 />
+                <h3 className="mt-4 font-bold">Temperature</h3>
             </div>
 
         </>

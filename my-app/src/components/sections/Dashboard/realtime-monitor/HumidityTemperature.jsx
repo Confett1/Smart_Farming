@@ -10,7 +10,6 @@ const HumidityTemperature = () => {
             <div className="flex mt-5 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
-                    <div className="text-black mb-3">Temperature</div>
                     <Temperature />
                     {/* <div className="w-[150px] h-[150px] rounded-full bg-black/30 relative overflow-hidden shadow-lg">
                         
@@ -36,7 +35,6 @@ const HumidityTemperature = () => {
 
                 {/* Humidity Gauge */}
                 <div className="relative w-[45%] h-[200px] flex flex-col items-center">
-                    <div className="text-black mb-2 text-base">Humidity</div>
                     <div className="m-6 bg-black shadow-lg rounded-full">
                         <Humidity />
                     </div>
