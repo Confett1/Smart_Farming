@@ -78,12 +78,21 @@ const LoginForm = () => {
     password: "",
   });
 
+  const login = [
+    {
+      username: "user1",
+      password: "pass123",
+      role: "admin"
+    }
+  ]
+
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
       [e.target.name]: e.target.value,
     });
   };
+
 
   
   const handleLogin = async (e) => {
@@ -109,7 +118,7 @@ const LoginForm = () => {
             }
 
             if (userCredentials.username == "user1" && userCredentials.password == "pass123") {
-              localStorage.setItem("user", JSON.stringify("login"));
+              localStorage.setItem("user", JSON.stringify(login));
               navigate('/');
             }
         }
