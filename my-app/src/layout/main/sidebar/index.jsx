@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import bomel from '../../../assets/images/bomel.jpg'
 import { useEffect } from "react";
 
-const Sidebar = ({userProfile}) => {
+const Sidebar = ({userProfile, darkModePref}) => {
   useEffect(() => {
     console.log(userProfile)
   }, [userProfile])
 
   return (  
     <>
-      <aside className="sidebar">
+      <aside className={`w-[260px] ${darkModePref? "bg-green-700" : "bg-green-900"} p-[20px] text-white flex flex-col fixed h-screen left-0 top-0 sidebar`}>
         <div className="flex flex-col items-center">
           <div className="w-[80px] h-[80px] overflow-hidden mx-auto rounded-full border-1">
             <img src={userProfile?.userProfile ? userProfile.userProfile : bomel} alt="Admin" id="adminAvatar" onError={(e) => { e.target.src = bomel; }} className="object-cover w-full h-full" />
@@ -86,6 +86,7 @@ const Sidebar = ({userProfile}) => {
 
 Sidebar.propTypes = {
   userProfile: PropTypes.any.isRequired,
+  darkModePref: PropTypes.any.isRequired,
 }
 
 export default Sidebar;

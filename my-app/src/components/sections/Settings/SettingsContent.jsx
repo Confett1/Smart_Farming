@@ -9,7 +9,6 @@ import SecuritySettings from "./Security"
 const SettingsContent = () => {
   const [formData, setFormData] = useState({
     notifications: "",
-    darkMode: "",
     units: "metric",
     syncFrequency: "15",
     email: "",
@@ -26,6 +25,8 @@ const SettingsContent = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }))
+    console.log(formData.darkMode);
+    
   }
 
   const handleSubmit = (e) => {

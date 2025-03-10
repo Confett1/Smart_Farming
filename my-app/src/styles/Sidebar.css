@@ -19,9 +19,9 @@
 /* Sidebar Styles */
 .sidebar {
   width: 260px;
-  background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 20px;
+  /* background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color)); */
+  /* color: white; */
+  /* padding: 20px; */
   display: flex;
   flex-direction: column;
   position: fixed;

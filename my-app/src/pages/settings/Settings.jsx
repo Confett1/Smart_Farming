@@ -8,6 +8,7 @@ import SettingsComponent from '../../components/sections/Settings';
 
 const Settings = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -20,11 +21,13 @@ const Settings = () => {
 
     return (
         <>
+        <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
             <Stack mx={2.7} my={1}>
                 <Breadcrumb PageName={"Settings"} />
                 <SettingsComponent />
             </Stack>
             <Footer />
+        </div>
         </>
     );
 };
