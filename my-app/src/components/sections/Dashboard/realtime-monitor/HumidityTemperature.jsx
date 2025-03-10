@@ -26,7 +26,7 @@ const HumidityTemperature = () => {
 
     return (
         <>
-        <div className="h-[340px border rounded-lg relative overflow-hidden bg-gray-100 flex flex-col p-5 shadow-lg">
+        <div className="rounded-lg relative overflow-hidden bg-gray-100 flex flex-col p-5 shadow-md hover:shadow-lg transition-all">
             <h1 className="mb-5 text-lg text-black font-bold">Climate Conditions</h1>
             <div className="flex mt-5 justify-around h-full">
                 {/* Temperature Gauge */}

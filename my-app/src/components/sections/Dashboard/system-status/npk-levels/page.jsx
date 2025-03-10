@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../../../../api/api";
-import { capitalize, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const NpkLevels = () => {
     const [latestNPKReading, setLatestNPKReading] = useState({

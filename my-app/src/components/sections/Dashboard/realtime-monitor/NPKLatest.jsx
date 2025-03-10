@@ -39,8 +39,8 @@
 
         return (
             <>
-            <div className="nutrient-grid">
-                <div className="nutrient-table">
+            <div className="shadow-md bg-gray-100 rounded-lg hover:shadow-lg transition-all">
+                <div className="nutrient-table h-full">
                 <h2 className="mb-5 text-lg text-black font-bold">Npk Levels</h2>
                     <table>
                         <thead>

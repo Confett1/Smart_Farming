@@ -1,7 +1,7 @@
 
 
     /* Grid table */
-    .nutrient-grid {
+    /* .nutrient-grid {
         width: 150%;
         max-width: 90%;
         gap: 20px;
@@ -11,7 +11,7 @@
         grid-template-rows: auto;
         overflow: hidden;
         background-color: rgb(176, 176, 176, .15);
-    }
+    } */
 
     /* Tablet: 2 columns */
     @media (max-width: 1024px) {
@@ -47,7 +47,7 @@
 
     .nutrient-table th,
     .nutrient-table td {
-        padding: 10px;
+        padding: 14px;
         text-align: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
@@ -62,7 +62,7 @@
     }
 
     .nutrient-table tr:hover {
-        background-color: rgba(44, 238, 252, 0.1);
+        background-color: rgba(44, 238, 252, 0.3);
     }
 
     .nutrient-level {

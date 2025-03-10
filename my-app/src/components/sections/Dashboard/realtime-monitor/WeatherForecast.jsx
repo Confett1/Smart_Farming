@@ -75,9 +75,9 @@ const WeatherForecast = () => {
     return (
         <>
             {/*<!-- Weather Forecast Card -->*/}
-            <div className="card weather-card">
+            <div className="card weather-card bg-gray-100">
                 <div className="card-header">
-                    <h3>Weather Forecast</h3>
+                    <h3 className="text-black">Weather Forecast</h3>
                 </div>
                 <div className="card-body">
                     <div className="current-weather">
