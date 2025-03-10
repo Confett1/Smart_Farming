@@ -41,7 +41,7 @@
             <>
             <div className="shadow-md bg-gray-100 rounded-lg hover:shadow-lg transition-all">
                 <div className="nutrient-table h-full">
-                <h2 className="mb-5 text-lg text-black font-bold">Npk Levels</h2>
+                <h3 className="mb-5 text-lg text-black font-bold">NPK Levels</h3>
                     <table>
                         <thead>
                             <tr>
@@ -52,7 +52,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Nitrogen (N)</td>
+                                <td>Nitrogen</td>
                                 <td>{latestNPKReading.nitrogen} ppm</td>
                                 <td>
                                     <div className="nutrient-level">
@@ -62,7 +62,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Phosphorus (P)</td>
+                                <td>Phosphorus</td>
                                 <td>{latestNPKReading.phosphorous} ppm</td>
                                 <td>
                                     <div className="nutrient-level">
@@ -71,7 +71,7 @@
                                 </td>   
                             </tr>
                             <tr>
-                                <td>Potassium (K)</td>
+                                <td>Potassium</td>
                                 <td>{latestNPKReading.potassium} ppm</td>
                                 <td>
                                     <div className="nutrient-level">

@@ -33,7 +33,6 @@
         border-radius: 8px;
         padding: 20px;
         color: black;
-        font-family: "Lato", sans-serif;
         z-index: 1000;
         animation: table-fade-in 2s 11s forwards;
         box-shadow: 0 0 10px rgba(44, 238, 252, 0.4);
@@ -47,7 +46,7 @@
 
     .nutrient-table th,
     .nutrient-table td {
-        padding: 14px;
+        padding: 15px;
         text-align: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
