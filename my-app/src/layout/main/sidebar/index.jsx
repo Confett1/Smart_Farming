@@ -6,6 +6,7 @@ import bomel from '../../../assets/images/bomel.jpg';
 import { useEffect } from "react";
 import { Home, BarChart2, Clock, Users, Settings, Leaf } from "lucide-react";
 
+const Sidebar = ({userProfile, darkModePref}) => {
 const Sidebar = ({ userProfile = {} }) => {
   useEffect(() => {
     console.log(userProfile);
@@ -14,7 +15,7 @@ const Sidebar = ({ userProfile = {} }) => {
 
 
   return (
-    <aside className="sidebar relative h-screen bg-gradient-to-b from-emerald-700 to-emerald-900 text-white overflow-hidden">
+    <aside className={`w-[260px] ${darkModePref? "bg-green-700" : "bg-green-900"} p-[20px] text-white flex flex-col fixed h-screen left-0 top-0 sidebar`}>
       {/* Decorative leaves */}
       <div className="absolute top-0 right-0 opacity-10">
         <Leaf className="w-24 h-24 text-white transform rotate-45" />
@@ -170,7 +171,8 @@ const Sidebar = ({ userProfile = {} }) => {
 };
 
 Sidebar.propTypes = {
-  userProfile: PropTypes.object.isRequired,
+  userProfile: PropTypes.any.isRequired,
+  darkModePref: PropTypes.any.isRequired,
+}
 };
-
 export default Sidebar;

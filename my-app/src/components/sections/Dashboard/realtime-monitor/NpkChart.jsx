@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 const NpkChart = ({ readings }) => {
     // Ensure that we have readings before rendering the chart
     const option = {
-        title: {
-            text: 'NPK Chart',
-        },
         tooltip: {
             trigger: 'axis',
         },
@@ -60,7 +57,12 @@ const NpkChart = ({ readings }) => {
         ],
     };
 
-    return <ReactECharts option={option} />;
+    return (
+        <div className='bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all'>
+            <h3 className='mb-5 text-lg text-black font-bold'>NPK Chart</h3>
+            <ReactECharts option={option} />
+        </div>
+    );
 };
 
 NpkChart.propTypes = {

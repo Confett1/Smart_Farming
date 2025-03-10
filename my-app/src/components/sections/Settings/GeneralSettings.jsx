@@ -1,15 +1,44 @@
 import {Divider} from "@mui/material";
+import { useState } from "react";
+import { toastConfirm } from "../../../utils/toast";
+import Swal from "sweetalert2";
 
-const GeneralSettings = ( formData, handleChange ) => {
+const GeneralSettings = ( formData ) => {
+  
+  const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+  const [isDarkMode, setIsDarkMode] = useState(!darkModePref);
+  
+
+  const handleDarkModeToggle = async () => {
+    const result = await toastConfirm(`${isDarkMode? "Disable" : "Enable"} Dark mode?`,"", "warning", "Confirm");
+    if (result.isConfirmed) {
+      setIsDarkMode((prev) => !prev);
+      Swal.fire({
+        title: "Dark Mode Updated!",
+        text: `Dark mode is now ${!isDarkMode ? "enabled" : "disabled"}`,
+        icon: "success"
+      });
+      localStorage.setItem('darkmode', isDarkMode);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+  };
+
+  const handleChange = () => {
+    console.log(isDarkMode);
+    
+  }
+
     return (
-        <div className="p-4 bg-white rounded-xl shadow duration-300">
-        <div className="border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-700">General Settings</h3>
-          <p className="text-gray-500 text-sm pb-2.5">Manage your general preferences</p>
+        <div className={`p-4 ${darkModePref? "bg-white" : "bg-gray-600"} rounded-xl shadow duration-300`}>
+        <div className={`${darkModePref? "text-gray-700" : "text-gray-300 "} border-b border-gray-100`}>
+          <h3 className="text-lg font-semibold">General Settings</h3>
+          <p className=" text-sm pb-2.5">Manage your general preferences</p>
         </div>
-        <div className="mx-2 pt-3">
+        <div className={`${darkModePref? "text-gray-600" : "text-gray-200"} mx-2 pt-3`}>
           <div className="flex justify-between items-center">
-            <div className="font-medium text-gray-600">
+            <div className="font-medium">
               <p>Notifications</p>
               <p className="font-normal text-sm">Receive notifications about important updates</p>
             </div>
@@ -23,8 +52,8 @@ const GeneralSettings = ( formData, handleChange ) => {
             />
           </div>
           <Divider sx={{my: 1.3}} />
-          <div className="flex justify-between items-center">
-            <div className="font-medium text-gray-600">
+          <div className={` ${darkModePref ? "text-gray-600" : "text-gray-200"} flex justify-between items-center`}>
+            <div className="font-medium">
               <p>Dark Mode</p>
               <p className="font-normal text-sm">Enable dark mode for better viewing at night</p>
             </div>
@@ -32,8 +61,8 @@ const GeneralSettings = ( formData, handleChange ) => {
               type="checkbox"
               id="darkMode"
               name="darkMode"
-              checked={formData.darkMode}
-              onChange={handleChange}
+              checked={!darkModePref}
+              onChange={handleDarkModeToggle}
               className="toggle-switch"
             />
           </div>

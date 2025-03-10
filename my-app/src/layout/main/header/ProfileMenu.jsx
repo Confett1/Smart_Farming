@@ -187,7 +187,7 @@ const ProfileMenu = () => {
 
     const handleMenuItemClick = (path) => {
     if (path === "/login") {
-      localStorage.clear();
+      localStorage.removeItem('user');
       // setUser({ username: '', password: null, userID: '', token: null, role: null, email: null, firstName: null, lastName: null, phoneNumber: null});
     }
 

@@ -12,6 +12,7 @@ const Notifications = ( {userProfile} ) => {
     const [notifications, setNotifications] = useState([]);
     const [viewedNotificationId, setViewedNotificationId] = useState(null);
     const [filterType, setFilterType] = useState("all");
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     const toggleViewMessage = (notificationId) => {
         setViewedNotificationId(prevId => (prevId === notificationId ? null : notificationId));
@@ -24,7 +25,7 @@ const Notifications = ( {userProfile} ) => {
     };
 
     const deleteNotification = async (notificationId) => {
-        const result = await toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning");
+        const result = await toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning", "Yes, Delete it.");
         if(result.isConfirmed) {
             try {
                 await API.delete(`/notifications/${notificationId}`);
@@ -121,7 +122,7 @@ const Notifications = ( {userProfile} ) => {
     return (
         <div ref={notifDropdownRef} className="mx-3">
             <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
-                <i className="fas fa-bell"></i>
+                <i className={`fas fa-bell ${darkModePref ? "text-gray-700" : "text-gray-200"}`}></i>
                 {notifications.filter(notification => !notification.isRead).length > 0 && (
                     <span className="notification-count pulse">{notifications.filter(notification => !notification.isRead).length}</span>
                 )}
@@ -135,7 +136,7 @@ const Notifications = ( {userProfile} ) => {
                                 <i className="fas fa-check-double"></i>
                                 Mark all as read
                             </button>
-                            <button className="notification-settings">
+                            <button className={`notification-settings`}>
                                 <i className="fas fa-cog"></i>
                             </button>
                         </div>
@@ -146,7 +147,7 @@ const Notifications = ( {userProfile} ) => {
                         <button className={`filter-btn ${filterType === "warning" ? "active" : ""}`} data-filter="warning" onClick={() => filterAlert("warning")}>Warnings</button>
                         <button className={`filter-btn ${filterType === "info" ? "active" : ""}`} data-filter="info" onClick={() => filterAlert("info")} >Info</button>
                     </div>
-                    <div className="notification-list">
+                    <div className={`notification-list ${darkModePref? "text-gray-600" : "text-gray-200"}`}>
                         {filteredNotifications.length > 0 ? (
                             filteredNotifications.map((notification) => (
                                 <div key={notification.notificationId} className={`notification-item ${notification.isRead ? "read" : "unread"} alert`}>
