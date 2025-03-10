@@ -12,7 +12,8 @@
         const fetchLatestReading = () => {
             API.get("/npk/latest")
             .then((response) => {
-                setLatestNPKReading(response.data);
+                response.data !== null
+                setLatestNPKReading(response.data); 
             })
             .catch(error => console.error("Error fetching NPK data", error));
         }
@@ -42,7 +43,7 @@
             <div className="shadow-md bg-gray-100 rounded-lg hover:shadow-lg transition-all">
                 <div className="nutrient-table h-full">
                 <h3 className="mb-5 text-lg text-black font-bold">NPK Levels</h3>
-                    <table>
+                    <table >
                         <thead>
                             <tr>
                                 <th>Nutrient</th>
@@ -53,29 +54,30 @@
                         <tbody>
                             <tr>
                                 <td>Nitrogen</td>
-                                <td>{latestNPKReading.nitrogen} ppm</td>
+                                <td>{latestNPKReading?.nitrogen? latestNPKReading.nitrogen : "--"} ppm</td>
                                 <td>
                                     <div className="nutrient-level">
                                         <div className="nutrient-level-fill" 
-                                        style={{width: `${getNitrogenLevel(latestNPKReading.nitrogen)}%`}} ></div>
+                                        style={{width: `${latestNPKReading?.nitrogen? getNitrogenLevel(latestNPKReading.nitrogen) : 0}%`}} ></div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Phosphorus</td>
-                                <td>{latestNPKReading.phosphorous} ppm</td>
+                                <td>{latestNPKReading?.phosphorous || "--"} ppm</td>
                                 <td>
                                     <div className="nutrient-level">
-                                        <div className={`nutrient-level-fill`} style={{width: `${getPhosphorusLevel(latestNPKReading.phosphorous)}%`}}></div>
+                                        <div className={`nutrient-level-fill`}
+                                        style={{width: `${latestNPKReading?.phosphorous? getPhosphorusLevel(latestNPKReading.phosphorous) : 0}%`}}></div>
                                     </div>
                                 </td>   
                             </tr>
                             <tr>
                                 <td>Potassium</td>
-                                <td>{latestNPKReading.potassium} ppm</td>
+                                <td>{latestNPKReading?.potassium || "--"} ppm</td>
                                 <td>
                                     <div className="nutrient-level">
-                                        <div className="nutrient-level-fill" style={{width: `${getPotassiumLevel(latestNPKReading.potassium)}%`}}></div>
+                                        <div className="nutrient-level-fill" style={{width: `${latestNPKReading?.potassium? getPotassiumLevel(latestNPKReading.potassium) : 0}%`}}></div>
                                     </div>
                                 </td>
                             </tr>

@@ -1,7 +1,7 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const humidity = 90;
+const humidity = 25;
 
 const Humidity = () => {
     return (

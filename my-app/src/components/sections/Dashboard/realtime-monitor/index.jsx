@@ -7,6 +7,7 @@ import WeatherForecast from './WeatherForecast';
 // import Fertilizer from './Fertilizer';
 import HumidityTemperature from './HumidityTemperature';
 import NPKLatest from './NPKLatest';
+import SoilMoisture from './SoilMoisture';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
@@ -59,6 +60,7 @@ const RealTimeMonitor = () => {
 
                 {/* NPK Chart */}
                 <NPKLatest />
+                <SoilMoisture />
                 <HumidityTemperature />
                 <NpkChart readings={fiveLatestReadings} />
                 {/* <WaterLevel /> */}

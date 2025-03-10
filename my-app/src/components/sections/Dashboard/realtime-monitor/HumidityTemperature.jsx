@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import Humidity from "./HumidityPercentage";
 import Temperature from "./Temperature";
 
@@ -6,8 +7,9 @@ const HumidityTemperature = () => {
     return (
         <>
         <div className="rounded-lg relative overflow-hidden bg-gray-100 flex flex-col p-6.5 shadow-md hover:shadow-lg transition-all">
-            <h1 className="text-lg text-black font-bold">Climate Conditions</h1>
-            <div className="flex mt-5 justify-around h-full">
+            <h1 className="text-lg text-black font-bold mb-5">Climate Conditions</h1>
+            <Divider />
+            <div className="flex mt-6 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
                     <Temperature />
