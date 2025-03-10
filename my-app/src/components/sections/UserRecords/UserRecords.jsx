@@ -41,7 +41,7 @@ function getComparator(order, orderBy) {
 }
 
 const headCells = [
-  { id: 'userProfile', numeric: false, disablePadding: true, label: 'User Name' },
+  { id: 'userProfile', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'dateCreated', numeric: true, disablePadding: false, label: 'Date' },
   { id: 'role', numeric: true, disablePadding: false, label: 'Role' },
   { id: 'userStatus', numeric: true, disablePadding: false, label: 'Status' },
@@ -66,14 +66,16 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
+            sx={{ml: 3}}
           />
         </TableCell>
         {headCells.map((headCell) => (
-          <TableCell key={headCell.id} align={headCell.numeric ? 'right' : 'left'} padding={headCell.disablePadding ? 'none' : 'normal'} sortDirection={orderBy === headCell.id ? order : false}>
+          <TableCell key={headCell.id} align={headCell.numeric ? 'center' : 'left'} padding={headCell.disablePadding ? 'none' : 'normal'} sortDirection={orderBy === headCell.id ? order : false}>
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
+              sx={{fontWeight: 600, color: "green"}}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -107,8 +109,8 @@ function EnhancedTableToolbar(props) {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          USERS
+        <Typography sx={{ flex: '1 1 100%', fontSize: 15, color: "green" }} variant="h6" id="tableTitle" component="div">
+          Users
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -139,7 +141,7 @@ export default function UsersRecordTable() {
   const [orderBy, setOrderBy] = React.useState('userStatus');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -306,15 +308,15 @@ export default function UsersRecordTable() {
                 return (
                   <TableRow hover onClick={(event) => handleClick(event, row.userId)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.userId} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
                     <TableCell padding="checkbox">
-                      <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                      <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }}  sx={{ml: 3}} />
                     </TableCell>
                     <TableCell sx={{textTransform: "capitalize"}} component="th" id={labelId} scope="row" padding="none">
                       {row.lastName}, {row.firstName} {row.suffix || ''} {row.middleName}
                     </TableCell>
-                    <TableCell align="right">{new Date(row.dateCreated).toLocaleDateString()}</TableCell>
-                    <TableCell align="right">{row.role? row.role.toUpperCase() : ''}</TableCell>
-                    <TableCell align="right">{row.userStatus}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">{new Date(row.dateCreated).toLocaleDateString()}</TableCell>
+                    <TableCell align="center">{row.role? row.role.toUpperCase() : ''}</TableCell>
+                    <TableCell align="center">{row.userStatus}</TableCell>
+                    <TableCell align="center">
                       <IconButton 
                           onMouseEnter={(event) => handleMenuOpen(event, row.userId)}
                         >
@@ -333,12 +335,12 @@ export default function UsersRecordTable() {
                           )}
                           
                           {row.userStatus === 'ACTIVE' && row.role === 'member'  && (
-                            <MenuItem onClick={() => handlePromote(row.userId)}>Promote to Admin</MenuItem>
+                            <MenuItem sx={{fontSize: 13}} onClick={() => handlePromote(row.userId)}>Promote to Admin</MenuItem>
                           )}
 
                           {row.role === 'admin' && (
                             <>
-                              <MenuItem onClick={() => handleDemote(row.userId)}>Demote to Member</MenuItem>
+                              <MenuItem  sx={{fontSize: 13}} onClick={() => handleDemote(row.userId)}>Demote to Member</MenuItem>
                             </>
                           )}
                         </Menu>
@@ -364,7 +366,7 @@ export default function UsersRecordTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
+      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" sx={{ display: "none" }} />
     </Box>
   );
 }

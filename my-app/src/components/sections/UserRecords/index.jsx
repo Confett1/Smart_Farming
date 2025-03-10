@@ -4,9 +4,9 @@ const UserRecords = () => {
     return (
         <>
         <div className="records-header">
-            <div className="page-name">
+            {/* <div className="page-name">
                 <h2>User Records</h2>
-            </div>
+            </div> */}
         </div>
         
         <UsersRecordTable />
