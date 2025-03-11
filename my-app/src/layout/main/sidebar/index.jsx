@@ -30,7 +30,7 @@ const Sidebar = ({userProfile, darkModePref}) => {
       </div>
 
       {/* Profile section */}
-      <div className="relative z-10 flex flex-col items-center pt-8 pb-4">
+      <div className="relative z-10 flex flex-col items-center pt-3 pb-4">
         <div className="w-[90px] h-[90px] overflow-hidden mx-auto rounded-full border-4 border-emerald-200/30 shadow-lg">
           <img
             src={userProfile?.userProfile || defaultAvatar}
@@ -88,7 +88,7 @@ const Sidebar = ({userProfile, darkModePref}) => {
           sx={{
             opacity: 0.7,
             pb: 1.5,
-            pl: 1.5,
+            pl: 0,
             letterSpacing: "1px",
             fontWeight: 500,
           }}
