@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import '../../../styles/Sidebar.css';
 import { Divider, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import bomel from '../../../assets/images/bomel.jpg';
+import defaultAvatar from '../../../assets/images/bomel.jpg';
 import { useEffect } from "react";
 import { Home, BarChart2, Clock, Users, Settings, Leaf } from "lucide-react";
 
@@ -14,7 +14,7 @@ const Sidebar = ({userProfile, darkModePref}) => {
 
 
   return (
-    <aside className={`w-[260px] ${darkModePref? "bg-green-700" : "bg-green-900"} p-[20px] text-white flex flex-col fixed h-screen left-0 top-0 sidebar`}>
+    <aside className={`w-[260px] ${darkModePref? "bg-green-700" : "bg-gray-800"} p-[20px] text-white flex flex-col fixed h-screen left-0 top-0 sidebar`}>
       {/* Decorative leaves */}
       <div className="absolute top-0 right-0 opacity-10">
         <Leaf className="w-24 h-24 text-white transform rotate-45" />

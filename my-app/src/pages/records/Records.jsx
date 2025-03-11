@@ -51,6 +51,8 @@ const Records = () => {
         });
     };
 
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+
     const openModal = () => {
         setIsModalOpen(true)
         console.log("Opening Modal");
@@ -179,12 +181,14 @@ const Records = () => {
                     /> */}
                 </form>
             </Modal>
-
+            
+            <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
             <Stack mx={2.7} my={1}>
                 <Breadcrumb PageName={"Records"} />
                 <RecordsComponent openModal={openModal} />
             </Stack>
             <Footer />
+            </div>
         </>
     );
 }

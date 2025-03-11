@@ -5,6 +5,8 @@ import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export default function Breadcrumb({PageName}) {
+  const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+  
   return (
     <Box
     sx={{
@@ -14,7 +16,9 @@ export default function Breadcrumb({PageName}) {
     }}
     >
       <Typography 
-        color="success"
+        sx={{
+          color: darkModePref ? "green" : "white"
+        }}
         fontSize={17}
         fontWeight={500}
       >
@@ -24,14 +28,17 @@ export default function Breadcrumb({PageName}) {
     <Breadcrumbs 
       separator="›" 
       aria-label="breadcrumbs"
+      
       sx={{
         fontSize: {
           xs: 12,
           sm: 16
-        }
+        },  
       }}
     >
-      <Link color="success" href="/" >
+      <Link sx={{
+        color: darkModePref? "green" : "white"
+      }} href="/" >
         Dashboard
       </Link>
       {/* {['Springfield', 'Simpson'].map((item) => (
@@ -40,7 +47,7 @@ export default function Breadcrumb({PageName}) {
         </Link>
       ))} */}
 
-      <Typography>{PageName}</Typography>
+      <Typography className={`${darkModePref ? "text-gray-600" : "text-gray-200"}`}>{PageName}</Typography>
     </Breadcrumbs>
     </Box>
   );

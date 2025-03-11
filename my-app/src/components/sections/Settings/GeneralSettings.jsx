@@ -1,7 +1,5 @@
 import {Divider} from "@mui/material";
 import { useState } from "react";
-import { toastConfirm } from "../../../utils/toast";
-import Swal from "sweetalert2";
 
 const GeneralSettings = ( formData ) => {
   
@@ -10,19 +8,11 @@ const GeneralSettings = ( formData ) => {
   
 
   const handleDarkModeToggle = async () => {
-    const result = await toastConfirm(`${isDarkMode? "Disable" : "Enable"} Dark mode?`,"", "warning", "Confirm");
-    if (result.isConfirmed) {
+    
       setIsDarkMode((prev) => !prev);
-      Swal.fire({
-        title: "Dark Mode Updated!",
-        text: `Dark mode is now ${!isDarkMode ? "enabled" : "disabled"}`,
-        icon: "success"
-      });
       localStorage.setItem('darkmode', isDarkMode);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    }
+      
+      window.location.reload();
   };
 
   const handleChange = () => {

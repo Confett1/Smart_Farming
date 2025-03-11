@@ -15,6 +15,8 @@ const UserRecordsPage = () => {
       navigate('/login');
     }
 
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 1000);
         return () => clearTimeout(timer);
@@ -25,11 +27,13 @@ const UserRecordsPage = () => {
     }
     return (
         <>
+        <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
             <Stack mx={2.7} my={1}>
                 <Breadcrumb PageName={"User Records"}/>
                 <UserRecords />
             </Stack>
             <Footer />
+        </div>
         </>
     );
 };

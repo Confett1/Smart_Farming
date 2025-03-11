@@ -7,9 +7,9 @@ import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monito
 import { Stack } from '@mui/material';
 import { signedIn } from '../../utils/toast';
 
-const Dashboard = () => {  
-  // const user = useAuth();
+const Dashboard = () => { 
   const [isLoading, setIsLoading] = useState(true);
+  const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
   useEffect(() => {
     signedIn();
@@ -24,11 +24,13 @@ const Dashboard = () => {
 
   return (
     <>
+      <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
       <Stack p={2.7}>
         {/* <SystemStatus /> */}
         <RealTimeMonitor />
       </Stack>
       <Footer />
+      </div>
     </>
   );
 };
