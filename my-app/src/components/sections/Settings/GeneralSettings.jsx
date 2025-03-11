@@ -16,8 +16,7 @@ const GeneralSettings = ( formData ) => {
   };
 
   const handleChange = () => {
-    console.log(isDarkMode);
-    
+    console.log(isDarkMode);    
   }
 
     return (
