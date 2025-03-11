@@ -285,7 +285,7 @@
 
 
 import React, { useEffect } from 'react';
-import { alpha } from '@mui/material/styles';
+// import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -294,15 +294,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+// import TableSortLabel from '@mui/material/TableSortLabel';
+// import Toolbar from '@mui/material/Toolbar';
+// import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import { visuallyHidden } from '@mui/utils';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+// import IconButton from '@mui/material/IconButton';
+// import Tooltip from '@mui/material/Tooltip';
+// import { visuallyHidden } from '@mui/utils';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import FilterListIcon from '@mui/icons-material/FilterList';
 import PropTypes from 'prop-types';
 import { FormControlLabel, Switch } from '@mui/material';
 import API from '../../../api/api';
@@ -315,12 +315,12 @@ const headCells = [
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
-function EnhancedTableHead({ order, orderBy, onRequestSort }) {
+function EnhancedTableHead({ order, orderBy }) {
 
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell, index) => (
+        {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={'left'}
