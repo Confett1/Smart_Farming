@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import PageLoader from "../../../loader/PageLoader";
 import API from "../../../../api/api";
 import { Divider } from "@mui/material";
+import PropTypes from "prop-types";
 
-const WeatherForecast = () => {
+const WeatherForecast = ({darkModePref}) => {
     const [weatherData, setWeatherData] = useState(null);
     const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
     const [notification, setNotification] = useState(null);
@@ -76,9 +77,9 @@ const WeatherForecast = () => {
     return (
         <>
             {/*<!-- Weather Forecast Card -->*/}
-            <div className="rounded-lg p-6 shadow-md hover:shadow-lg border border-black/5 transition-all weather-card bg-gray-100">
+            <div className={`rounded-lg p-6 shadow-md hover:shadow-lg border border-black/5 transition-all weather-card ${darkModePref ? "bg-gray-100" : "bg-gray-700"}`}>
                 <div className="">
-                    <h3 className="mb-5 font-bold text-lg text-black">Weather Forecast</h3>
+                    <h3 className="mb-5 font-bold text-lg">Weather Forecast</h3>
                     <Divider />
                 </div>
                 {/* <Divider></Divider> */}
@@ -89,7 +90,7 @@ const WeatherForecast = () => {
                                 <i className="fas fa-sun"></i>
                             </div>
                             <div className="weather-info p-5">
-                                <div className="temperature">{weatherData.main.temp}°C</div>
+                                <div className={`temperature `}>{weatherData.main.temp}°C</div>
                                 <div className="condition" style={{textTransform: "capitalize"}} >{weatherData.weather[0].description}</div>
                             </div>
                         </div>
@@ -109,5 +110,9 @@ const WeatherForecast = () => {
         </>
     );
 };
+
+WeatherForecast.propTypes = {
+    darkModePref: PropTypes.bool.isRequired
+}
 
 export default WeatherForecast;

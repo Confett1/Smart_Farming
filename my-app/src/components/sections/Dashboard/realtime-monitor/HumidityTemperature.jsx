@@ -3,21 +3,20 @@ import Humidity from "./HumidityPercentage";
 import Temperature from "./Temperature";
 import PropTypes from "prop-types";
 
-const HumidityTemperature = ({readings}) => {
+const HumidityTemperature = ({readings, darkModePref}) => {
 
     const temperature = readings?.temperature || "";
-    const huimidity = readings?.humidity || ""; 
- 
+    const huimidity = readings?.humidity || "";
 
     return (
         <>
-        <div className="rounded-lg relative overflow-hidden bg-gray-100 flex flex-col p-6.5 shadow-md hover:shadow-lg transition-all">
-            <h1 className="text-lg text-black font-bold mb-5">Climate Conditions</h1>
+        <div className={`${darkModePref ? "bg-gray-100" : "bg-gray-700 text-gray-200"} rounded-lg relative overflow-hidden flex flex-col p-6.5 shadow-md hover:shadow-lg transition-all`}>
+            <h1 className="text-lg font-bold mb-5">Climate Conditions</h1>
             <Divider />
             <div className="flex mt-6 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
-                    <Temperature temperature={temperature} />
+                    <Temperature temperature={temperature} darkModePref={darkModePref} />
                     {/* <div className="w-[150px] h-[150px] rounded-full bg-black/30 relative overflow-hidden shadow-lg">
                         
                         <div className="absolute top-1/2 left-1/2 w-full h-full flex justify-center items-center">
@@ -42,8 +41,8 @@ const HumidityTemperature = ({readings}) => {
 
                 {/* Humidity Gauge */}
                 <div className="relative w-[45%] h-[200px] flex flex-col items-center">
-                    <div className="m-6 bg-black shadow-lg rounded-full">
-                        <Humidity humidity={huimidity} />
+                    <div className="m-6  shadow-lg rounded-full">
+                        <Humidity humidity={huimidity} darkModePref={darkModePref} />
                     </div>
                 </div>  
             </div>
@@ -53,7 +52,8 @@ const HumidityTemperature = ({readings}) => {
 };
 
 HumidityTemperature.propTypes = {
-    readings: PropTypes.any.isRequired
+    readings: PropTypes.any.isRequired,
+    darkModePref: PropTypes.bool.isRequired
 }
 
 export default HumidityTemperature;

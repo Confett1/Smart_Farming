@@ -32,33 +32,25 @@
         transform: translate(0%, 0%);
         border-radius: 8px;
         padding: 20px;
-        color: black;
         z-index: 1000;
         animation: table-fade-in 2s 11s forwards;
-        box-shadow: 0 0 10px rgba(44, 238, 252, 0.4);
-        border: 1px solid rgba(44, 238, 252, 0.3);
     }
 
     .nutrient-table table {
-        border-collapse: collapse;
         width: 100%;
-        border: 1px solid rgb(0, 0, 0, 0.15);
+        /* border: 1px solid rgb(0, 0, 0, 0.50); */
     }
 
     .nutrient-table th,
     .nutrient-table td {
-        padding: 16.4px;
+        padding: 19px;
         text-align: center;
     }
 
-    .nutrient-table th {
-        background-color: rgba(24, 146, 58, 0.6);
+    /* .nutrient-table th {
+        background-color: #18923a99;
         color: black;
-    }
-
-    .nutrient-table tr {
-        background-color: aliceblue;
-    }
+    } */
 
     .nutrient-table tr:hover {
         background-color: rgba(44, 238, 252, 0.3);

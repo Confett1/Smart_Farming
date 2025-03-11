@@ -24,12 +24,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
-      <Stack p={2.7}>
-        {/* <SystemStatus /> */}
-        <RealTimeMonitor />
-      </Stack>
-      <Footer />
+      <div className={`${darkModePref? "" : "bg-gray-700"}`}>
+        <Stack p={2.7}> 
+          <RealTimeMonitor />
+        </Stack>
+        <Footer />
       </div>
     </>
   );

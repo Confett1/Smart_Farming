@@ -2,19 +2,18 @@ import PropTypes from "prop-types";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const Humidity = ({humidity}) => {
+const Humidity = ({humidity, darkModePref}) => {
     return (
         <>
             <div className="w-36 h-36 items-center">
                 <CircularProgressbar
                     value={humidity}
                     text={`${humidity}%`}
-                    styles={buildStyles({
-                    pathColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",
-                    textColor: "white",
-                    textSize:"20px",
-                    trailColor: "rgba(92, 28, 95, 1)",
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        styles={buildStyles({
+                        pathColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",
+                        textColor: darkModePref ? "black" : "white",
+                        textSize:"20px",
+                        trailColor: darkModePref ? "rgb(201, 198, 198)" : "#290829",
                     })}
                     strokeWidth={11.5}
                     
@@ -26,7 +25,8 @@ const Humidity = ({humidity}) => {
 };
 
 Humidity.propTypes = {
-    humidity: PropTypes.any.isRequired
+    humidity: PropTypes.any.isRequired,
+    darkModePref: PropTypes.bool.isRequired
 }
 
 export default Humidity;

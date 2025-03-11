@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import Thermometer from "react-thermometer-component";
 
 
-const Temperature = ({temperature}) => {
+const Temperature = ({temperature , darkModePref}) => {
     return (
         <>
-            <div>
+            <div >
                 <Thermometer
-                    theme="light"
+                    theme={`${darkModePref ? "light" : "dark"}`}
                     value={temperature}
                     max="50"
                     steps="1"
@@ -23,7 +23,8 @@ const Temperature = ({temperature}) => {
 };
 
 Temperature.propTypes = {
-    temperature: PropTypes.any.isRequired
+    temperature: PropTypes.any.isRequired,
+    darkModePref: PropTypes.bool.isRequired
 }
 
 export default Temperature;

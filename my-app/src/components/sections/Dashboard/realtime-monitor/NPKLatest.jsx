@@ -1,8 +1,9 @@
     import { useEffect, useState } from "react";
     import API from "../../../../api/api";
     import "../../../../styles/NutrientTable.css"
+import PropTypes from "prop-types";
 
-    const NPKLatest = () => {
+    const NPKLatest = ({darkModePref}) => {
         const [latestNPKReading, setLatestNPKReading] = useState({
             nitrogen: "--",
             phosphorous: "--",
@@ -40,21 +41,19 @@
 
         return (
             <>
-            <div className="shadow-md bg-gray-100 rounded-lg hover:shadow-lg transition-all">
-                <div className="nutrient-table h-full">
-                <h3 className="mb-5 text-lg text-black font-bold">NPK Levels</h3>
+            <div className={`${darkModePref ? "bg-gray-100" : "bg-gray-700"} shadow-md rounded-lg hover:shadow-lg transition-all`}>
+                <div className="nutrient-table h-full ">
+                <h3 className="mb-5 text-lg font-bold">NPK Levels</h3>
                     <table >
-                        <thead>
-                            <tr>
+                        <thead className={`${darkModePref ? "bg-[#18923a99]" :"bg-[#111a2a99]"}`}>
                                 <th>Nutrient</th>
-                                <th>Value</th>
+                                <th>Value (ppm)</th>
                                 <th>Level</th>
-                            </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody className={`${darkModePref ? "bg-gray-100" : "bg-gray-600"}`}>
+                            <tr >
                                 <td>Nitrogen</td>
-                                <td>{latestNPKReading?.nitrogen? latestNPKReading.nitrogen : "--"} ppm</td>
+                                <td>{latestNPKReading?.nitrogen? latestNPKReading.nitrogen : "--"}</td>
                                 <td>
                                     <div className="nutrient-level">
                                         <div className="nutrient-level-fill" 
@@ -64,7 +63,7 @@
                             </tr>
                             <tr>
                                 <td>Phosphorus</td>
-                                <td>{latestNPKReading?.phosphorous || "--"} ppm</td>
+                                <td>{latestNPKReading?.phosphorous || "--"}</td>
                                 <td>
                                     <div className="nutrient-level">
                                         <div className={`nutrient-level-fill`}
@@ -74,7 +73,7 @@
                             </tr>
                             <tr>
                                 <td>Potassium</td>
-                                <td>{latestNPKReading?.potassium || "--"} ppm</td>
+                                <td>{latestNPKReading?.potassium || "--"}</td>
                                 <td>
                                     <div className="nutrient-level">
                                         <div className="nutrient-level-fill" style={{width: `${latestNPKReading?.potassium? getPotassiumLevel(latestNPKReading.potassium) : 0}%`}}></div>
@@ -87,6 +86,10 @@
             </div>
             </>
         );
+    }
+
+    NPKLatest.propTypes = {
+        darkModePref: PropTypes.bool.isRequired
     }
 
     export default NPKLatest;
