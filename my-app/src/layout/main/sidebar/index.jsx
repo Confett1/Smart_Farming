@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { Home, BarChart2, Clock, Users, Settings, Leaf } from "lucide-react";
 
 const Sidebar = ({userProfile, darkModePref}) => {
-const Sidebar = ({ userProfile = {} }) => {
   useEffect(() => {
     console.log(userProfile);
   }, [userProfile]);
@@ -174,5 +173,4 @@ Sidebar.propTypes = {
   userProfile: PropTypes.any.isRequired,
   darkModePref: PropTypes.any.isRequired,
 }
-};
 export default Sidebar;
