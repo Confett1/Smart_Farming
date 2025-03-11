@@ -43,7 +43,7 @@ const Header = ({userProfile}) => {
                     />
                 </div>
                 
-                <Notifications userProfile={userProfile} />
+                <Notifications userProfile={userProfile} darkModePref={darkModePref} />
                 <ProfileMenu image={userProfile} userProfile={userProfile} />
             </div>
         </header>
