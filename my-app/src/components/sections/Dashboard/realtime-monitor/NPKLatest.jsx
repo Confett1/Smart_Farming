@@ -46,9 +46,11 @@ import PropTypes from "prop-types";
                 <h3 className="mb-5 text-lg font-bold">NPK Levels</h3>
                     <table >
                         <thead className={`${darkModePref ? "bg-[#18923a99]" :"bg-[#111a2a99]"}`}>
-                                <th>Nutrient</th>
-                                <th>Value (ppm)</th>
-                                <th>Level</th>
+                                <tr>
+                                    <th>Nutrient</th>
+                                    <th>Value (ppm)</th>
+                                    <th>Level</th>
+                                </tr>
                         </thead>
                         <tbody className={`${darkModePref ? "bg-gray-100" : "bg-gray-600"}`}>
                             <tr >

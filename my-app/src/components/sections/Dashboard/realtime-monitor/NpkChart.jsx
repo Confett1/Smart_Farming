@@ -30,7 +30,7 @@ const NpkChart = ({ readings, darkModePref }) => {
             textStyle: {
                 color: darkModePref ? "white" : "white" 
             },
-            data: readings.map(reading =>
+            data: [...readings].reverse().map(reading =>
                 new Date(reading.timestamp).toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",

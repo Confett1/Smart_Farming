@@ -14,13 +14,22 @@ const RealTimeMonitor = () => {
         nitrogen: "--",
         phosphorous: "--",
         potassium: "--",
+        soilMoisture: 0,
+        humidity: 0,
+        temperature: 0,
+        waterLevel: 0, 
     });
     const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     const fetchLatestReading = () => {
         API.get("/npk/latest")
         .then((response) => {
-            setLatestNPKReading(response.data);
+            console.log(response.data);
+            
+            setLatestNPKReading(prevState => ({
+                ...prevState,  // Keep previous values
+                ...response.data // Update with new values
+            }));
         })
         .catch(error => console.error("Error fetching NPK data", error));
     }
@@ -37,11 +46,14 @@ const RealTimeMonitor = () => {
     useEffect(() => {
         fetchLatestReading();
         fetchFiveLatestReadings();
-        console.log(latestNPKReading);
         
-        const interval = setInterval(fetchFiveLatestReadings, 10000);
+        const interval = setInterval(() => {
+                fetchLatestReading();
+                fetchFiveLatestReadings();
+            }, 1000);
+
         return () => clearInterval(interval);
-    }, []);
+    }, []); 
 
     return (
         <>
