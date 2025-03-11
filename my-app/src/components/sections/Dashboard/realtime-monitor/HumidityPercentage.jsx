@@ -11,7 +11,7 @@ const Humidity = ({humidity, darkModePref}) => {
                     text={`${humidity}%`}
                         styles={buildStyles({
                         pathColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",
-                        textColor: darkModePref ? "black" : "white",
+                        textColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",   
                         textSize:"20px",
                         trailColor: darkModePref ? "rgb(201, 198, 198)" : "#290829",
                     })}
