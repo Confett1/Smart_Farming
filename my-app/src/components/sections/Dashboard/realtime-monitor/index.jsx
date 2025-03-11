@@ -61,7 +61,7 @@ const RealTimeMonitor = () => {
 
                 {/* NPK Chart */}
                 <NPKLatest />
-                <SoilMoisture />
+                <SoilMoisture soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} />
                 <HumidityTemperature readings={latestNPKReading} />
                 <NpkChart readings={fiveLatestReadings} />
                 {/* <WaterLevel /> */}

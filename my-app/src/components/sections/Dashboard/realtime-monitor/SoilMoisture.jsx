@@ -1,8 +1,8 @@
 import { Divider } from "@mui/material";
+import PropTypes from "prop-types";
 import GaugeChart from "react-gauge-chart";
 
-const SoilMoisture = () => {
-    const soilMoisture = 50;
+const SoilMoisture = ({soilMoisture}) => {
     const percent = soilMoisture / 100;
 
     const moistureLevel = soilMoisture <= 25 ? "dry" : soilMoisture <=75 ? "moist" : "wet";
@@ -32,5 +32,9 @@ const SoilMoisture = () => {
         </>
     );
 };
+
+SoilMoisture.propTypes = {
+    soilMoisture: PropTypes.any.isRequired
+}
 
 export default SoilMoisture;
