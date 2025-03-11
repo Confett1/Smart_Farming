@@ -8,6 +8,7 @@ import Profile from "../../components/sections/ProfileSection";
 const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const profile = JSON.parse(localStorage.getItem('user'));
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     useEffect(() => {
     
@@ -21,11 +22,13 @@ const ProfilePage = () => {
     
     return (
         <>
+        <div className={`${darkModePref? "" : "bg-gray-700"}`}>
             <Stack p={2.7}>
                 <Breadcrumb PageName={"Profile"} />
-                <Profile profile={profile} />
+                <Profile profile={profile} darkModePref={darkModePref} />
             </Stack>
             <Footer />
+        </div>
         </>
     )
 }
