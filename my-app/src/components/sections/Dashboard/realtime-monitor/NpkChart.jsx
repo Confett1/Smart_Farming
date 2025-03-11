@@ -49,19 +49,19 @@ const NpkChart = ({ readings, darkModePref }) => {
                 name: 'Nitrogen',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.nitrogen),
+                data: [...readings].reverse().map(reading => reading.nitrogen),
             },
             {
                 name: 'Phosphorous',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.phosphorous),
+                data: [...readings].reverse().map(reading => reading.phosphorous),
             },
             {
                 name: 'Potassium',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.potassium),
+                data: [...readings].reverse().map(reading => reading.potassium),
             },
         ],
     };

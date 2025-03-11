@@ -24,7 +24,6 @@ const RealTimeMonitor = () => {
     const fetchLatestReading = () => {
         API.get("/npk/latest")
         .then((response) => {
-            console.log(response.data);
             
             setLatestNPKReading(prevState => ({
                 ...prevState,  // Keep previous values
@@ -50,7 +49,7 @@ const RealTimeMonitor = () => {
         const interval = setInterval(() => {
                 fetchLatestReading();
                 fetchFiveLatestReadings();
-            }, 1000);
+            }, 10000);
 
         return () => clearInterval(interval);
     }, []); 

@@ -15,14 +15,14 @@
 
     /* Tablet: 2 columns */
     @media (max-width: 1024px) {
-        .grid {
+        .nutrient-grid {
             grid-template-columns: repeat(2, 1fr);
         }
     }
 
     /* Mobile: 1 column */
     @media (max-width: 768px) {
-        .grid {
+        .nutrient-grid {
             grid-template-columns: repeat(1, 1fr);
         }
     }
@@ -83,3 +83,12 @@
     .low {
         width: 30%;
     }
+    
+    @media (max-width: 768px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+    
