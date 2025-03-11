@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import API from '../../../../api/api';
 import NpkChart from './NpkChart';
 import WeatherForecast from './WeatherForecast';
-import WaterLevel from './WaterLevel';
-import Fertilizer from './Fertilizer';
+// import WaterLevel from './WaterLevel';
+// import Fertilizer from './Fertilizer';
+import HumidityTemperature from './HumidityTemperature';
+import NPKLatest from './NPKLatest';
+import SoilMoisture from './SoilMoisture';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
@@ -13,6 +16,7 @@ const RealTimeMonitor = () => {
         phosphorous: "--",
         potassium: "--",
     });
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     const fetchLatestReading = () => {
         API.get("/npk/latest")
@@ -34,17 +38,22 @@ const RealTimeMonitor = () => {
     useEffect(() => {
         fetchLatestReading();
         fetchFiveLatestReadings();
-
-        const interval = setInterval(fetchLatestReading, 10000);
+        console.log(latestNPKReading);
+        
+        const interval = setInterval(fetchFiveLatestReadings, 10000);
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <section className="monitoring">
+        <>
+        <div className={`page-name my-2 ${darkModePref ? "text-[#2c3e50]" : "text-gray-200"}`}>
+            <h2>Dashboard</h2>
+        </div>
+        <section className={`monitoring ${darkModePref ? "bg-gray-200" : "bg-gray-800 text-gray-200"}`} >
             <Typography sx={{ textAlign: 'left', fontWeight: 600, mb: -1.5 }}>Real-Time Monitoring</Typography>
             <div className="monitoring-grid">
                 {/* NPK Monitoring */}
-                <div className="card">
+                {/* <div className="card">
                     <div className="card-header">
                         <h3>NPK Monitoring</h3>
                     </div>
@@ -53,15 +62,19 @@ const RealTimeMonitor = () => {
                         <div className="value-box"><span>P</span><div id="p-value">{latestNPKReading.phosphorous}</div></div>
                         <div className="value-box"><span>K</span><div id="k-value">{latestNPKReading.potassium}</div></div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* NPK Chart */}
-                <NpkChart readings={fiveLatestReadings} />
-                <WaterLevel />
-                <WeatherForecast />
-                <Fertilizer />
+                <NPKLatest darkModePref={darkModePref} />
+                <SoilMoisture soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} darkModePref={darkModePref} />
+                <HumidityTemperature readings={latestNPKReading} darkModePref={darkModePref}/>
+                <NpkChart readings={fiveLatestReadings} darkModePref={darkModePref} />
+                {/* <WaterLevel /> */}
+                <WeatherForecast darkModePref={darkModePref} />
+                {/* <Fertilizer /> */}
             </div>
         </section>
+        </>
     );
 };
 

@@ -187,7 +187,7 @@ const ProfileMenu = () => {
 
     const handleMenuItemClick = (path) => {
     if (path === "/login") {
-      localStorage.clear();
+      localStorage.removeItem('user');
       // setUser({ username: '', password: null, userID: '', token: null, role: null, email: null, firstName: null, lastName: null, phoneNumber: null});
     }
 
@@ -218,7 +218,7 @@ const ProfileMenu = () => {
             bgcolor: '',
           }}
         />
-       <Typography variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography>
+       {/* <Typography sx={{textTransform: "capitalize"}} variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography> */}
        <IconifyIcon sx={{ fontSize: 30, ml: -0.6 }} icon={open ? 'material-symbols-light:arrow-drop-up-rounded' : 'material-symbols-light:arrow-drop-down-rounded'} />
       </ButtonBase>
 
@@ -248,7 +248,7 @@ const ProfileMenu = () => {
           <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { borderRadius: 3 } }}>
             <Avatar src={userProfile?.userProfile ? userProfile.userProfile : userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
             <Stack direction="column">
-              <Typography variant="body2" color="text.primary" fontWeight={600}>
+              <Typography sx={{textTransform: "capitalize"}} variant="body2" color="text.primary" fontWeight={600}>
                 {userProfile.firstName} {userProfile.lastName}
               </Typography>
               <Typography variant="caption" color="text.secondary" fontWeight={400}>

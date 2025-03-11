@@ -66,8 +66,8 @@ select {
 }
 
 section {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  /* background-color: #fff; */
+  /* border: 1px solid #ddd; */
   border-radius: 5px;
   padding: 20px;
   margin: 20px auto;
@@ -90,7 +90,7 @@ section {
 }
 
 .card {
-  background: var(--card-background);
+  /* background: var(--card-background); */
   border-radius: var(--border-radius);
   padding: 24px;
   box-shadow: var(--shadow-md);
@@ -108,7 +108,7 @@ section {
   align-items: center;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .card-header h3 {
@@ -293,12 +293,12 @@ section {
 .temperature {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #2c3e50;
+  /* color: #2c3e50; */
 }
 
 .condition {
   font-size: 1.2rem;
-  color: #666;
+  /* color: #666; */
 }
 
 .weather-details {
@@ -540,7 +540,6 @@ section {
 }
 
 .card-body {
-  height: 300px;
   position: relative;
 }
 

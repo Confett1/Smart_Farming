@@ -2,14 +2,13 @@
 
 import { useState } from "react"
 import GeneralSettings from "./GeneralSettings"
-import FarmSettings from "./FarmSettings"
+// import FarmSettings from "./FarmSettings"
 import SecuritySettings from "./Security"
-import NotificationSettings from "./NotificationSettings"
+// import NotificationSettings from "./NotificationSettings"
 
 const SettingsContent = () => {
   const [formData, setFormData] = useState({
     notifications: "",
-    darkMode: "",
     units: "metric",
     syncFrequency: "15",
     email: "",
@@ -26,6 +25,8 @@ const SettingsContent = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }))
+    console.log(formData.darkMode);
+    
   }
 
   const handleSubmit = (e) => {
@@ -37,9 +38,9 @@ const SettingsContent = () => {
     <div>
       <form onSubmit={handleSubmit} className="grid grid-cols-[1fr,1fr] gap-2.5">
         <GeneralSettings formData={formData.notifications} handleChange={handleChange}  />
-        <FarmSettings />
+        {/* <FarmSettings /> */}
         <SecuritySettings />
-        <NotificationSettings />
+        {/* <NotificationSettings /> */}
 
 
         {/* Farm Settings */}

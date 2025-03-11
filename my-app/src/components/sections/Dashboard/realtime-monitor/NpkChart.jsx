@@ -1,17 +1,17 @@
 import ReactECharts from 'echarts-for-react';
 import PropTypes from 'prop-types';
 
-const NpkChart = ({ readings }) => {
+const NpkChart = ({ readings, darkModePref }) => {
     // Ensure that we have readings before rendering the chart
     const option = {
-        title: {
-            text: 'NPK Chart',
-        },
         tooltip: {
             trigger: 'axis',
         },
         legend: {
             data: ['Nitrogen', 'Phosphorous', 'Potassium'],
+            textStyle: {
+                color: darkModePref ? "#1F2937" : "#E5E7EB" 
+            }
         },
         grid: {
             left: '3%',
@@ -27,6 +27,9 @@ const NpkChart = ({ readings }) => {
         xAxis: {
             type: 'category',
             boundaryGap: false,
+            textStyle: {
+                color: darkModePref ? "white" : "white" 
+            },
             data: readings.map(reading =>
                 new Date(reading.timestamp).toLocaleTimeString("en-US", {
                     hour: "2-digit",
@@ -37,6 +40,9 @@ const NpkChart = ({ readings }) => {
         },
         yAxis: {
             type: 'value',
+            textStyle: {
+                color: darkModePref ? "#1F2937" : "#E5E7EB" 
+            }
         },
         series: [
             {
@@ -60,11 +66,17 @@ const NpkChart = ({ readings }) => {
         ],
     };
 
-    return <ReactECharts option={option} />;
+    return (
+        <div className={`${darkModePref ? "bg-gray-100" : "bg-gray-700"} p-6 rounded-lg shadow-md hover:shadow-lg transition-all`}>
+            <h3 className='mb-5 text-lg font-bold'>NPK Chart</h3>
+            <ReactECharts option={option} />
+        </div>
+    );
 };
 
 NpkChart.propTypes = {
-    readings: PropTypes.any.isRequired
+    readings: PropTypes.any.isRequired,
+    darkModePref: PropTypes.bool.isRequired
 }
 
 export default NpkChart;

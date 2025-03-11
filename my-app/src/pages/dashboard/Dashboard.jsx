@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import SystemStatus from '../../components/sections/Dashboard/system-status';
+// import SystemStatus from '../../components/sections/Dashboard/system-status';
 import PageLoader from '../../components/loader/LinearLoader';
 import '../../styles/Homepage.css';
 import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
 import { Stack } from '@mui/material';
 import { signedIn } from '../../utils/toast';
-// import useAuth from "../../hooks/useAuth";
 
-const Dashboard = () => {  
-  // const user = useAuth();
+const Dashboard = () => { 
   const [isLoading, setIsLoading] = useState(true);
+  const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
   useEffect(() => {
     signedIn();
@@ -25,11 +24,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <Stack p={2.7}>
-        <SystemStatus />
-        <RealTimeMonitor />
-      </Stack>
-      <Footer />
+      <div className={`${darkModePref? "" : "bg-gray-700"}`}>
+        <Stack p={2.7}> 
+          <RealTimeMonitor />
+        </Stack>
+        <Footer />
+      </div>
     </>
   );
 };

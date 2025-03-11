@@ -4,12 +4,15 @@ import {Link} from "react-router-dom"
 import API from "../../../api/api";
 import PropTypes from "prop-types";
 import { toastConfirm } from "../../../utils/toast";
+import Swal from "sweetalert2";
 
 const Notifications = ( {userProfile} ) => {
     const [isNotifOpen, setIsNotifOpen] = useState(false);
     const notifDropdownRef = useRef(null);
     const [notifications, setNotifications] = useState([]);
     const [viewedNotificationId, setViewedNotificationId] = useState(null);
+    const [filterType, setFilterType] = useState("all");
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     const toggleViewMessage = (notificationId) => {
         setViewedNotificationId(prevId => (prevId === notificationId ? null : notificationId));
@@ -22,13 +25,28 @@ const Notifications = ( {userProfile} ) => {
     };
 
     const deleteNotification = async (notificationId) => {
-        toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning");
+        const result = await toastConfirm("Are you sure you want to delete this notification?", "Confirm deletion", "warning", "Yes, Delete it.");
+        if(result.isConfirmed) {
             try {
                 await API.delete(`/notifications/${notificationId}`);
                 setNotifications((prevNotifications) => prevNotifications.filter(n => n.notificationId !== notificationId));
+                
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "The notification has been deleted.",
+                    icon: "success"
+                });
+
             } catch (err) {
                 console.error("Error deleting notification: ", err);
+
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete notification.",
+                    icon: "error"
+                });
             }
+        }
     }
 
     const readNotification = async (notificationId) => {
@@ -54,6 +72,26 @@ const Notifications = ( {userProfile} ) => {
             );
         } catch (err) {
             console.error("Error marking all as read: ", err);
+        }
+    };
+
+    const filterAlert = (type) => {
+        setFilterType(type);
+    };
+
+    // Filter notifications based on selected type
+    const filteredNotifications =
+        filterType === "all" ? notifications : notifications.filter((notif) => notif.type === filterType);
+
+
+
+    const getIcon = (type) => {
+        switch (type) {
+            case "alert": return "fas fa-exclamation-circle text-red-500";
+            case "warning": return "fas fa-exclamation-triangle text-yellow-500";
+            case "info": return "fas fa-info-circle text-blue-500";
+            case "success": return "fas fa-check-circle text-green-500";
+            default: return "fas fa-bell text-gray-500";
         }
     };
 
@@ -84,8 +122,10 @@ const Notifications = ( {userProfile} ) => {
     return (
         <div ref={notifDropdownRef} className="mx-3">
             <button id="notificationBtn" aria-label="Notifications" onClick={toggleNotif}>
-                <i className="fas fa-bell"></i>
-                <span className="notification-count pulse">{notifications.length}</span>
+                <i className={`fas fa-bell ${darkModePref ? "text-gray-700" : "text-gray-200"}`}></i>
+                {notifications.filter(notification => !notification.isRead).length > 0 && (
+                    <span className="notification-count pulse">{notifications.filter(notification => !notification.isRead).length}</span>
+                )}
             </button>
             {isNotifOpen && (
                 <div className="notification-dropdown" style={{ display: 'block' }}>
@@ -96,23 +136,23 @@ const Notifications = ( {userProfile} ) => {
                                 <i className="fas fa-check-double"></i>
                                 Mark all as read
                             </button>
-                            <button className="notification-settings">
+                            <button className={`notification-settings`}>
                                 <i className="fas fa-cog"></i>
                             </button>
                         </div>
                     </div>
                     <div className="flex gap-2 border-b border-gray-200 py-1 px-6">
-                        <button className="filter-btn active" data-filter="all">All</button>
-                        <button className="filter-btn" data-filter="alert">Alerts</button>
-                        <button className="filter-btn" data-filter="warning">Warnings</button>
-                        <button className="filter-btn" data-filter="info">Info</button>
+                        <button className={`filter-btn ${filterType === "all" ? "active" : ""}`} data-filter="all" onClick={() => filterAlert("all")}>All</button>
+                        <button className={`filter-btn ${filterType === "alert" ? "active" : ""}`} data-filter="alert" onClick={() => filterAlert("alert")} >Alerts</button>
+                        <button className={`filter-btn ${filterType === "warning" ? "active" : ""}`} data-filter="warning" onClick={() => filterAlert("warning")}>Warnings</button>
+                        <button className={`filter-btn ${filterType === "info" ? "active" : ""}`} data-filter="info" onClick={() => filterAlert("info")} >Info</button>
                     </div>
-                    <div className="notification-list">
-                        {notifications.length > 0 ? (
-                            notifications.map((notification) => (
+                    <div className={`notification-list ${darkModePref? "text-gray-600" : "text-gray-200"}`}>
+                        {filteredNotifications.length > 0 ? (
+                            filteredNotifications.map((notification) => (
                                 <div key={notification.notificationId} className={`notification-item ${notification.isRead ? "read" : "unread"} alert`}>
                                     <div className="notification-icon">
-                                        <i className="fas fa-exclamation-circle"></i>
+                                        <i className={`${getIcon(notification.type)}`}></i>
                                     </div>
                                     <div className="notification-content">
                                         <div className="text-left text-sm font-bold">{notification.title}</div>

@@ -103,10 +103,11 @@ select {
 
 /* Control Elements */
 .control-btn {
-  width: 100%;
+  width: 50% ;
+  height: 12rem;
   padding: 14px;
-  border: none;
-  border-radius: var(--border-radius);
+  border: none; 
+  border-radius: 50%;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   font-weight: 600;

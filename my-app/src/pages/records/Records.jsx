@@ -9,6 +9,7 @@ import RecordsComponent from '../../components/sections/Records';
 import API from '../../api/api';
 import { toast } from '../../utils/toast';
 import { TextField } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const Records = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,18 +19,23 @@ const Records = () => {
         duration: "",
         status: "",
     });
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+  
+    if (user.role !== 'admin') {
+      navigate('/login');
+    }
 
     const addRecord = async () => {
         try {
             const response = await API.post("/records/add", recordDetails);
-            alert(response.data);
             setRecordDetails({
                 activityName: "",
                 duration: "",
                 status: "",
             })
 
-            toast("You successfully added a new record", "Added New Record", "success");
+            toast(response.data, "Added New Record", "success");
         } catch (error) {
             console.error("Error adding record: ", error);
 
@@ -44,6 +50,8 @@ const Records = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     const openModal = () => {
         setIsModalOpen(true)
@@ -173,12 +181,14 @@ const Records = () => {
                     /> */}
                 </form>
             </Modal>
-
+            
+            <div className={`h-screen ${darkModePref? "" : "bg-gray-700"}`}>
             <Stack mx={2.7} my={1}>
                 <Breadcrumb PageName={"Records"} />
                 <RecordsComponent openModal={openModal} />
             </Stack>
             <Footer />
+            </div>
         </>
     );
 }
