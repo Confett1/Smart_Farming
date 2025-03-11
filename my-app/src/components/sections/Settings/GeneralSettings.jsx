@@ -21,7 +21,7 @@ const GeneralSettings = ( formData ) => {
   }
 
     return (
-        <div className={`p-4 ${darkModePref? "bg-white" : "bg-gray-600"} rounded-xl shadow duration-300`}>
+        <div className={`p-4 ${darkModePref? "bg-white" : "bg-gray-800"} rounded-xl shadow duration-300`}>
         <div className={`${darkModePref? "text-gray-700" : "text-gray-300 "} border-b border-gray-100`}>
           <h3 className="text-lg font-semibold">General Settings</h3>
           <p className=" text-sm pb-2.5">Manage your general preferences</p>
