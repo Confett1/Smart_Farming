@@ -12,4 +12,21 @@
     .print-hidden {
       display: none !important;
     }
+  
+
+
+    /* Ensure colors are preserved */
+    body {
+        -webkit-print-color-adjust: exact; /* Forces the browser to use original colors */
+        color-adjust: exact; /* Applies the same for non-WebKit browsers */
+    }
+    
+    /* Hide unnecessary buttons in print view */
+    .print\:hidden {
+        display: none;
+    }
+
+    .print\:block {
+        display: block;
+    }
   }
