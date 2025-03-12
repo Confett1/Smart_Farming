@@ -3,11 +3,11 @@ import { CalendarIcon, X, Printer } from 'lucide-react'; // Import icons
 import logoicon from "../../../assets/images/logo.png";
 import "../../../styles/print.css";
 
-export function Report({ selectedPeriod, onClose }) {
+export function Report({ selectedPeriod, onClose}) {
     const reportData = {
         title: "Agricultural Performance Report",
         date: new Date().toLocaleDateString(),
-        author: "John Doe",
+        author: "Vince",
         department: "Agriculture",
         summary:
             "This report summarizes the agricultural performance based on harvest, water usage, and fertilizer usage.",
@@ -35,6 +35,9 @@ export function Report({ selectedPeriod, onClose }) {
         },
     };
 
+
+    // const authorName = `${userProfile?.firstName || ""} ${userProfile?.lastName || ""} ${userProfile?.suffix || ""}`.trim();
+
     const data = reportData.content[selectedPeriod];
 
     const handlePrint = () => {
@@ -42,9 +45,12 @@ export function Report({ selectedPeriod, onClose }) {
     };
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-            {/* Icons for Exit and Print */}
-            <div className="absolute top-4 right-4 flex space-x-4 z-60">
+        <div className="fixed inset-0 flex justify-center items-center  bg-opacity-10 z-50">
+      
+          
+            {/* Report Content */}
+            <div className="bg-white shadow-lg rounded-lg relative max-h-[90vh] w-full max-w-[210mm] overflow-y-auto print:container">
+            <div className="absolute top-4 right-4 flex space-x-4 print:hidden">
                 <button
                     className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                     onClick={onClose}
@@ -58,10 +64,7 @@ export function Report({ selectedPeriod, onClose }) {
                     <Printer className="h-6 w-6 text-gray-700" />
                 </button>
             </div>
-
-            {/* Report Content */}
-            <div className="bg-white shadow-lg rounded-lg relative max-h-[90vh] w-full max-w-[800px] overflow-y-auto print:max-w-full">
-                <div className="mx-auto bg-white p-[20mm] flex flex-col print:p-0">
+                <div className="mx-auto bg-white p-[20mm] flex flex-col print:p-[10mm]">
                     {/* Report Header */}
                     <div className="flex justify-between items-start border-b pb-4 mb-6">
                         <div>
