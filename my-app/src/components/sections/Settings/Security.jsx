@@ -3,7 +3,7 @@
 const SecuritySettings = (formData, handleChange) => {
   const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
   return (
-    <div className={`${darkModePref ? "bg-white text-gray-600" : "text-gray-200 bg-gray-600"} p-4 rounded-xl shadow duration-300`}>
+    <div className={`${darkModePref ? "bg-white text-gray-600" : "text-gray-200 bg-gray-800"} p-4 rounded-xl shadow duration-300`}>
       <div className={`border-b border-gray-100`}>
         <h3 className="text-lg font-semibold">Security and Privacy</h3>
         <p className="text-sm pb-2.5">Manage your security settings</p>

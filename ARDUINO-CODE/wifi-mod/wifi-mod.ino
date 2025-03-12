@@ -1,146 +1,182 @@
-// // this work 
-// #include <WiFi.h>
-// #include <WebServer.h>
-// #include <DNSServer.h>
+// // // this work 
+// // #include <WiFi.h>
+// // #include <WebServer.h>
+// // #include <DNSServer.h>
+// // #include <HTTPClient.h>
 
-// const char *ssid = "SMART-FARMING-ESP32";
-// const char *password = "smartfarming";
+// // const char *ssid = "SMART-FARMING-ESP32";
+// // const char *password = "smartfarming";
+// // const char* serverUrl = "http://10.0.23.158:8080/api/npk/add";
 
-// IPAddress apIP(192, 168, 4, 1);
-// IPAddress gateway(192, 168, 4, 1);
-// IPAddress subnet(255, 255, 255, 0);
+// // const char *ssid_sta = "Zion Piso Wifi"; // Change to your router's Wi-Fi
 
-// DNSServer dnsServer;
-// WebServer server(80);
+// // IPAddress apIP(192, 168, 4, 1);
+// // IPAddress gateway(192, 168, 4, 1);
+// // IPAddress subnet(255, 255, 255, 0);
 
-// const byte DNS_PORT = 53;
+// // DNSServer dnsServer;
+// // WebServer server(80);
 
-// // Sensor data placeholders
-// String NPK = "-";
-// String pH = "-";
-// String temperature = "-";
-// String humidity = "-";
-// String moisture = "-";
-// String ecValue = "-";
+// // const byte DNS_PORT = 53;
 
-// String html_page;
+// // // Sensor data placeholders
+// // String NPK = "-";
+// // String nitrogen = "-";
+// // String phosphorous = "-";
+// // String potassium = "-";
+// // String pH = "-";
+// // String temperature = "-";
+// // String humidity = "-";
+// // String moisture = "-";
+// // String ecValue = "-";
 
-// void generatePage() {
-//   html_page = R"rawliteral(
-//     <!DOCTYPE html><html><head><title>Smart Farming</title>
-//     <style>body{font-family:Arial;text-align:center;padding:20px;}table{margin:auto;}</style>
-//     <script>
-//     function fetchData() {
-//       fetch('/data')
-//         .then(response => response.json())
-//         .then(data => {
-//           document.getElementById('npk').innerText = data.NPK;
-//           document.getElementById('ph').innerText = data.pH;
-//           document.getElementById('temp').innerText = data.temperature + " °C";
-//           document.getElementById('humidity').innerText = data.humidity + " %";
-//           document.getElementById('moisture').innerText = data.moisture;
-//           document.getElementById('ec').innerText = data.ecValue;
-//         });
-//     }
-//     setInterval(fetchData, 2000); // Update every 2 seconds
-//     </script>
-//     </head><body>
-//     <h1>Smart Farming Data</h1>
-//     <table border='1'>
-//       <tr><th>Sensor</th><th>Value</th></tr>
-//       <tr><td>NPK</td><td id="npk">-</td></tr>
-//       <tr><td>pH</td><td id="ph">-</td></tr>
-//       <tr><td>Temperature</td><td id="temp">-</td></tr>
-//       <tr><td>Humidity</td><td id="humidity">-</td></tr>
-//       <tr><td>Soil Moisture</td><td id="moisture">-</td></tr>
-//       <tr><td>EC</td><td id="ec">-</td></tr>
-//     </table>
-//     </body></html>
-//   )rawliteral";
-// }
+// // String html_page;
 
-// void handleRoot() {
-//   generatePage();
-//   server.send(200, "text/html", html_page);
-// }
+// // void generatePage() {
+// //   html_page = R"rawliteral(
+// //     <!DOCTYPE html><html><head><title>Smart Farming</title>
+// //     <style>body{font-family:Arial;text-align:center;padding:20px;}table{margin:auto;}</style>
+// //     <script>
+// //     function fetchData() {
+// //       fetch('/data')
+// //         .then(response => response.json())
+// //         .then(data => {
+// //           document.getElementById('npk').innerText = data.NPK;
+// //           document.getElementById('ph').innerText = data.pH;
+// //           document.getElementById('temp').innerText = data.temperature + " °C";
+// //           document.getElementById('humidity').innerText = data.humidity + " %";
+// //           document.getElementById('moisture').innerText = data.moisture;
+// //           document.getElementById('ec').innerText = data.ecValue;
+// //         });
+// //     }
+// //     setInterval(fetchData, 2000); // Update every 2 seconds
+// //     </script>
+// //     </head><body>
+// //     <h1>Smart Farming Data</h1>
+// //     <table border='1'>
+// //       <tr><th>Sensor</th><th>Value</th></tr>
+// //       <tr><td>NPK</td><td id="npk">-</td></tr>
+// //       <tr><td>pH</td><td id="ph">-</td></tr>
+// //       <tr><td>Temperature</td><td id="temp">-</td></tr>
+// //       <tr><td>Humidity</td><td id="humidity">-</td></tr>
+// //       <tr><td>Soil Moisture</td><td id="moisture">-</td></tr>
+// //       <tr><td>EC</td><td id="ec">-</td></tr>
+// //     </table>
+// //     </body></html>
+// //   )rawliteral";
+// // }
 
-// void handleData() {
-//   String json = "{";
-//   json += "\"NPK\":\"" + NPK + "\",";
-//   json += "\"pH\":\"" + pH + "\",";
-//   json += "\"temperature\":\"" + temperature + "\",";
-//   json += "\"humidity\":\"" + humidity + "\",";
-//   json += "\"moisture\":\"" + moisture + "\",";
-//   json += "\"ecValue\":\"" + ecValue + "\"";
-//   json += "}";
-//   server.send(200, "application/json", json);
-// }
+// // void handleRoot() {
+// //   generatePage();
+// //   server.send(200, "text/html", html_page);
+// // }
 
-// void setup() {
-//   Serial.begin(9600);
-//   Serial2.begin(9600, SERIAL_8N1, 16, 17); // RX=16, TX=17
+// // void handleData() {
+// //   String json = "{";
+// //   json += "\"NPK\":\"" + NPK + "\",";
+// //   json += "\"pH\":\"" + pH + "\",";
+// //   json += "\"temperature\":\"" + temperature + "\",";
+// //   json += "\"humidity\":\"" + humidity + "\",";
+// //   json += "\"moisture\":\"" + moisture + "\",";
+// //   json += "\"ecValue\":\"" + ecValue + "\"";
+// //   json += "}";
+// //   server.send(200, "application/json", json);
+// // }
+
+// // void setup() {
+// //   Serial.begin(9600);
+// //   Serial2.begin(9600, SERIAL_8N1, 16, 17); // RX=16, TX=17
   
-//   WiFi.softAPConfig(apIP, gateway, subnet);
-//   WiFi.softAP(ssid, password);
-//   dnsServer.start(DNS_PORT, "*", apIP);
+// //   WiFi.softAPConfig(apIP, gateway, subnet);
+// //   WiFi.softAP(ssid, password);
+// //   dnsServer.start(DNS_PORT, "*", apIP);
+
+// //    // Connect to Router (STA mode)
+// //     WiFi.begin(ssid_sta);
+// //     Serial.print("Connecting to Wi-Fi");
+// //     while (WiFi.status() != WL_CONNECTED) {
+// //         delay(500);
+// //         Serial.print(".");
+// //     }
   
-//   server.on("/", handleRoot);
-//   server.on("/data", handleData);  // JSON endpoint
-//   server.onNotFound(handleRoot);
-//   server.begin();
+// //   server.on("/", handleRoot);
+// //   server.on("/data", handleData);  // JSON endpoint
+// //   server.onNotFound(handleRoot);
+// //   server.begin();
 
-//   Serial.println("✅ ESP32 Wi-Fi Server with AJAX Started");
-//   Serial.println(WiFi.softAPIP());
-// }
+// //   Serial.println("✅ ESP32 Wi-Fi Server with AJAX Started");
+// //   Serial.println(WiFi.softAPIP());
+// // }
 
-// void loop() {
-//   dnsServer.processNextRequest();
-//   server.handleClient();
+// // void sendDataToServer() {
+// //     if (WiFi.status() == WL_CONNECTED) {
+// //         HTTPClient http;
+// //         http.begin(serverUrl);
+// //         http.addHeader("Content-Type", "application/json");
 
-//   if (Serial2.available()) {
-//     String data = Serial2.readStringUntil('\n');
-//     data.trim();
-//     if (data.length() > 0) {
-//       Serial.println("Received: " + data);
-//       parseData(data);
-//     }
-//   }
-// }
+// //         String jsonData = "{\"n\":\"" + nitrogen + "\",\"p\":\"" + phosphorous + "\",\"k\":\"" + potassium +  "\",\"temperature\":\"" + temperature + "\",\"humidity\":\"" + humidity + "\"}";
 
-// void parseData(String data) {
-//   int nIndex = data.indexOf("N:") + 2;
-//   int pIndex = data.indexOf("P:") + 2;
-//   int kIndex = data.indexOf("K:") + 2;
-//   int moistureIndex = data.indexOf("Moisture:") + 9;
-//   int tempIndex = data.indexOf("Temp:") + 5;
-//   int ecIndex = data.indexOf("EC:") + 3;
-//   int humidityIndex = data.indexOf("Humidity:") + 9;
-//   int phIndex = data.indexOf("pH:") + 3;
+// //         int httpResponseCode = http.POST(jsonData);
+// //         if (httpResponseCode > 0) {
+// //             Serial.println("Data sent successfully: " + jsonData);
+// //             String response = http.getString();
+// //             Serial.println("Server response: " + response);
+// //         } else {
+// //             Serial.print("Error sending data: ");
+// //             Serial.println(httpResponseCode);
+// //         }
+// //         http.end();
+// //     } else {
+// //         Serial.println("Wi-Fi Disconnected");
+// //     }
+// // }
 
-//   int n = data.substring(nIndex, data.indexOf(",", nIndex)).toInt();
-//   int p = data.substring(pIndex, data.indexOf(",", pIndex)).toInt();
-//   int k = data.substring(kIndex, data.indexOf(",", kIndex)).toInt();
-//   float moistureVal = data.substring(moistureIndex, data.indexOf(",", moistureIndex)).toFloat();
-//   float tempVal = data.substring(tempIndex, data.indexOf(",", tempIndex)).toFloat();
-//   float ecVal = data.substring(ecIndex, data.indexOf(",", ecIndex)).toFloat();
-//   float humidityVal = data.substring(humidityIndex, data.indexOf(",", humidityIndex)).toFloat();
-//   float phVal = data.substring(phIndex).toFloat();
+// // void loop() {
+// //   dnsServer.processNextRequest();
+// //   server.handleClient();
 
-//   NPK = String(n) + "-" + String(p) + "-" + String(k);
-//   moisture = String(moistureVal);
-//   temperature = String(tempVal);
-//   ecValue = String(ecVal);
-//   humidity = String(humidityVal);
-//   pH = String(phVal);
-// }
+// //   if (Serial2.available()) {
+// //     String data = Serial2.readStringUntil('\n');
+// //     data.trim();
+// //     if (data.length() > 0) {
+// //       Serial.println("Received: " + data);
+// //       parseData(data);
+// //     }
+// //   }
 
+// //   sendDataToServer();
+// //   delay(5000);
+// // }
 
+// // void parseData(String data) {
+// //   int nIndex = data.indexOf("N:") + 2;
+// //   int pIndex = data.indexOf("P:") + 2;
+// //   int kIndex = data.indexOf("K:") + 2;
+// //   int moistureIndex = data.indexOf("Moisture:") + 9;
+// //   int tempIndex = data.indexOf("Temp:") + 5;
+// //   int ecIndex = data.indexOf("EC:") + 3;
+// //   int humidityIndex = data.indexOf("Humidity:") + 9;
+// //   int phIndex = data.indexOf("pH:") + 3;
 
+// //   int n = data.substring(nIndex, data.indexOf(",", nIndex)).toInt();
+// //   int p = data.substring(pIndex, data.indexOf(",", pIndex)).toInt();
+// //   int k = data.substring(kIndex, data.indexOf(",", kIndex)).toInt();
+// //   float moistureVal = data.substring(moistureIndex, data.indexOf(",", moistureIndex)).toFloat();
+// //   float tempVal = data.substring(tempIndex, data.indexOf(",", tempIndex)).toFloat();
+// //   float ecVal = data.substring(ecIndex, data.indexOf(",", ecIndex)).toFloat();
+// //   float humidityVal = data.substring(humidityIndex, data.indexOf(",", humidityIndex)).toFloat();
+// //   float phVal = data.substring(phIndex).toFloat();
 
-
-
-
-
+// //   NPK = String(n) + "-" + String(p) + "-" + String(k);
+// //   nitrogen = String(n);
+// //   phosphorous = String(p);
+// //   potassium = String(k);
+// //   moisture = String(moistureVal);
+// //   temperature = String(tempVal);
+// //   ecValue = String(ecVal);
+// //   humidity = String(humidityVal);
+// //   pH = String(phVal);
+// // }
 
 
 
@@ -332,9 +368,16 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <DNSServer.h>
+#include <HTTPClient.h>
 
 const char *ssid = "SMART-FARMING-ESP32";
 const char *password = "smartfarming";
+const char* serverUrl = "http://192.168.8.100:8080/api/npk/add";
+
+// const char *ssid_sta = "Zion Piso Wifi";
+
+const char *ssid_sta = "HUAWEI-B525-A4E9";
+const char *pass_sta = "DHF5H5R4JB0";
 
 IPAddress apIP(192, 168, 4, 1);
 IPAddress gateway(192, 168, 4, 1);
@@ -347,6 +390,9 @@ const byte DNS_PORT = 53;
 
 // Sensor data placeholders
 String NPK = "-";
+String nitrogen = "-";
+String phosphorous = "-";
+String potassium = "-";
 String pH = "-";
 String temperature = "-";
 String humidity = "-";
@@ -782,7 +828,8 @@ void generatePage() {
         /* Temperature and Humidity */
         .climate-container {
             opacity: 0;
-            height: 300px;
+            min-height: 300px;
+            height: auto;
             box-shadow: 0 0 2px rgba(44, 238, 252, 0.4);
             border: 1px solid rgba(44, 238, 252, 0.3);
             border-radius: 8px;
@@ -2236,6 +2283,14 @@ void setup() {
   WiFi.softAPConfig(apIP, gateway, subnet);
   WiFi.softAP(ssid, password);
   dnsServer.start(DNS_PORT, "*", apIP);
+
+     // Connect to Router (STA mode)
+    WiFi.begin(ssid_sta, pass_sta);
+    Serial.print("Connecting to Wi-Fi");
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
   
   server.on("/", handleRoot);
   server.on("/data", handleData);  // JSON endpoint
@@ -2248,6 +2303,29 @@ void setup() {
 
   Serial.println("✅ ESP32 Wi-Fi Server with AJAX Started");
   Serial.println(WiFi.softAPIP());
+}
+
+void sendDataToServer() {
+    if (WiFi.status() == WL_CONNECTED) {
+        HTTPClient http;
+        http.begin(serverUrl);
+        http.addHeader("Content-Type", "application/json");
+
+        String jsonData = "{\"n\":\"" + nitrogen + "\",\"p\":\"" + phosphorous + "\",\"k\":\"" + potassium +  "\",\"temperature\":\"" + temperature + "\",\"humidity\":\"" + humidity + "\",\"moisture\":\"" + moisture + "\",\"water_level\":\"" + 0 + "\"}";
+
+        int httpResponseCode = http.POST(jsonData);
+        if (httpResponseCode > 0) {
+            Serial.println("Data sent successfully: " + jsonData);
+            String response = http.getString();
+            Serial.println("Server response: " + response);
+        } else {
+            Serial.print("Error sending data: ");
+            Serial.println(httpResponseCode);
+        }
+        http.end();
+    } else {
+        Serial.println("Wi-Fi Disconnected");
+    }
 }
 
 void parseData(String data) {
@@ -2266,6 +2344,9 @@ void parseData(String data) {
     int p = data.substring(pIndex, data.indexOf(",", pIndex)).toInt();
     int k = data.substring(kIndex, data.indexOf(",", kIndex)).toInt();
     NPK = String(n) + "-" + String(p) + "-" + String(k);
+    nitrogen = String(n);
+    phosphorous = String(p);
+    potassium = String(k);
   }
   
   if (moistureIndex > 8) {
@@ -2306,4 +2387,7 @@ void loop() {
       parseData(data);
     }
   }
+
+    sendDataToServer();
+    delay(5000);
 }

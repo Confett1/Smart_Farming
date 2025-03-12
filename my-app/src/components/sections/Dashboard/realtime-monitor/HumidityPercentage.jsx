@@ -3,15 +3,17 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Humidity = ({humidity, darkModePref}) => {
+
     return (
         <>
-            <div className="w-36 h-36 items-center">
+            <div className="flex flex-col items-center justify-center">
+            <div className="w-36 h-36">
                 <CircularProgressbar
                     value={humidity}
                     text={`${humidity}%`}
                         styles={buildStyles({
                         pathColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",
-                        textColor: darkModePref ? "black" : "white",
+                        textColor: humidity > 80 ? "red" : humidity > 50 ? "orange" : "blue",   
                         textSize:"20px",
                         trailColor: darkModePref ? "rgb(201, 198, 198)" : "#290829",
                     })}
@@ -19,6 +21,7 @@ const Humidity = ({humidity, darkModePref}) => {
                     
                 />
                 <h3 className="relative mt-[30px] ml-8 font-bold">Humidity</h3>
+            </div>
             </div>
         </>
     );

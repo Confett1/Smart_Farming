@@ -30,7 +30,7 @@ const NpkChart = ({ readings, darkModePref }) => {
             textStyle: {
                 color: darkModePref ? "white" : "white" 
             },
-            data: readings.map(reading =>
+            data: [...readings].reverse().map(reading =>
                 new Date(reading.timestamp).toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -49,19 +49,19 @@ const NpkChart = ({ readings, darkModePref }) => {
                 name: 'Nitrogen',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.nitrogen),
+                data: [...readings].reverse().map(reading => reading.nitrogen),
             },
             {
                 name: 'Phosphorous',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.phosphorous),
+                data: [...readings].reverse().map(reading => reading.phosphorous),
             },
             {
                 name: 'Potassium',
                 type: 'line',
                 stack: 'Total',
-                data: readings.map(reading => reading.potassium),
+                data: [...readings].reverse().map(reading => reading.potassium),
             },
         ],
     };

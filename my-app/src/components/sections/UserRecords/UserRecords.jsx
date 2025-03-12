@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { alpha } from '@mui/material/styles';
+// import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,15 +11,15 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
+// import Paper from '@mui/material/Paper'; 
+// import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import FilterListIcon from '@mui/icons-material/FilterList';
 import PropTypes from 'prop-types';  // Importing PropTypes
-import { FormControlLabel, MenuItem, Switch } from '@mui/material';
+import { MenuItem} from '@mui/material';
 import API from '../../../api/api';
 import { MoreVerticalIcon } from 'lucide-react';
 import { Menu } from '@mui/joy';
@@ -40,6 +40,8 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
+
 const headCells = [
   { id: 'userProfile', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'dateCreated', numeric: true, disablePadding: false, label: 'Date' },
@@ -49,7 +51,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -57,8 +59,8 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
+        <TableCell >
+          {/* <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -67,7 +69,7 @@ function EnhancedTableHead(props) {
               'aria-label': 'select all desserts',
             }}
             sx={{ml: 3}}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} align={headCell.numeric ? 'center' : 'left'} padding={headCell.disablePadding ? 'none' : 'normal'} sortDirection={orderBy === headCell.id ? order : false}>
@@ -75,7 +77,23 @@ function EnhancedTableHead(props) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
-              sx={{fontWeight: 600, color: "green"}}
+              sx={{
+                fontWeight: 600,
+                color: darkModePref ? "green" : "#d1d5db",
+                "& .MuiTableSortLabel-icon": {
+                  color: darkModePref ? "green" : "#d1d5db", // Ensures the arrow icon color
+                },
+                "&.Mui-active": {
+                  color: darkModePref ? "green" : "#d1d5db",
+                  "& .MuiTableSortLabel-icon": {
+                    color: darkModePref ? "green" : "#d1d5db", // Keeps icon color on active
+                  },
+// Ensures the color remains the same when active
+                },
+                "&:hover": {
+                  color: darkModePref ? "lightgreen" : "#e5e7eb", // Optional: Slight color change on hover
+                },
+              }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -100,32 +118,12 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+function EnhancedTableToolbar() {
   return (
-    <Toolbar sx={[{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }, numSelected > 0 && { bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity) }]}>
-      {numSelected > 0 ? (
-        <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography sx={{ flex: '1 1 100%', fontSize: 15, color: "green" }} variant="h6" id="tableTitle" component="div">
+    <Toolbar className={`${darkModePref ? "bg-white text-green" : "bg-gray-800 text-gray-300 " }`} sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
+        <Typography sx={{ flex: '1 1 100%', fontSize: 15 }} variant="h6" id="tableTitle" component="div">
           Users
         </Typography>
-      )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
     </Toolbar>
   );
 }
@@ -247,21 +245,21 @@ export default function UsersRecordTable() {
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+  // const handleClick = (event, id) => {
+  //   const selectedIndex = selected.indexOf(id);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, id);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+  //   }
+  //   setSelected(newSelected);
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -272,9 +270,9 @@ export default function UsersRecordTable() {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = (event) => {
+  //   setDense(event.target.checked);
+  // };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -287,10 +285,9 @@ export default function UsersRecordTable() {
   );
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
+    <Box  sx={{ width: '100%'}} className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
+        <EnhancedTableToolbar  numSelected={selected.length} />
+        <TableContainer className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
               numSelected={selected.length}
@@ -302,22 +299,28 @@ export default function UsersRecordTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = selected.includes(row.userId);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow hover onClick={(event) => handleClick(event, row.userId)} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.userId} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
-                    <TableCell padding="checkbox">
-                      <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }}  sx={{ml: 3}} />
+                  <TableRow
+                    sx={{
+                      color: darkModePref ? "black" : "white",
+                      cursor: "pointer"
+                    }}
+                    className={`${darkModePref ? "bg-white hover:bg-gray-200" : "bg-gray-800 hover:bg-gray-500 text-gray-300"}`}
+                    tabIndex={-1} key={row.userId}
+                  >
+                    <TableCell>
+                      {/* <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }}  sx={{ml: 3}} /> */}
                     </TableCell>
-                    <TableCell sx={{textTransform: "capitalize"}} component="th" id={labelId} scope="row" padding="none">
+                    <TableCell sx={{textTransform: "capitalize", mr: 3, color: darkModePref ? "black" : '#d1d5db'}} component="th" id={labelId} scope="row" padding="none">
                       {row.lastName}, {row.firstName} {row.suffix || ''} {row.middleName}
                     </TableCell>
-                    <TableCell align="center">{new Date(row.dateCreated).toLocaleDateString()}</TableCell>
-                    <TableCell align="center">{row.role? row.role.toUpperCase() : ''}</TableCell>
-                    <TableCell align="center">{row.userStatus}</TableCell>
-                    <TableCell align="center">
-                      <IconButton 
+                    <TableCell align="center" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{new Date(row.dateCreated).toLocaleDateString()}</TableCell>
+                    <TableCell align="center" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{row.role? row.role.toUpperCase() : ''}</TableCell>
+                    <TableCell align="center" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{row.userStatus}</TableCell>
+                    <TableCell align="center" >
+                      <IconButton sx={{color: darkModePref ? "black" : '#d1d5db'}}
                           onMouseEnter={(event) => handleMenuOpen(event, row.userId)}
                         >
                           <MoreVerticalIcon />
@@ -357,6 +360,18 @@ export default function UsersRecordTable() {
           </Table>
         </TableContainer>
         <TablePagination
+          className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}
+          sx={{
+            color: darkModePref ? "black" : '#d1d5db',
+            "& .MuiSvgIcon-root": {
+              color: darkModePref ? "black" : "#d1d5db", // Changes color of pagination icons
+            },
+            "& .MuiTablePagination-actions": {
+              "& button": {
+                color: darkModePref ? "black" : "#d1d5db", // Ensures buttons (prev/next) match the theme
+              },
+            },
+          }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
@@ -365,8 +380,6 @@ export default function UsersRecordTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
-      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" sx={{ display: "none" }} />
     </Box>
   );
 }

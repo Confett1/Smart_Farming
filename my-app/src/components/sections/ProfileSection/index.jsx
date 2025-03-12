@@ -3,7 +3,7 @@ import profilePic from "../../../assets/images/bomel.jpg"
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const Profile = ({profile}) => {
+const Profile = ({profile, darkModePref}) => {
   console.log(profile);
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const Profile = ({profile}) => {
   
   
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen pt-5 rounded-lg ${darkModePref ? "" : "bg-gray-800"}`}>
       {/* Main Profile Card */}
       <div className="max-w-6xl mx-auto rounded-xl shadow-lg overflow-hidden">
         {/* Profile Header */}
@@ -44,8 +44,8 @@ const Profile = ({profile}) => {
 
         {/* Profile Info */}
         <div className="px-8 py-6 text-center">
-          <h2 className="text-2xl font-semibold text-gray-800">{`${profile.firstName} ${profile.middleName || ''} ${profile.lastName} ${profile.suffix || ''}`}</h2>
-          <p className="text-gray-600 text-sm">Software Developer</p>
+          <h2 className={`text-2xl font-semibold ${darkModePref ? "text-gray-800" : "text-gray-100"}`}>{`${profile.firstName} ${profile.middleName || ''} ${profile.lastName} ${profile.suffix || ''}`}</h2>
+          <p className={` text-sm ${darkModePref ? "text-gray-600" : "text-gray-300"}`}>Software Developer</p>
 
           {/* Social Links */}
           <div className="mt-4 flex justify-center space-x-6">
@@ -69,8 +69,8 @@ const Profile = ({profile}) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* Personal Info */}
             <div className="border border-gray-300 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-800">Personal Information</h3>
-              <div className="mt-4 text-gray-600 text-sm leading-6.5">
+              <h3 className={`text-lg font-semibold ${darkModePref ? "text-gray-800" : "text-gray-100"}`}>Personal Information</h3>
+              <div className={`mt-4 ${darkModePref ? "text-gray-600" : "text-gray-300"} text-sm leading-6.5`}>
                 <p><span className='font-semibold'>First Name:</span> {profile.firstName}</p>
                 <p><span className='font-semibold'>Last Name:</span> {profile.lastName}</p>
                 <p><span className='font-semibold'>Email:</span> {profile.email}</p>
@@ -81,8 +81,8 @@ const Profile = ({profile}) => {
 
             {/* About */}
             <div className="border border-gray-300 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-800">About</h3>
-              <div className="mt-2 text-gray-600 text-sm">
+              <h3 className={`text-lg font-semibold  ${darkModePref ? "text-gray-800" : "text-gray-100"}`}>About</h3>
+              <div className={`${darkModePref ? "text-gray-600" : "text-gray-300"} mt-2 text-sm`}>
                 <p>
                   {profile.bio || "No bio yet."}
                 </p>
@@ -111,7 +111,7 @@ const Profile = ({profile}) => {
         </div> */}
 
         {/* Settings & Actions */}
-         <div className="px-8 py-6 bg-gray-100 rounded-b-xl">
+         <div className="px-8 py-6 rounded-b-xl">
           <div className="flex justify-between">
             <button className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all" onClick={() => handleEdit()}>
               Edit Profile
@@ -127,7 +127,8 @@ const Profile = ({profile}) => {
 };
 
 Profile.propTypes = {
-  profile: PropTypes.any.isRequired
+  profile: PropTypes.any.isRequired,
+  darkModePref: PropTypes.bool.isRequired
 }
 
 export default Profile;

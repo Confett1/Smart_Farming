@@ -28,7 +28,7 @@ const Main = ({ children }) => {
                     },
                     flex: 1,
                     overflow: 'hidden',
-                    bgcolor: `${darkModePref ? "#000" : "#00000"}`,
+                    bgcolor: `${darkModePref ? "#F3F3F3" : "#0000"}`,
                     minHeight: "91vh"
                 }}
             >

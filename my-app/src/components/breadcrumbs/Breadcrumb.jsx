@@ -34,6 +34,9 @@ export default function Breadcrumb({PageName}) {
           xs: 12,
           sm: 16
         },  
+        "& .MuiBreadcrumbs-separator": {
+          color: darkModePref ? "green" : "white", // Change separator color
+        }
       }}
     >
       <Link sx={{
@@ -47,7 +50,7 @@ export default function Breadcrumb({PageName}) {
         </Link>
       ))} */}
 
-      <Typography className={`${darkModePref ? "text-gray-600" : "text-gray-200"}`}>{PageName}</Typography>
+      <Typography className={`${darkModePref ? "text-green-800" : "text-gray-200"}`}>{PageName}</Typography>
     </Breadcrumbs>
     </Box>
   );

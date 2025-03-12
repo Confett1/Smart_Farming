@@ -7,6 +7,7 @@ import EditProfile from "../../components/sections/ProfileSection/EditProfile";
 const ProfileEditPage = () => {
     const [isLoading, setIsLoading] = useState(null);
     const user = JSON.parse(localStorage.getItem('user'));
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
     
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -19,10 +20,12 @@ const ProfileEditPage = () => {
 
     return (
         <>
-            <Stack p={2.7}>
-                <Breadcrumb PageName={"Edit Profile"}/>
-                <EditProfile user={user} />
-            </Stack>
+            <div className={`${darkModePref? "" : "bg-gray-700"}`}>
+                <Stack p={2.7}>
+                    <Breadcrumb PageName={"Edit Profile"}/>
+                    <EditProfile user={user} />
+                </Stack>
+            </div>
         </>
     );
 }
