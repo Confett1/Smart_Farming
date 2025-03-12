@@ -1,93 +1,170 @@
-const ChartsContent = () => {
+import { useState, useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
+import { Wheat, Droplet, Sprout } from "lucide-react";
+
+const ChartsContent = ({ selectedPeriod }) => {
+    const [activeTab, setActiveTab] = useState("harvest");
+    const [chartData, setChartData] = useState({
+        harvest: { labels: [], data: [] },
+        water: { labels: [], data: [] },
+        fertilizer: { labels: [], data: [] },
+    });
+
+    const chartInstance = useRef(null);
+    const chartRef = useRef(null);
+
+    useEffect(() => {
+        const fetchChartData = async (category) => {
+            try {
+                const response = await fetch(`http://localhost:8080/charts/${category}`);
+                const data = await response.json();
+
+                if (!Array.isArray(data)) {
+                    console.error(`Invalid API response for ${category}:`, data);
+                    return;
+                }
+
+                const now = new Date();
+                let filteredData = data.filter((item) => {
+                    const itemDate = new Date(item.timestamp);
+                    
+                    if (selectedPeriod === "currentWeek") {
+                        const startOfWeek = new Date();
+                        startOfWeek.setDate(now.getDate() - now.getDay());
+                        return itemDate >= startOfWeek && itemDate <= now;
+                    } else if (selectedPeriod === "lastWeek") {
+                        const lastWeekStart = new Date();
+                        lastWeekStart.setDate(now.getDate() - now.getDay() - 7);
+                        const lastWeekEnd = new Date(lastWeekStart);
+                        lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+                        return itemDate >= lastWeekStart && itemDate <= lastWeekEnd;
+                    } else if (selectedPeriod === "lastMonth") {
+                        const lastMonth = new Date();
+                        lastMonth.setMonth(now.getMonth() - 1);
+                        return itemDate >= lastMonth && itemDate <= now;
+                    } else if (selectedPeriod === "lastYear") {
+                        const lastYear = new Date();
+                        lastYear.setFullYear(now.getFullYear() - 1);
+                        return itemDate >= lastYear && itemDate <= now;
+                    }
+                    return false;
+                });
+
+                const labels = filteredData.map((item) => new Date(item.timestamp).toLocaleDateString());
+                const values = filteredData.map((item) => item.value);
+
+                setChartData((prevData) => ({
+                    ...prevData,
+                    [category]: { labels, data: values },
+                }));
+            } catch (error) {
+                console.error(`Error fetching ${category} data:`, error);
+            }
+        };
+
+        ["harvest", "water", "fertilizer"].forEach(fetchChartData);
+    }, [selectedPeriod]);
+
+    useEffect(() => {
+        if (!chartRef.current || chartData[activeTab].labels.length === 0) return;
+
+        if (chartInstance.current) {
+            chartInstance.current.destroy();
+        }
+
+        const ctx = chartRef.current.getContext("2d");
+
+        chartInstance.current = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: chartData[activeTab].labels,
+                datasets: [
+                    {
+                        label: `${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Data`,
+                        data: chartData[activeTab].data,
+                        backgroundColor: "rgba(75, 192, 192, 0.2)",
+                        borderColor: "rgba(75, 192, 192, 0.6)",
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: "#4BC0C0",
+                        pointBorderColor: "#fff",
+                        tension: 0.3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { ticks: { color: "#ffffff", font: { size: 14 } } },
+                    y: { ticks: { color: "#ffffff", font: { size: 14, weight: "bold" } } },
+                },
+                plugins: {
+                    legend: { labels: { color: "#ffffff", font: { size: 16, weight: "bold" } } },
+                },
+            },
+        });
+
+        return () => {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
+            }
+        };
+    }, [chartData, activeTab]);
+
     return (
         <>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 mb-8">
-                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
-                    <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Total Harvest</h3>
-                        <span className="icon">📅</span>
-                    </div>
-                    <div className="card-content">
-                        <div className="value">0 kg</div>
-                        <p className="trend">0% from last period</p>
-                    </div>
-                </div>
-                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
-                    <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Water Usage</h3>
-                        <span className="icon">💧</span>
-                    </div>
-                    <div className="card-content">
-                        <div className="value">0 L</div>
-                        <p className="trend">0% from last period</p>
-                    </div>
-                </div>
-                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
-                    <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Fertilizer Used</h3>
-                        <span className="icon">🌱</span>
-                    </div>
-                    <div className="card-content">
-                        <div className="value">0 L</div>
-                        <p className="trend">0% from last period</p>
-                    </div>
-                </div>
-                <div className="bg-[var(--card-background)] rounded-lg p-4 shadow-md">
-                    <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-lg font-semibold text-[var(--muted-color)]">Solar Energy</h3>
-                        <span className="icon">⚡</span>
-                    </div>
-                    <div className="card-content">
-                        <div className="value">0 kWh</div>
-                        <p className="trend">0% from last period</p>
-                    </div>
-                </div>
+            <div className="summary-cards">
+                {["harvest", "water", "fertilizer"].map((key) => {
+                    const values = chartData[key].data;
+                    let percentageChange = "No data";
+
+                    if (values.length > 1) {
+                        const latest = values[values.length - 1];
+                        const previous = values[values.length - 2];
+
+                        if (previous !== 0) {
+                            const change = ((latest - previous) / previous) * 100;
+                            percentageChange = change.toFixed(2) + "%";
+                            percentageChange = change > 0 ? `↑ ${percentageChange}` : `↓ ${percentageChange}`;
+                        } else {
+                            percentageChange = latest > 0 ? "↑ 100%" : "No Change";
+                        }
+                    }
+
+                    const Icon = key === "harvest" ? Wheat : key === "water" ? Droplet : Sprout;
+
+                    return (
+                        <div className="card" key={key}>
+                            <div className="card-header">
+                                <Icon size={24} className="icon text-white" />
+                                <h3>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
+                            </div>
+                            <div className="card-content">
+                                <div className="value">
+                                    {values.length > 0 ? values[values.length - 1] : 0} {key === "harvest" ? "kg" : "L"}
+                                </div>
+                                <p className="trend">{percentageChange}</p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
 
             <div className="tabs">
-                <button className="tab-btn active" data-tab="harvest">Harvest</button>
-                <button className="tab-btn" data-tab="water">Water Usage</button>
-                <button className="tab-btn" data-tab="fertilizer">Fertilizer</button>
-                <button className="tab-btn" data-tab="pestControl">Pest Control</button>
-                <button className="tab-btn" data-tab="solar">Solar Energy</button>
+                {["harvest", "water", "fertilizer"].map((key) => (
+                    <button
+                        key={key}
+                        className={`tab-btn ${activeTab === key ? "active" : ""}`}
+                        onClick={() => setActiveTab(key)}
+                    >
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </button>
+                ))}
             </div>
 
-            <div className="tab-content">
-                <div className="tab-pane active" id="harvest">
-                    <div className="chart-card">
-                        <h2>Rice Harvest Trends</h2>
-                        <p>Monthly harvest amounts in kilograms</p>
-                        <canvas id="harvestChart"></canvas>
-                    </div>
-                </div>
-                <div className="tab-pane" id="water">
-                    <div className="chart-card">
-                        <h2>Water Usage and Irrigation Schedule</h2>
-                        <p>Daily water consumption and irrigation timings</p>
-                        <canvas id="waterChart"></canvas>
-                    </div>
-                </div>
-                <div className="tab-pane" id="fertilizer">
-                    <div className="chart-card">
-                        <h2>Fertilizer Application</h2>
-                        <p>Monthly fertilizer usage in liters</p>
-                        <canvas id="fertilizerChart"></canvas>
-                    </div>
-                </div>
-                <div className="tab-pane" id="pestControl">
-                    <div className="chart-card">
-                        <h2>Pest Control Measures</h2>
-                        <p>Monthly pest control product application in liters</p>
-                        <canvas id="pestControlChart"></canvas>
-                    </div>
-                </div>
-                <div className="tab-pane" id="solar">
-                    <div className="chart-card">
-                        <h2>Solar Energy Consumption</h2>
-                        <p>Daily solar energy usage in kilowatts</p>
-                        <canvas id="solarChart"></canvas>
-                    </div>
-                </div>
+            <div className="chart-container">
+                <canvas ref={chartRef}></canvas>
             </div>
         </>
     );
