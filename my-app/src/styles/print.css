@@ -1,15 +1,25 @@
 @media print {
-    @page {
-      size: A4;
-      margin: 0;
-    }
   
-    body {
-      margin: 0;
-      padding: 0;
-    }
-  
-    .print-hidden {
-      display: none !important;
-    }
+  body {
+      -webkit-print-color-adjust: exact; 
+      color-adjust: exact; 
   }
+
+ 
+  .print\:container {
+      width: 210mm; 
+      height: auto; 
+      margin: 0 auto; 
+      padding: 10mm; 
+      overflow: visible;
+  }
+
+
+  .print\:hidden {
+      display: none;
+  }
+
+  .print\:block {
+      display: block;
+  }
+}
