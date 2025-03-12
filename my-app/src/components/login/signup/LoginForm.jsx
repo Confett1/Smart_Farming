@@ -105,16 +105,28 @@ const LoginForm = () => {
         } else {
             try {
                 const response = await API.post('/user/login', userCredentials);
-                localStorage.setItem("user", JSON.stringify(response.data));
-                const toastResponse = await toast(`Login Successful, welcome ${response.data.firstName}`, "", "success");
+                
+                  localStorage.setItem("user", JSON.stringify(response.data));
+                  setUserCredentials({
+                    username: "************************************",
+                    password: "************************************",
+                  })
+                  const toastResponse = await toast(`Login Successful, welcome ${response.data.firstName}`, "", "success");
 
-                if (toastResponse.isConfirmed) {
-                  navigate('/');
-                }
-                navigate('/');
+                  if (toastResponse.isConfirmed) {
+                    navigate('/');
+                  }
+
             } catch (error) {
                 console.error("Login Failed", error);
-                toast(error.response?.data || "Login Failed!", "", "error");
+                const toastResponse = await toast(error.response?.data.message || "", "Login Failed", "error");
+
+                if (toastResponse.isConfirmed) {
+                  setUserCredentials({
+                    username: '',
+                    password: ''
+                  })
+                }
             }
 
             if (userCredentials.username == "user1" && userCredentials.password == "pass123") {
