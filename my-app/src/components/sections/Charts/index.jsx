@@ -29,7 +29,7 @@ const ChartsComponent = () => {
                 </div>
             </header>
 
-            <ChartsContent selectedPeriod={selectedPeriod} />
+            <ChartsContent selectedPeriod={selectedPeriod} darkModePref={darkModePref} />
         </>
     );
 };

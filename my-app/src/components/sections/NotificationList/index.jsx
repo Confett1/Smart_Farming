@@ -3,7 +3,7 @@ import API from "../../../api/api";
 import PropTypes from "prop-types";
 import LinearLoader from "../../loader/LinearLoader";
 
-const Notifications = ({profile}) => {
+const Notifications = ({profile, darkModePref}) => {
     const [notifications, setNotification] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -115,8 +115,8 @@ const Notifications = ({profile}) => {
     // ];
 
     return (
-        <div className="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <h1 className="text-xl font-semibold mb-6">All Notifications</h1>
+        <div className={`w-full mx-auto p-6 rounded-lg shadow-lg ${darkModePref ? "bg-gray-100 text-gray-800" : "text-gray-300 bg-gray-800"}`}>
+            <h1 className="text-xl font-semibold mb-6 ">All Notifications</h1>
             { isLoading ? (
                 <LinearLoader />
             ) : error ? (
@@ -128,7 +128,7 @@ const Notifications = ({profile}) => {
                 {notifications.map((notification) => (
                     <li
                         key={notification.notificationId}
-                        className="flex items-center p-2 border-b border-gray-200 hover:bg-gray-50"
+                        className={`flex items-center p-2 border-b ${ darkModePref ? "hover:bg-gray-200 border-gray-300" : " border-gray-700 hover:bg-gray-700"} rounded-sm`}
                     >
                         <div className="flex-shrink-0">
                             <span className={`notification-icon ${getColor(notification.type)}`}>
@@ -136,8 +136,8 @@ const Notifications = ({profile}) => {
                             </span>
                         </div>
                         <div className="ml-4">
-                            <p className="text-gray-800 font-semibold">{notification.title}</p>
-                            <p className="text-gray-600">{notification.messageBody}</p>
+                            <p className={`font-semibold`}>{notification.title}</p>
+                            <p className="">{notification.messageBody}</p>
                             <span className="text-xs text-gray-500">{getTimeAgo(notification.createdAt)}</span>
                         </div>
                     </li>
@@ -149,7 +149,8 @@ const Notifications = ({profile}) => {
 };
 
 Notifications.propTypes = {
-    profile: PropTypes.any.isRequired
+    profile: PropTypes.any.isRequired,
+    darkModePref: PropTypes.bool.isRequired
 }
 
 export default Notifications;

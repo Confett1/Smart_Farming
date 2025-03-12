@@ -8,6 +8,7 @@ import PageLoader from '../../components/loader/LinearLoader';
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const profile = JSON.parse(localStorage.getItem('user'));
+    const darkModePref = JSON.parse(localStorage.getItem('darkmode'));
 
     useEffect(() => {
     
@@ -21,11 +22,13 @@ const NotificationPage = () => {
     
     return (
         <>
-            <Stack p={2.7}>
-                <Breadcrumb PageName={"Notification"} />
-                <Notifications profile={profile} />
-            </Stack>
-            <Footer />
+            <div className={`${darkModePref? "" : "bg-gray-700"}`}>
+                <Stack p={2.7}>
+                    <Breadcrumb PageName={"Notification"} />
+                    <Notifications profile={profile} darkModePref={darkModePref} />
+                </Stack>
+                <Footer />
+            </div>
         </>
     )
 }
