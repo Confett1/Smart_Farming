@@ -315,7 +315,7 @@ const headCells = [
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
-function EnhancedTableHead({ order, orderBy }) {
+function EnhancedTableHead({ order, orderBy, darkModePref }) {
 
   return (
     <TableHead>
@@ -325,7 +325,7 @@ function EnhancedTableHead({ order, orderBy }) {
             key={headCell.id}
             align={'left'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ fontWeight: 600, color: 'green' }}
+            sx={{ fontWeight: 600, color: darkModePref ? 'green' : '#d1d5db' }}
           >
               {headCell.label}
           </TableCell>
@@ -337,11 +337,12 @@ function EnhancedTableHead({ order, orderBy }) {
 
 EnhancedTableHead.propTypes = {
   order: PropTypes.string.isRequired,
+  darkModePref: PropTypes.bool.isRequired,
   orderBy: PropTypes.string.isRequired,
   onRequestSort: PropTypes.func.isRequired,
 };
 
-export default function RecordTable() {
+export default function RecordTable({darkModePref, filterType}) {
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('timestamp');
   const [page, setPage] = React.useState(0);
@@ -362,6 +363,8 @@ export default function RecordTable() {
     const interval = setInterval(fetchRecordData, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  const filteredRows = filterType === "all" ? rows : rows.filter((row) => row.status === filterType);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -385,29 +388,37 @@ export default function RecordTable() {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = React.useMemo(() => {
-    return [...rows]
+    return [...filteredRows]
       .sort((a, b) => (order === 'desc' ? b[orderBy] - a[orderBy] : a[orderBy] - b[orderBy]))
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  }, [order, orderBy, page, rowsPerPage, rows]);
+  }, [order, orderBy, page, rowsPerPage, filteredRows]);
 
   return (
+    
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
+      <TableContainer className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-            <EnhancedTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+            <EnhancedTableHead darkModePref={darkModePref} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
             <TableBody>
               {visibleRows.map((row, index) => {
                 const rowNumber = page * rowsPerPage + index + 1;
                 return (
-                  <TableRow key={row.recordId} sx={{ cursor: 'default' }}>
-                    <TableCell align="left">{rowNumber}</TableCell>
-                    <TableCell align='left' sx={{ textTransform: "capitalize" }}>{row.activityName}</TableCell>
-                    <TableCell align="left">{new Date(row.timestamp).toLocaleDateString()}</TableCell>
-                    <TableCell align="left">
+                  <TableRow
+                    sx={{
+                      color: darkModePref ? "black" : "white",
+                      cursor: "pointer"
+                    }}
+                    className={`${darkModePref ? "bg-white" : "bg-gray-800 text-gray-300"}`}
+                    tabIndex={-1} key={row.userId}
+                  >
+                    <TableCell sx={{textTransform: "capitalize", mr: 3, color: darkModePref ? "black" : '#d1d5db'}}>{rowNumber}</TableCell>
+                    <TableCell align='left' sx={{ textTransform: "capitalize", color: darkModePref ? "black" : '#d1d5db' }}>{row.activityName}</TableCell>
+                    <TableCell align="left" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{new Date(row.timestamp).toLocaleDateString()}</TableCell>
+                    <TableCell align="left" sx={{color: darkModePref ? "black" : '#d1d5db'}}>
                       {row.duration} {row.duration === 1 ? "Minute" : "Minutes"}
                     </TableCell>
-                    <TableCell sx={{ textTransform: 'capitalize' }}>{row.status}</TableCell>
+                    <TableCell sx={{ textTransform: 'capitalize', color: darkModePref ? "black" : '#d1d5db'    }}>{row.status}</TableCell>
                   </TableRow>
                 );
               })}
@@ -420,6 +431,18 @@ export default function RecordTable() {
           </Table>
         </TableContainer>
         <TablePagination
+          className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}
+          sx={{
+            color: darkModePref ? "black" : '#d1d5db',
+            "& .MuiSvgIcon-root": {
+              color: darkModePref ? "black" : "#d1d5db", // Changes color of pagination icons
+            },
+            "& .MuiTablePagination-actions": {
+              "& button": {
+                color: darkModePref ? "black" : "#d1d5db", // Ensures buttons (prev/next) match the theme
+              },
+            },
+          }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
@@ -432,4 +455,9 @@ export default function RecordTable() {
       <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" sx={{ display: "none" }} />
     </Box>
   );
+};
+
+RecordTable.propTypes = {
+  darkModePref: PropTypes.bool.isRequired,
+  filterType: PropTypes.string.isRequired,
 }

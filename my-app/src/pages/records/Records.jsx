@@ -4,7 +4,7 @@ import PageLoader from '../../components/loader/LinearLoader';
 import Footer from '../../layout/main/footer';
 import Modal from '../../components/modals';
 import Breadcrumb from '../../components/breadcrumbs/Breadcrumb';
-import { Stack } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 import RecordsComponent from '../../components/sections/Records';
 import API from '../../api/api';
 import { toast } from '../../utils/toast';
@@ -128,33 +128,43 @@ const Records = () => {
                         }}
                     />
 
-                    <TextField
-                        fullWidth
-                        onChange={handleChange}
-                        value={recordDetails.status}
-                        name='status'
-                        label="Status"
-                        id="fullWidth"
-                        sx={{
-                            "& .MuiOutlinedInput-root": {
-                                "&:hover fieldset": {
-                                    borderColor: "green", // Border color on hover
+                    <FormControl fullWidth>
+                        <InputLabel id="status-label" sx={{ color: "gray", "&.Mui-focused": { color: "green" } }}>
+                            Status
+                        </InputLabel>   
+                        <Select
+                            fullWidth
+                            value={recordDetails.status}
+                            onChange={handleChange}
+                            name="status"
+                            tabIndex={1}
+                            labelId='status-label'
+                            label='status'
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "green", // Green border on hover
+                                    },
+                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "green", // Green border when focused (clicked)
+                                    },
                                 },
-                                "&.Mui-focused fieldset": {
-                                    borderColor: "green", // Border color when focused
+                                "& .MuiInputLabel-root": {
+                                    color: "gray",
+                                    "&.Mui-focused": {
+                                        color: "green", // Green label when focused
+                                    },
                                 },
-                            },
-                            "& .MuiInputLabel-root": {
-                                color: "gray", 
-                                "&.Mui-focused": {
-                                    color: "green", // Label color when focused
+                                "& .MuiSelect-select": {
+                                    color: "green", // Green text when selected
                                 },
-                            },
-                            "& .MuiInputBase-input": {
-                                color: "green", // Optional: Change the input text color when focused
-                            },
-                        }}
-                    />
+                            }}
+                        >
+                            <MenuItem value="completed">Completed</MenuItem>
+                            <MenuItem value="in progress">In Progress</MenuItem>
+                            <MenuItem value="pending">Pending</MenuItem>
+                        </Select>
+                    </FormControl>
                     {/* <input
                         type="text"
                         placeholder="Activity Name"
