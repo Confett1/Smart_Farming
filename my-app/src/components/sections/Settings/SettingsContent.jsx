@@ -1,43 +1,43 @@
 "use client"
 
-import { useState } from "react"
+// import { useState } from "react"
 import GeneralSettings from "./GeneralSettings"
 // import FarmSettings from "./FarmSettings"
 import SecuritySettings from "./Security"
 // import NotificationSettings from "./NotificationSettings"
 
 const SettingsContent = () => {
-  const [formData, setFormData] = useState({
-    notifications: "",
-    units: "metric",
-    syncFrequency: "15",
-    email: "",
-    phone: "",
-    currentPassword: "",
-    newPassword: "",
-    twoFactor: false,
-    dataSharing: true,
-  })
+  // const [formData, setFormData] = useState({
+  //   notifications: "",
+  //   units: "metric",
+  //   syncFrequency: "15",
+  //   email: "",
+  //   phone: "",
+  //   currentPassword: "",
+  //   newPassword: "",
+  //   twoFactor: false,
+  //   dataSharing: true,
+  // })
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }))
-    console.log(formData.darkMode);
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   }))
+  //   console.log(formData.darkMode);
     
-  }
+  // }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   console.log("Form submitted:", formData)
+  // }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="grid grid-cols-[1fr,1fr] gap-2.5">
-        <GeneralSettings formData={formData.notifications} handleChange={handleChange}  />
+      <div className="grid grid-cols-[1fr,1fr] gap-2.5">
+        <GeneralSettings  />
         {/* <FarmSettings /> */}
         <SecuritySettings />
         {/* <NotificationSettings /> */}
@@ -178,7 +178,7 @@ const SettingsContent = () => {
             Save Changes
           </button>
         </div> */}
-      </form>
+      </div>
     </div>
   )
 }

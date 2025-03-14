@@ -139,7 +139,6 @@ export default function UsersRecordTable() {
   const [orderBy, setOrderBy] = React.useState('userStatus');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -288,7 +287,7 @@ export default function UsersRecordTable() {
     <Box  sx={{ width: '100%'}} className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
         <EnhancedTableToolbar  numSelected={selected.length} />
         <TableContainer className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size='medium'>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -352,7 +351,7 @@ export default function UsersRecordTable() {
                 );
               })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}

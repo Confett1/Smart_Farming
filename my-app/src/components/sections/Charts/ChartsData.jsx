@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { Wheat, Droplet, Sprout } from "lucide-react";
+import PropTypes from "prop-types";
 
-const ChartsContent = ({ selectedPeriod }) => {
+const ChartsContent = ({ selectedPeriod, darkModePref }) => {
     const [activeTab, setActiveTab] = useState("harvest");
     const [chartData, setChartData] = useState({
         harvest: { labels: [], data: [] },
@@ -82,13 +83,13 @@ const ChartsContent = ({ selectedPeriod }) => {
                     {
                         label: `${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Data`,
                         data: chartData[activeTab].data,
-                        backgroundColor: "rgba(75, 192, 192, 0.2)",
-                        borderColor: "rgba(75, 192, 192, 0.6)",
+                        backgroundColor: darkModePref ? "rgba(75, 192, 192, 0.5)" : "rgba(75, 192, 192, 0.2)",
+                        borderColor: darkModePref ? "rgba(48, 114, 114, 0.6)" : "rgba(75, 192, 192, 0.6)",
                         borderWidth: 2,
                         pointRadius: 4,
-                        pointBackgroundColor: "#4BC0C0",
-                        pointBorderColor: "#fff",
-                        tension: 0.3,
+                        pointBackgroundColor: darkModePref ? "rgba(75, 192, 192, 0.5)" :"#4BC0C0",
+                        pointBorderColor: darkModePref ? "rgba(48, 114, 114, 0.6)" : "#fff",
+                        tension: 0.3  
                     },
                 ],
             },
@@ -96,11 +97,11 @@ const ChartsContent = ({ selectedPeriod }) => {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    x: { ticks: { color: "#ffffff", font: { size: 14 } } },
-                    y: { ticks: { color: "#ffffff", font: { size: 14, weight: "bold" } } },
+                    x: { ticks: { color: darkModePref ? "var(--card-background)" : "#fff", font: { size: 14 } } },
+                    y: { ticks: { color: darkModePref ? "var(--card-background)" : "#ffffff", font: { size: 14, weight: "bold" } } },
                 },
                 plugins: {
-                    legend: { labels: { color: "#ffffff", font: { size: 16, weight: "bold" } } },
+                    legend: { labels: { color: darkModePref ? "var(--card-background)" : "#ffffff", font: { size: 16, weight: "bold" } } },
                 },
             },
         });
@@ -135,27 +136,27 @@ const ChartsContent = ({ selectedPeriod }) => {
                     const Icon = key === "harvest" ? Wheat : key === "water" ? Droplet : Sprout;
 
                     return (
-                        <div className="card" key={key}>
+                        <div className={`chartCard ${darkModePref ? "bg-white" : "bg-[var(--card-background)]"}`} key={key}>
                             <div className="card-header">
-                                <Icon size={24} className="icon text-white" />
-                                <h3>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
+                                <Icon size={24} className={`icon ${darkModePref ? "text-[var(--card-background)]" : "text-gray-200"}`} />
+                                <h3 style={{color: darkModePref ? "var(--card-background)" : "whitesmoke"}}>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
                             </div>
                             <div className="card-content">
-                                <div className="value">
+                                <div style={{color: darkModePref ? "var(--card-background)" : "white"}} className="value">
                                     {values.length > 0 ? values[values.length - 1] : 0} {key === "harvest" ? "kg" : "L"}
                                 </div>
-                                <p className="trend">{percentageChange}</p>
+                                <p className={`trend ${darkModePref ? "text-gray-500" : "text-[var(--muted-color)]"}`}>{percentageChange}</p>
                             </div>
                         </div>
                     );
                 })}
             </div>
 
-            <div className="tabs">
+            <div className="tabs ">
                 {["harvest", "water", "fertilizer"].map((key) => (
                     <button
                         key={key}
-                        className={`tab-btn ${activeTab === key ? "active" : ""}`}
+                        className={`tab-btn ${darkModePref ? "text-gray-500" : "text-[var(--muted-color)]"} ${activeTab === key ? "active" : ""}`}
                         onClick={() => setActiveTab(key)}
                     >
                         {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -163,11 +164,16 @@ const ChartsContent = ({ selectedPeriod }) => {
                 ))}
             </div>
 
-            <div className="chart-container">
+            <div className={`chart-container ${darkModePref ? "bg-white" : "bg-[#1e293b]"}`}>
                 <canvas ref={chartRef}></canvas>
             </div>
         </>
     );
 };
+
+ChartsContent.propTypes = {
+    selectedPeriod: PropTypes.string.isRequired,
+    darkModePref: PropTypes.bool.isRequired
+}
 
 export default ChartsContent;
