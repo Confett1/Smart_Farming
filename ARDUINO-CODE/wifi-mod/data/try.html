@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Farming Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Base styles and CSS variables */
+    :root {
+      --background: #ffffff;
+      --foreground: #0f172a;
+      --card: #ffffff;
+      --card-foreground: #0f172a;
+      --border: #e2e8f0;
+      --input: #e2e8f0;
+      --primary: #23f0ff;
+      --primary-foreground: #0f172a;
+      --secondary: #1eaf4a;
+      --secondary-foreground: #0f172a;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --accent: #f1f5f9;
+      --accent-foreground: #0f172a;
+      --destructive: #ef4444;
+      --destructive-foreground: #f8fafc;
+      --radius: 0.5rem;
+      
+      --nitrogen-color: #4287f5;
+      --phosphorous-color: #f54242;
+      --potassium-color: #42f59e;
+    }
+
+    .dark {
+      --background: #0f172a;
+      --foreground: #f8fafc;
+      --card: #1e293b;
+      --card-foreground: #f8fafc;
+      --border: #334155;
+      --input: #334155;
+      --primary: #23f0ff;
+      --primary-foreground: #0f172a;
+      --secondary: #1eaf4a;
+      --secondary-foreground: #f8fafc;
+      --muted: #1e293b;
+      --muted-foreground: #94a3b8;
+      --accent: #1e293b;
+      --accent-foreground: #f8fafc;
+      --destructive: #7f1d1d;
+      --destructive-foreground: #f8fafc;
+    }
+
+    /* Reset and base styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: fit-content;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .status-display {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .status-text {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    .status-online {
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    /* Grid layouts */
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (min-width: 768px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Card styles */
+    .card {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: background-color 0.3s;
+    }
+
+    .card-header {
+      padding: 1rem 1.5rem 0.5rem;
+    }
+
+    .card-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted-foreground);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-content {
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+
+    .value-large {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .value-note {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 500;
+      color: var(--muted-foreground);
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      width: 100%;
+      height: 0.5rem;
+      background-color: var(--muted);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill-high {
+      width: 90%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    .progress-fill-medium {
+      width: 60%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    .progress-fill-low {
+      width: 30%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    /* Graph styles */
+    .graph-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .graph-y-axis {
+      position: absolute;
+      left: -5px;
+      top: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .graph-y-label {
+      transform: translateX(-100%);
+      margin-left: -5px;
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+
+    .graph-x-axis {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .graph-x-label {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+
+    .graph-svg {
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      width: calc(100% - 20px);
+      height: 100%;
+    }
+
+    .graph-legend {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .legend-color {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 0.25rem;
+      margin-right: 0.5rem;
+    }
+
+    .legend-text {
+      font-size: 0.75rem;
+    }
+
+    /* Tank and moisture styles */
+    .tank-container, .moisture-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .tank-container {
+      background: linear-gradient(to bottom, #0a3b5c, #0d5c8c);
+    }
+
+    .moisture-container {
+      background: linear-gradient(to bottom, #6b3d1a, #8b5a2b);
+    }
+
+    .tank-fill, .moisture-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      transition: height 1s ease-in-out;
+    }
+
+    .tank-fill {
+      background: linear-gradient(to bottom, rgba(0, 204, 255, 0.3), rgba(0, 68, 255, 0.8));
+    }
+
+    .moisture-fill {
+      background: linear-gradient(to bottom, rgba(0, 68, 255, 0.3), rgba(0, 68, 255, 0.8));
+    }
+
+    .tank-value, .moisture-value {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+
+    .tank-markers {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      width: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+
+    .tank-marker {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .tank-marker::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 10px;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tank-marker-label {
+      position: absolute;
+      right: 15px;
+      color: white;
+      font-size: 0.75rem;
+      transform: translateY(-50%);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .tab-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-trigger {
+      padding: 0.5rem;
+      background-color: var(--muted);
+      color: var(--muted-foreground);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .tab-trigger:hover {
+      background-color: var(--accent);
+      color: var(--accent-foreground);
+    }
+
+    .tab-trigger.active {
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Form controls */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 0.5rem;
+      background-color: var(--muted);
+      border-radius: 9999px;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background-color: var(--primary);
+      border: none;
+      cursor: pointer;
+    }
+
+    .slider-value {
+      font-size: 0.875rem;
+      min-width: 2.5rem;
+      text-align: right;
+    }
+
+    .switch-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 3rem;
+      height: 1.5rem;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--muted);
+      transition: 0.4s;
+      border-radius: 1.5rem;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 1rem;
+      width: 1rem;
+      left: 0.25rem;
+      bottom: 0.25rem;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--secondary);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(1.5rem);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      margin-right: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* Buttons */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
+    }
+
+    .button-primary {
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .button-primary:hover {
+      opacity: 0.9;
+    }
+
+    .button-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .button-destructive {
+      background-color: var(--destructive);
+      color: var(--destructive-foreground);
+    }
+
+    .button-destructive:hover {
+      opacity: 0.9;
+    }
+
+    .button-destructive:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .button-outline {
+      background-color: transparent;
+      color: var(--foreground);
+      border: 1px solid var(--border);
+    }
+
+    .button-outline:hover {
+      background-color: var(--muted);
+    }
+
+    .button-icon {
+      padding: 0.5rem;
+      border-radius: 9999px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .button-group .button {
+      flex: 1;
+    }
+
+    /* Icons */
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .icon-small {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* Utilities */
+    .flex {
+      display: flex;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .gap-2 {
+      gap: 0.5rem;
+    }
+
+    .gap-4 {
+      gap: 1rem;
+    }
+
+    .mt-4 {
+      margin-top: 1rem;
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+
+    .space-y-2 > * + * {
+      margin-top: 0.5rem;
+    }
+
+    .space-y-4 > * + * {
+      margin-top: 1rem;
+    }
+
+    .space-y-6 > * + * {
+      margin-top: 1.5rem;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--foreground);
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--muted);
+    }
+
+    .sun-icon, .moon-icon {
+      position: absolute;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .sun-icon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+
+    .moon-icon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0);
+    }
+
+    .dark .sun-icon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0);
+    }
+
+    .dark .moon-icon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">Smart Farming Dashboard</h1>
+      <div class="status-display">
+        <div class="status-text">
+          System: <span class="status-online" id="system-status">Online</span>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon sun-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon moon-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid grid-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Temperature</div>
+        </div>
+        <div class="card-content">
+          <div class="value-large" id="temperature-value">24°C</div>
+          <div class="value-note">Optimal range: 20-30°C</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Humidity</div>
+        </div>
+        <div class="card-content">
+          <div class="value-large" id="humidity-value">65%</div>
+          <div class="value-note">Optimal range: 60-80%</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Soil Moisture</div>
+        </div>
+        <div class="card-content">
+          <div class="value-large" id="moisture-value">45%</div>
+          <div class="value-note">Optimal range: 40-60%</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Water Level</div>
+        </div>
+        <div class="card-content">
+          <div class="value-large" id="water-value">78%</div>
+          <div class="value-note">Tank capacity: 100 liters</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Nutrient Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Nutrient Levels</div>
+        </div>
+        <div class="card-content">
+          <table>
+            <thead>
+              <tr>
+                <th>Nutrient</th>
+                <th>Value</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NPK</td>
+                <td id="npk-value">N: 120, P: 80, K: 60</td>
+                <td>
+                  <div class="progress-bar">
+                    <div class="progress-fill progress-fill-high"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>pH</td>
+                <td id="ph-value">6.5</td>
+                <td>
+                  <div class="progress-bar">
+                    <div class="progress-fill progress-fill-medium"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>EC</td>
+                <td id="ec-value">1.2 mS/cm</td>
+                <td>
+                  <div class="progress-bar">
+                    <div class="progress-fill progress-fill-low"></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Nutrient Graph -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">NPK Trends</div>
+        </div>
+        <div class="card-content">
+          <div class="graph-container">
+            <div class="graph-y-axis">
+              <div class="graph-y-label">100</div>
+              <div class="graph-y-label">75</div>
+              <div class="graph-y-label">50</div>
+              <div class="graph-y-label">25</div>
+              <div class="graph-y-label">0</div>
+            </div>
+            <svg id="nutrient-graph" class="graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <!-- Graph lines will be added by JavaScript -->
+            </svg>
+            <div class="graph-x-axis">
+              <div class="graph-x-label">0</div>
+              <div class="graph-x-label">5</div>
+              <div class="graph-x-label">10</div>
+              <div class="graph-x-label">15</div>
+              <div class="graph-x-label">20</div>
+            </div>
+          </div>
+          <div class="graph-legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: var(--nitrogen-color);"></div>
+              <div class="legend-text">Nitrogen</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: var(--phosphorous-color);"></div>
+              <div class="legend-text">Phosphorous</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: var(--potassium-color);"></div>
+              <div class="legend-text">Potassium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Water Tank -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Water Tank</div>
+        </div>
+        <div class="card-content">
+          <div class="tank-container">
+            <div class="tank-fill" id="tank-fill" style="height: 78%;"></div>
+            <div class="tank-value" id="tank-value">78%</div>
+            <div class="tank-markers">
+              <div class="tank-marker">
+                <div class="tank-marker-label">100%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">75%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">50%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">25%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">0%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soil Moisture -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Soil Moisture</div>
+        </div>
+        <div class="card-content">
+          <div class="moisture-container">
+            <div class="moisture-fill" id="moisture-fill" style="height: 45%;"></div>
+            <div class="moisture-value" id="moisture-display">45%</div>
+            <div class="tank-markers">
+              <div class="tank-marker">
+                <div class="tank-marker-label">100%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">75%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">50%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">25%</div>
+              </div>
+              <div class="tank-marker">
+                <div class="tank-marker-label">0%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">System Controls</div>
+      </div>
+      <div class="card-content">
+        <div class="tabs">
+          <div class="tab-list">
+            <button class="tab-trigger active" data-tab="nutrients">
+              <svg class="icon icon-small" viewBox="0 0 24 24">
+                <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"></path>
+                <path d="M12 22V15.5"></path>
+                <path d="M22 8.5L12 15.5L2 8.5"></path>
+                <path d="M12 2V8.5"></path>
+                <path d="M7 5.5L17 11.5"></path>
+              </svg>
+              <span class="tab-text">Nutrients</span>
+            </button>
+            <button class="tab-trigger" data-tab="irrigation">
+              <svg class="icon icon-small" viewBox="0 0 24 24">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+              <span class="tab-text">Irrigation</span>
+            </button>
+            <button class="tab-trigger" data-tab="drainage">
+              <svg class="icon icon-small" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 12l4 4 4-4"></path>
+                <path d="M12 8v8"></path>
+              </svg>
+              <span class="tab-text">Drainage</span>
+            </button>
+            <button class="tab-trigger" data-tab="settings">
+              <svg class="icon icon-small" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              <span class="tab-text">Settings</span>
+            </button>
+          </div>
+
+          <!-- Nutrients Tab -->
+          <div id="nutrients-tab" class="tab-content active">
+            <!-- Nitrogen Control -->
+            <div class="form-group">
+              <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                  <svg class="icon icon-small" viewBox="0 0 24 24" style="color: var(--nitrogen-color);">
+                    <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"></path>
+                    <path d="M12 22V15.5"></path>
+                    <path d="M22 8.5L12 15.5L2 8.5"></path>
+                    <path d="M12 2V8.5"></path>
+                    <path d="M7 5.5L17 11.5"></path>
+                  </svg>
+                  <span class="form-label">Nitrogen (N)</span>
+                </div>
+                <span class="slider-value" id="nitrogen-value">0%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" min="0" max="100" value="0" class="slider" id="nitrogen-slider">
+                <button class="button button-primary" id="nitrogen-btn" disabled>Dispense</button>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="nitrogen-fill" style="width: 0%; background-color: var(--nitrogen-color);"></div>
+              </div>
+            </div>
+
+            <!-- Phosphorous Control -->
+            <div class="form-group">
+              <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                  <svg class="icon icon-small" viewBox="0 0 24 24" style="color: var(--phosphorous-color);">
+                    <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"></path>
+                    <path d="M12 22V15.5"></path>
+                    <path d="M22 8.5L12 15.5L2 8.5"></path>
+                    <path d="M12 2V8.5"></path>
+                    <path d="M7 5.5L17 11.5"></path>
+                  </svg>
+                  <span class="form-label">Phosphorous (P)</span>
+                </div>
+                <span class="slider-value" id="phosphorous-value">0%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" min="0" max="100" value="0" class="slider" id="phosphorous-slider">
+                <button class="button button-primary" id="phosphorous-btn" disabled>Dispense</button>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="phosphorous-fill" style="width: 0%; background-color: var(--phosphorous-color);"></div>
+              </div>
+            </div>
+
+            <!-- Potassium Control -->
+            <div class="form-group">
+              <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                  <svg class="icon icon-small" viewBox="0 0 24 24" style="color: var(--potassium-color);">
+                    <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"></path>
+                    <path d="M12 22V15.5"></path>
+                    <path d="M22 8.5L12 15.5L2 8.5"></path>
+                    <path d="M12 2V8.5"></path>
+                    <path d="M7 5.5L17 11.5"></path>
+                  </svg>
+                  <span class="form-label">Potassium (K)</span>
+                </div>
+                <span class="slider-value" id="potassium-value">0%</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" min="0" max="100" value="0" class="slider" id="potassium-slider">
+                <button class="button button-primary" id="potassium-btn" disabled>Dispense</button>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="potassium-fill" style="width: 0%; background-color: var(--potassium-color);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Irrigation Tab -->
+          <div id="irrigation-tab" class="tab-content">
+            <div class="switch-container">
+              <div class="flex items-center gap-2">
+                <svg class="icon icon-small" viewBox="0 0 24 24" style="color: #00a2ff;">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+                <span class="form-label">Irrigation System</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="irrigation-toggle">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div id="irrigation-controls" class="disabled">
+              <div class="form-group">
+                <label class="form-label" for="flow-rate-slider">Flow Rate: <span id="flow-rate-value">50%</span></label>
+                <input type="range" min="0" max="100" value="50" class="slider" id="flow-rate-slider">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="duration-slider">Duration: <span id="duration-value">10</span> minutes</label>
+                <input type="range" min="1" max="60" value="10" class="slider" id="duration-slider">
+              </div>
+
+              <div class="checkbox-container">
+                <input type="checkbox" id="schedule-irrigation">
+                <label for="schedule-irrigation">Schedule Irrigation</label>
+              </div>
+
+              <div class="button-group mt-4">
+                <button class="button button-primary" id="start-irrigation">
+                  <svg class="icon icon-small" viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  Start Irrigation
+                </button>
+                <button class="button button-destructive" id="stop-irrigation" disabled>
+                  <svg class="icon icon-small" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12"></rect>
+                  </svg>
+                  Stop
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drainage Tab -->
+          <div id="drainage-tab" class="tab-content">
+            <div class="switch-container">
+              <div class="flex items-center gap-2">
+                <svg class="icon icon-small" viewBox="0 0 24 24" style="color: var(--potassium-color);">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 12l4 4 4-4"></path>
+                  <path d="M12 8v8"></path>
+                </svg>
+                <span class="form-label">Drainage System</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="drainage-toggle">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div id="drainage-controls" class="disabled">
+              <div class="checkbox-container">
+                <input type="checkbox" id="auto-drainage" checked>
+                <label for="auto-drainage">Automatic Mode</label>
+              </div>
+
+              <div id="manual-drainage-controls" class="disabled">
+                <div class="button-group mt-4">
+                  <button class="button button-primary" id="open-drainage">
+                    Open Drainage
+                  </button>
+                  <button class="button button-destructive" id="close-drainage">
+                    Close Drainage
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings Tab -->
+          <div id="settings-tab" class="tab-content">
+            <div class="form-group">
+              <label class="form-label" for="data-interval-slider">
+                Data Sending Interval: <span id="current-interval">5 seconds</span>
+              </label>
+              <input type="range" min="1" max="60" value="5" class="slider" id="data-interval-slider">
+              <p class="value-note">Adjust how frequently data is sent to the server (1-60 seconds)</p>
+            </div>
+
+            <div class="checkbox-container">
+              <input type="checkbox" id="auto-refresh" checked>
+              <label for="auto-refresh">Auto-refresh Dashboard</label>
+            </div>
+
+            <div class="checkbox-container">
+              <input type="checkbox" id="dark-mode">
+              <label for="dark-mode">Dark Mode</label>
+            </div>
+
+            <div class="button-group mt-6">
+              <button class="button button-primary" id="save-settings">
+                Save Settings
+              </button>
+              <button class="button button-outline" id="reset-settings">
+                Reset to Defaults
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>Smart Farming System v1.0</div>
+      <div>Last Updated: <span id="last-updated">-</span></div>
+    </footer>
+  </div>
+
+  <script>
+    // Dark mode functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkModeCheckbox = document.getElementById('dark-mode');
+    
+    // Check for saved theme preference or use device preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark');
+      darkModeCheckbox.checked = true;
+    }
+    
+    // Toggle theme
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      darkModeCheckbox.checked = isDark;
+    }
+    
+    themeToggle.addEventListener('click', toggleTheme);
+    darkModeCheckbox.addEventListener('change', function() {
+      if (this.checked !== document.body.classList.contains('dark')) {
+        toggleTheme();
+      }
+    });
+
+    // Tab switching functionality
+    const tabTriggers = document.querySelectorAll('.tab-trigger');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        // Remove active class from all triggers and contents
+        tabTriggers.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked trigger and corresponding content
+        trigger.classList.add('active');
+        const tabId = trigger.getAttribute('data-tab');
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+      });
+    });
+
+    // Nutrient sliders functionality
+    function setupNutrientSlider(nutrient) {
+      const slider = document.getElementById(`${nutrient}-slider`);
+      const value = document.getElementById(`${nutrient}-value`);
+      const fill = document.getElementById(`${nutrient}-fill`);
+      const btn = document.getElementById(`${nutrient}-btn`);
+      
+      slider.addEventListener('input', () => {
+        const sliderValue = slider.value;
+        value.textContent = `${sliderValue}%`;
+        fill.style.width = `${sliderValue}%`;
+        
+        // Enable/disable button based on value
+        btn.disabled = sliderValue <= 0;
+      });
+      
+      btn.addEventListener('click', () => {
+        // Visual feedback
+        btn.textContent = 'Dispensing...';
+        btn.disabled = true;
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+          slider.value = 0;
+          value.textContent = '0%';
+          fill.style.width = '0%';
+          btn.textContent = 'Dispense';
+          btn.disabled = true;
+          
+          // Update last updated time
+          updateLastUpdated();
+        }, 3000);
+      });
+    }
+    
+    setupNutrientSlider('nitrogen');
+    setupNutrientSlider('phosphorous');
+    setupNutrientSlider('potassium');
+
+    // Irrigation system functionality
+    const irrigationToggle = document.getElementById('irrigation-toggle');
+    const irrigationControls = document.getElementById('irrigation-controls');
+    const flowRateSlider = document.getElementById('flow-rate-slider');
+    const flowRateValue = document.getElementById('flow-rate-value');
+    const durationSlider = document.getElementById('duration-slider');
+    const durationValue = document.getElementById('duration-value');
+    const startIrrigationBtn = document.getElementById('start-irrigation');
+    const stopIrrigationBtn = document.getElementById('stop-irrigation');
+    
+    irrigationToggle.addEventListener('change', () => {
+      if (irrigationToggle.checked) {
+        irrigationControls.classList.remove('disabled');
+      } else {
+        irrigationControls.classList.add('disabled');
+      }
+    });
+    
+    flowRateSlider.addEventListener('input', () => {
+      flowRateValue.textContent = `${flowRateSlider.value}%`;
+    });
+    
+    durationSlider.addEventListener('input', () => {
+      durationValue.textContent = durationSlider.value;
+    });
+    
+    startIrrigationBtn.addEventListener('click', () => {
+      if (irrigationToggle.checked) {
+        startIrrigationBtn.disabled = true;
+        stopIrrigationBtn.disabled = false;
+        updateLastUpdated();
+      }
+    });
+    
+    stopIrrigationBtn.addEventListener('click', () => {
+      if (irrigationToggle.checked) {
+        startIrrigationBtn.disabled = false;
+        stopIrrigationBtn.disabled = true;
+        updateLastUpdated();
+      }
+    });
+
+    // Drainage system functionality
+    const drainageToggle = document.getElementById('drainage-toggle');
+    const drainageControls = document.getElementById('drainage-controls');
+    const autoDrainageToggle = document.getElementById('auto-drainage');
+    const manualDrainageControls = document.getElementById('manual-drainage-controls');
+    
+    drainageToggle.addEventListener('change', () => {
+      if (drainageToggle.checked) {
+        drainageControls.classList.remove('disabled');
+        
+        // Check auto mode
+        if (autoDrainageToggle.checked) {
+          manualDrainageControls.classList.add('disabled');
+        } else {
+          manualDrainageControls.classList.remove('disabled');
+        }
+      } else {
+        drainageControls.classList.add('disabled');
+      }
+    });
+    
+    autoDrainageToggle.addEventListener('change', () => {
+      if (autoDrainageToggle.checked) {
+        manualDrainageControls.classList.add('disabled');
+      } else {
+        manualDrainageControls.classList.remove('disabled');
+      }
+    });
+
+    // Settings functionality
+    const dataIntervalSlider = document.getElementById('data-interval-slider');
+    const currentInterval = document.getElementById('current-interval');
+    const autoRefreshToggle = document.getElementById('auto-refresh');
+    const saveSettingsBtn = document.getElementById('save-settings');
+    const resetSettingsBtn = document.getElementById('reset-settings');
+    
+    dataIntervalSlider.addEventListener('input', () => {
+      currentInterval.textContent = `${dataIntervalSlider.value} seconds`;
+    });
+    
+    saveSettingsBtn.addEventListener('click', () => {
+      // Visual feedback
+      saveSettingsBtn.textContent = 'Saved!';
+      setTimeout(() => {
+        saveSettingsBtn.textContent = 'Save Settings';
+      }, 2000);
+      
+      updateLastUpdated();
+    });
+    
+    resetSettingsBtn.addEventListener('click', () => {
+      // Reset to defaults
+      dataIntervalSlider.value = 5;
+      currentInterval.textContent = '5 seconds';
+      autoRefreshToggle.checked = true;
+      darkModeCheckbox.checked = false;
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      
+      // Visual feedback
+      resetSettingsBtn.textContent = 'Reset!';
+      setTimeout(() => {
+        resetSettingsBtn.textContent = 'Reset to Defaults';
+      }, 2000);
+      
+      updateLastUpdated();
+    });
+
+    // Graph functionality
+    let nitrogenData = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+    let phosphorousData = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+    let potassiumData = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+    
+    function updateGraph() {
+      const svg = document.getElementById('nutrient-graph');
+      
+      // Clear existing paths
+      while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+      }
+      
+      // Create polylines for each data series
+      const createPolyline = (data, color) => {
+        const points = createGraphPoints(data);
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        polyline.setAttribute("points", points);
+        polyline.setAttribute("stroke", color);
+        polyline.setAttribute("stroke-width", "2");
+        polyline.setAttribute("fill", "none");
+        svg.appendChild(polyline);
+      };
+      
+      createPolyline(nitrogenData, 'var(--nitrogen-color)');
+      createPolyline(phosphorousData, 'var(--phosphorous-color)');
+      createPolyline(potassiumData, 'var(--potassium-color)');
+    }
+    
+    function createGraphPoints(data) {
+      if (data.length === 0) return "";
+      
+      const width = 100;
+      const height = 100;
+      const xStep = width / (data.length - 1 || 1);
+      
+      return data.map((value, index) => {
+        const x = index * xStep;
+        // Normalize value between 0 and 100, then invert (0 at bottom, 100 at top)
+        const y = height - (value / 100 * height);
+        return `${x},${y}`;
+      }).join(" ");
+    }
+    
+    // Update data and UI
+    function updateData() {
+      // Update temperature
+      const tempValue = (20 + Math.random() * 10).toFixed(1);
+      document.getElementById('temperature-value').textContent = `${tempValue}°C`;
+      
+      // Update humidity
+      const humidityValue = (60 + Math.random() * 20).toFixed(1);
+      document.getElementById('humidity-value').textContent = `${humidityValue}%`;
+      
+      // Update moisture
+      const moistureValue = (40 + Math.random() * 30).toFixed(1);
+      document.getElementById('moisture-value').textContent = `${moistureValue}%`;
+      document.getElementById('moisture-fill').style.height = `${moistureValue}%`;
+      document.getElementById('moisture-display').textContent = `${moistureValue}%`;
+      
+      // Update water level
+      const waterValue = (70 + Math.random() * 20).toFixed(1);
+      document.getElementById('water-value').textContent = `${waterValue}%`;
+      document.getElementById('tank-fill').style.height = `${waterValue}%`;
+      document.getElementById('tank-value').textContent = `${waterValue}%`;
+      
+      // Update graph data
+      nitrogenData.shift();
+      nitrogenData.push(Math.floor(Math.random() * 100));
+      
+      phosphorousData.shift();
+      phosphorousData.push(Math.floor(Math.random() * 100));
+      
+      potassiumData.shift();
+      potassiumData.push(Math.floor(Math.random() * 100));
+      
+      updateGraph();
+      updateLastUpdated();
+    }
+    
+    function updateLastUpdated() {
+      document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+    }
+    
+    // Initial setup
+    updateGraph();
+    updateLastUpdated();
+    
+    // Set up interval for periodic updates
+    let updateInterval = setInterval(updateData, 5000);
+    
+    // Handle auto-refresh toggle
+    autoRefreshToggle.addEventListener('change', () => {
+      if (autoRefreshToggle.checked) {
+        updateInterval = setInterval(updateData, 5000);
+      } else {
+        clearInterval(updateInterval);
+      }
+    });
+    
+    // Initial data update
+    updateData();
+  </script>
+</body>
+</html>
