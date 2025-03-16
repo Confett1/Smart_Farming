@@ -1,24 +1,34 @@
 import { Grid } from "@mui/material";
-import NpkLevels from "./npk-levels/page";
-import Irrigation from "./irrigation/page";
-import Solar from "./solar/page";
+import NitrogenMotor from "./Nitrogen-motor/page";
+import Irrigation from "./Irrigation-motor/page";
+import PhosporusMotor from "./Phosporus-motor/page";
+import PottasiumMotor from "./Potassium-motor/page";
+import PropTypes from "prop-types";
 
-const SystemStatus = () => {
+const SystemStatus = ({darkModePref}) => {
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={4} xl={4}>
-                <NpkLevels />
+        <Grid container spacing={3} className="flex justify-center">
+            <Grid item  >
+                <Irrigation darkModePref={darkModePref}/>
             </Grid>
 
-            <Grid item xs={12} md={4} xl={4}>
-                <Irrigation />
+            <Grid item>
+                <NitrogenMotor darkModePref={darkModePref} />
             </Grid>
 
-            <Grid item xs={12} md={4} xl={4}>
-                <Solar />
+            <Grid item>
+                <PhosporusMotor darkModePref={darkModePref} />
+            </Grid>
+
+            <Grid item >
+                <PottasiumMotor darkModePref={darkModePref} />
             </Grid>
         </Grid>
     );
 }
+
+SystemStatus.propTypes = {
+    darkModePref: PropTypes.bool.isRequired,
+};
 
 export default SystemStatus;

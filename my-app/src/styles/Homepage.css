@@ -1,3 +1,9 @@
+:root {
+  --active-color: #5f6bea;  /* Brighter emerald for better highlighting */
+--inactive-color: #5f6bea; /* Muted neutral amber */
+}
+
+
 /* Control Center */
 .control-center {
   padding-top: 20px;
@@ -36,7 +42,6 @@
   padding: 4px 12px;
   border-radius: 15px;
   font-size: 0.9rem;
-  background: var(--success-color);
 }
 
 .status.warning {
@@ -126,18 +131,20 @@ section {
 
 /* Status Cards */
 .status-card {
-  background: var(--card-background);
   border-radius: var(--border-radius);
-  padding: 24px;
+  padding: 20px;
   display: flex;
+  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap:20px;
   box-shadow: var(--shadow-md);
   transition: var(--transition);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  width: 100%;
-  height: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 270px  ;
+  height: 200px;
 }
+
 
 .status-card:hover {
   transform: translateY(-4px);
@@ -167,19 +174,19 @@ section {
   transform: rotate(45deg);
 }
 
-.irrigation-status { background: linear-gradient(135deg, #2563eb, #3b82f6); }
-.solar-status { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
-.npk-status { background: linear-gradient(135deg, #10b981, #34d399); }
-.wifi-status { background: linear-gradient(135deg, #6366f1, #818cf8); }
+.inactive { background: var(--inactive-color);}
+.active { background:var(--active-color) }
 
 .status-info {
-  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
 }
 
 .status-info h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -193,23 +200,33 @@ section {
   gap: 6px;
 }
 
-.status::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
+.status {
+  padding: 7px 10px;
+  font-weight: bold;
+  display: inline-block;
 }
 
+.status.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--active-color);
+  border: 1px solid var(--active-color);
+}
+
+.status.inactive {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--inactive-color);
+  border: 1px solid var(--inactive-color);
+}
+/* 
 .status.active {
   background: rgba(16, 185, 129, 0.1);
   color: var(--success-color);
 }
 
-.status.warning {
+.status.inactive {
   background: rgba(245, 158, 11, 0.1);
-  color: var(--warning-color);
-}
+  color: var();
+} */
 
 .status-details {
   margin-top: 12px;

@@ -56,9 +56,6 @@ const RealTimeMonitor = () => {
 
     return (
         <>
-        <div className={`page-name my-2 ${darkModePref ? "text-[#2c3e50]" : "text-gray-200"}`}>
-            <h2>Dashboard</h2>
-        </div>
         <section className={`monitoring ${darkModePref ? "bg-gray-200" : "bg-gray-800 text-gray-200"}`} >
             <Typography sx={{ textAlign: 'left', fontWeight: 600, mb: -1.5 }}>Real-Time Monitoring</Typography>
             <div className="monitoring-grid">
