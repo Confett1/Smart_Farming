@@ -2,9 +2,46 @@ import { Divider } from "@mui/material";
 import PropTypes from "prop-types";
 // import GaugeChart from "react-gauge-chart";
 import GaugeComponent from "react-gauge-component";
+import API from "../../../../api/api";
+import { useEffect, useRef} from "react";
 
 const SoilMoisture = ({soilMoisture, darkModePref}) => {
     const moistureLevel = soilMoisture <= 25 ? "dry" : soilMoisture <=75 ? "moist" : "wet";
+    const NOTIFICATION_COOLDOWN = 4 * 60 * 60 * 1000;
+    const lastNotificationTime = useRef(localStorage.getItem("lastSoilMoistureNotif") || 0); // Persist last notification time
+    const notifyAdmins = async (notificationData) => {
+        try {
+            const response = await API.post('/notifications', notificationData);
+            console.log(response.data);
+            lastNotificationTime.current = Date.now();
+            localStorage.setItem('lastSoilMoistureNotif', lastNotificationTime.current);
+        } catch (error) {
+            console.error("Failed to send notification:", error);
+        }
+    };
+
+    useEffect(() => {
+        console.log(lastNotificationTime);
+        let newNotification = null;
+
+        if (soilMoisture <= 25) {
+            newNotification = {
+                title: "Soil Drought Alert!",
+                messageBody: `Soil moisture dropped to ${soilMoisture}%. The soil is in drought conditions! Water it immediately.`,
+                type: "alert" 
+            };
+        }
+
+        if (newNotification) {
+            const now = Date.now();
+            if (now - lastNotificationTime.current >= NOTIFICATION_COOLDOWN) {
+                notifyAdmins(newNotification);
+                lastNotificationTime.current = now;
+                localStorage.setItem('lastSoilMoistureNotif', now);
+            }
+        }
+    }, [])
+
     return (
         <>
             <div className={`shadow-md ${darkModePref ? "bg-gray-100" : "bg-gray-700"} hover:shadow-lg transition-all items-center justify-center p-5 rounded-lg`}>
@@ -12,15 +49,6 @@ const SoilMoisture = ({soilMoisture, darkModePref}) => {
                 <Divider />
                 <div className="flex justify-center items-center">
                     <div className="w-full mt-5">
-                    {/* <GaugeChart
-                        id="soilMoisture"
-                        arcsLength={[0.25, 0.50, 0.25]}
-                        colors={["red", "orange", "blue"]}
-                        percent={percent}
-                        textColor="black"
-                        arcPadding={0.02}
-                        needleColor={"#5392ff"}
-                    /> */}
                     <GaugeComponent
                         value={soilMoisture}
                         type="semicircle"
@@ -45,20 +73,6 @@ const SoilMoisture = ({soilMoisture, darkModePref}) => {
 
                         arc={{
                             colorArray: ["red", "blue"],
-                            // subArcs: [
-                            //     {
-                            //         color: "red",
-                            //         showTick: true,
-                            //     },
-                            //     {
-                            //         limit: 75,
-                            //         color: "orange"
-                            //     },
-                            //     {
-                            //         limit: 100,
-                            //         color: "blue"
-                            //     }
-                            // ],
                             padding: 0,
                             nbSubArcs: 300,
                             width: 0.2,

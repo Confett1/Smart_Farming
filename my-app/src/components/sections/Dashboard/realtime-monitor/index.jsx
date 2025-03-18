@@ -3,10 +3,10 @@ import {Typography } from '@mui/material';
 import API from '../../../../api/api';
 import NpkChart from './NpkChart';
 import WeatherForecast from './WeatherForecast';
-// import WaterLevel from './WaterLevel';
 import HumidityTemperature from './HumidityTemperature';
 import NPKLatest from './NPKLatest';
 import SoilMoisture from './SoilMoisture';
+import WaterLevel from '../WaterLevel/WaterLevel';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
@@ -65,6 +65,7 @@ const RealTimeMonitor = () => {
                 <NpkChart readings={fiveLatestReadings} darkModePref={darkModePref} />
                 {/* <WaterLevel /> */}
                 <WeatherForecast darkModePref={darkModePref} />
+                <WaterLevel />
             </div>
         </section>
         </>
