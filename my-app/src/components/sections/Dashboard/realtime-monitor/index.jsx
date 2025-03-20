@@ -6,7 +6,7 @@ import WeatherForecast from './WeatherForecast';
 import HumidityTemperature from './HumidityTemperature';
 import NPKLatest from './NPKLatest';
 import SoilMoisture from './SoilMoisture';
-import WaterLevel from '../WaterLevel/WaterLevel';
+import WaterLevel from './WaterLevel';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
@@ -60,12 +60,12 @@ const RealTimeMonitor = () => {
             <Typography sx={{ textAlign: 'left', fontWeight: 600, mb: -1.5 }}>Real-Time Monitoring</Typography>
             <div className="monitoring-grid">
                 <NPKLatest darkModePref={darkModePref} />
-                <SoilMoisture soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} darkModePref={darkModePref} />
-                <HumidityTemperature readings={latestNPKReading} darkModePref={darkModePref}/>
+                <SoilMoisture npkId={latestNPKReading.id} soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} darkModePref={darkModePref} />
+                <HumidityTemperature npkId={latestNPKReading.id} readings={latestNPKReading} darkModePref={darkModePref}/>
                 <NpkChart readings={fiveLatestReadings} darkModePref={darkModePref} />
                 {/* <WaterLevel /> */}
                 <WeatherForecast darkModePref={darkModePref} />
-                <WaterLevel />
+                <WaterLevel npkId={latestNPKReading.id} darkModePref={darkModePref} />
             </div>
         </section>
         </>

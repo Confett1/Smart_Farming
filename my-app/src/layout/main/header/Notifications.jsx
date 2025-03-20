@@ -131,7 +131,10 @@ const Notifications = ({ userProfile, darkModePref }) => {
         };
 
         document.addEventListener("click", handleClickOutside);
-        return () => document.removeEventListener("click", handleClickOutside);
+        const interval = setInterval(() => {
+            fetchNotifications();
+        }, 10000);
+        return () => {document.removeEventListener("click", handleClickOutside), clearInterval(interval)};
     }, [userProfile]);
 
     return (

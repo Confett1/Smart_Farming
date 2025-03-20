@@ -78,6 +78,8 @@ const LoginForm = () => {
     password: "",
   });
 
+  localStorage.setItem('darkmode', true);
+
   const login = [
     {
       username: "user1",

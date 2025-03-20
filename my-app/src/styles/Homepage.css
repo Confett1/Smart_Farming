@@ -25,7 +25,6 @@
 
 .card-header {
   padding: 15px;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -119,7 +118,6 @@ section {
 .card-header h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -353,7 +351,6 @@ section {
 
 /* Water Level Monitoring */
 .field-water-card {
-  background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
@@ -366,7 +363,6 @@ section {
 }
 
 .field-plot {
-  background: #f8f9fa;
   border-radius: 10px;
   padding: 15px;
 }
@@ -381,14 +377,13 @@ section {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  background: #e3f2fd;
 }
 
 .water-overlay {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(180deg, rgba(33, 150, 243, 0.4), rgba(33, 150, 243, 0.6));
+  /* background: ; */
   transition: height 1s ease-in-out;
 }
 
@@ -426,8 +421,6 @@ section {
 
 .mark {
   font-size: 0.8rem;
-  color: #666;
-  background: rgba(255, 255, 255, 0.8);
   padding: 2px 5px;
   border-radius: 3px;
 }
@@ -443,14 +436,9 @@ section {
 }
 
 .current-status {
-  padding: 3px 8px;
+  padding: 5px 10px;
   border-radius: 12px;
   font-size: 0.9rem;
-}
-
-.current-status.optimal {
-  background: #e8f5e9;
-  color: #2e7d32;
 }
 
 .drainage-status {

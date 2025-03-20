@@ -117,7 +117,7 @@ const SecuritySettings = () => {
       
         </div>
         <div className="flex justify-end">
-          <button type="submit" className="bg-gray-700 text-white px-6 w-86 py-3 rounded-lg hover:bg-gray-500 my-3">SUBMIT</button></div>
+          <button type="submit" className= {`text-white px-6 w-86 py-3 rounded-lg  my-3 ${darkModePref ? "bg-green-600 hover:bg-green-500" : "bg-gray-700 hover:bg-gray-500"} transition-all`}>SUBMIT</button></div>
         </div>
     </div>
     </form>

@@ -223,9 +223,9 @@ const NPKLatest = ({ darkModePref }) => {
                     </thead>
                     <tbody className={darkModePref ? "bg-gray-100" : "bg-gray-700"}>
                         {[
-                            { name: "Nitrogen", value: latestNPKReading?.nitrogen, max: 200 },
-                            { name: "Phosphorus", value: latestNPKReading?.phosphorous, max: 100 },
-                            { name: "Potassium", value: latestNPKReading?.potassium, max: 200 },
+                            { name: "Nitrogen", value: latestNPKReading?.nitrogen, max: 135 },
+                            { name: "Phosphorus", value: latestNPKReading?.phosphorous, max: 90 },
+                            { name: "Potassium", value: latestNPKReading?.potassium, max: 90 },
                         ].map((nutrient, index) => (
                             <tr
                                 key={index}

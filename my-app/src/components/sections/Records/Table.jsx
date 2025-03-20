@@ -311,7 +311,7 @@ const headCells = [
   { id: 'no', numeric: true, disablePadding: false, label: 'No.' },
   { id: 'activityName', numeric: false, disablePadding: true, label: 'Activity Name' },
   { id: 'timestamp', numeric: true, disablePadding: false, label: 'Date' },
-  { id: 'duration', numeric: true, disablePadding: false, label: 'Duration' },
+  { id: 'duration', numeric: true, disablePadding: false, label: 'Duration (Minute/s)' },
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
@@ -323,7 +323,7 @@ function EnhancedTableHead({ order, orderBy, darkModePref }) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={'left'}
+            align={'center'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ fontWeight: 600, color: darkModePref ? 'green' : '#d1d5db' }}
           >
@@ -343,11 +343,9 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function RecordTable({darkModePref, filterType}) {
-  const [order, setOrder] = React.useState('desc');
-  const [orderBy, setOrderBy] = React.useState('timestamp');
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
 
   useEffect(() => {
@@ -366,12 +364,6 @@ export default function RecordTable({darkModePref, filterType}) {
 
   const filteredRows = filterType === "all" ? rows : rows.filter((row) => row.status === filterType);
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -389,9 +381,9 @@ export default function RecordTable({darkModePref, filterType}) {
 
   const visibleRows = React.useMemo(() => {
     return [...filteredRows]
-      .sort((a, b) => (order === 'desc' ? b[orderBy] - a[orderBy] : a[orderBy] - b[orderBy]))
+      .reverse()
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  }, [order, orderBy, page, rowsPerPage, filteredRows]);
+  }, [page, rowsPerPage, filteredRows]);
 
   return (
     
@@ -399,7 +391,7 @@ export default function RecordTable({darkModePref, filterType}) {
       <Paper sx={{ width: '100%', mb: 2 }}>
       <TableContainer className={`${darkModePref ? "bg-white" : "bg-gray-800"}`}>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-            <EnhancedTableHead darkModePref={darkModePref} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+            <EnhancedTableHead darkModePref={darkModePref}/>
             <TableBody>
               {visibleRows.map((row, index) => {
                 const rowNumber = page * rowsPerPage + index + 1;
@@ -410,15 +402,15 @@ export default function RecordTable({darkModePref, filterType}) {
                       cursor: "pointer"
                     }}
                     className={`${darkModePref ? "bg-white" : "bg-gray-800 text-gray-300"}`}
-                    tabIndex={-1} key={row.userId}
+                    tabIndex={-1} key={row.recordId}
                   >
-                    <TableCell sx={{textTransform: "capitalize", mr: 3, color: darkModePref ? "black" : '#d1d5db'}}>{rowNumber}</TableCell>
-                    <TableCell align='left' sx={{ textTransform: "capitalize", color: darkModePref ? "black" : '#d1d5db' }}>{row.activityName}</TableCell>
-                    <TableCell align="left" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{new Date(row.timestamp).toLocaleDateString()}</TableCell>
-                    <TableCell align="left" sx={{color: darkModePref ? "black" : '#d1d5db'}}>
-                      {row.duration} {row.duration === 1 ? "Minute" : "Minutes"}
+                    <TableCell align='center' sx={{textTransform: "capitalize", mr: 3, color: darkModePref ? "black" : '#d1d5db'}}>{rowNumber}</TableCell>
+                    <TableCell align='center' sx={{ textTransform: "capitalize", color: darkModePref ? "black" : '#d1d5db' }}>{row.activityName}</TableCell>
+                    <TableCell align="center" sx={{color: darkModePref ? "black" : '#d1d5db'}}>{new Date(row.timestamp).toLocaleString()}</TableCell>
+                    <TableCell align="center" sx={{color: darkModePref ? "black" : '#d1d5db'}}>
+                      {row?.duration || '----'}
                     </TableCell>
-                    <TableCell sx={{ textTransform: 'capitalize', color: darkModePref ? "black" : '#d1d5db'    }}>{row.status}</TableCell>
+                    <TableCell align='center' sx={{ textTransform: 'capitalize', color: darkModePref ? "black" : '#d1d5db'    }}>{row.status}</TableCell>
                   </TableRow>
                 );
               })}
@@ -443,7 +435,7 @@ export default function RecordTable({darkModePref, filterType}) {
               },
             },
           }}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
