@@ -27,7 +27,7 @@ const menuItems = [
   },
 ];
 
-const ProfileMenu = () => {
+const ProfileMenu = ({darkModePref}) => {
   const userProfile = JSON.parse(localStorage.getItem('user'));
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -53,92 +53,143 @@ const ProfileMenu = () => {
 
   return (
     <>
-      <ButtonBase
+  <ButtonBase
+    sx={{ 
+      '&:hover': {
+        bgcolor: 'transparent',
+        color: '#000'
+      }
+    }}
+    onClick={handleProfileClick}
+    aria-controls={open ? 'account-menu' : undefined}
+    aria-expanded={open ? 'true' : undefined}
+    aria-haspopup="true"
+    disableRipple
+  >
+    <Avatar
+      src={userProfile?.userProfile || userProfile}
+      sx={{
+        height: 44,
+        width: 44,
+        bgcolor: !darkModePref ? "gray.700" : "gray.200", // Reversed
+      }}
+    />
+  </ButtonBase>
+
+  <Menu
+    anchorEl={anchorEl}
+    id="account-menu"
+    open={open}
+    onClose={handleProfileMenuClose}
+    onClick={handleProfileMenuClose}
+    sx={{
+      mt: 1.6,
+      '& .MuiList-root': {
+        p: 0,
+        width: 'auto',
+        minWidth: 230,
+      },
+    }}
+    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    PaperProps={{
+      sx: {
+        borderRadius: 2,
+        bgcolor: !darkModePref ? "#1F2937 " : "white", // REVERSED
+        color: !darkModePref ? "#E0E0E0" : "text.primary", // REVERSED
+        boxShadow: !darkModePref 
+          ? "0px 4px 20px rgba(255, 255, 255, 0.1)" 
+          : "0px 4px 20px rgba(0, 0, 0, 0.1)",
+      },
+    }}    
+  >
+    <Box p={1}>
+      <MenuItem 
+        onClick={handleProfileMenuClose} 
         sx={{ 
-          '&:hover': {
-            bgcolor: 'transparent',
-            color: '#000'
-          }
+          '&:hover': { borderRadius: 3 },
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          bgcolor: !darkModePref ? "gray.800" : "white", // Reversed
+          color: !darkModePref ? "white" : "black" // Reversed
         }}
-        onClick={handleProfileClick}
-        aria-controls={open ? 'account-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
-        disableRipple
       >
-        <Avatar
-          src={userProfile?.userProfile || userProfile}
-          sx={{
-            height: 44,
-            width: 44,
-            bgcolor: '',
-          }}
+        <Avatar 
+          src={userProfile?.userProfile || "/default-profile.png"} 
+          sx={{ height: 42, width: 42, bgcolor: !darkModePref ? "gray.700" : "gray.200" }} 
         />
-       {/* <Typography sx={{textTransform: "capitalize"}} variant='body2' pl={1}>{userProfile.firstName} {userProfile.middleName} {userProfile.lastName} {userProfile.suffix}</Typography> */}
-       {/* <IconifyIcon sx={{ fontSize: 30, ml: -0.6 }} icon={open ? 'material-symbols-light:arrow-drop-up-rounded' : 'material-symbols-light:arrow-drop-down-rounded'} /> */}
-      </ButtonBase>
+        <Stack direction="column">
+          <Typography 
+            sx={{ 
+              textTransform: "capitalize", 
+              whiteSpace: "nowrap", 
+              overflow: "hidden", 
+              textOverflow: "ellipsis",
+              color: !darkModePref ? "white" : "black" // Reversed
+            }} 
+            variant="body2" 
+            fontWeight={600}
+          >
+            {userProfile.firstName} {userProfile.lastName}
+          </Typography>
+          <Typography 
+            variant="caption" 
+            fontWeight={400} 
+            sx={{ 
+              whiteSpace: "nowrap", 
+              overflow: "hidden", 
+              textOverflow: "ellipsis",
+              color: !darkModePref ? "gray.400" : "gray.600" // Reversed
+            }}
+          >
+            {userProfile.email}
+          </Typography>
+        </Stack>
+      </MenuItem>
+    </Box>
 
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleProfileMenuClose}
-        onClick={handleProfileMenuClose}
-        sx={{
-          mt: 1.6,
-          '& .MuiList-root': {
-            p: 0,
-            width: 'auto',
-            minWidth: 230,
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        PaperProps={{
-          sx: {
-            borderRadius: 2, // Apply border radius here
-          },
-        }}
-      >
-        <Box p={1}>
-          <MenuItem onClick={handleProfileMenuClose} sx={{ '&:hover': { borderRadius: 3 } }}>
-            <Avatar src={userProfile?.userProfile ? userProfile.userProfile : userProfile} sx={{ mr: 1, height: 42, width: 42 }} />
-            <Stack direction="column">
-              <Typography sx={{textTransform: "capitalize"}} variant="body2" color="text.primary" fontWeight={600}>
-                {userProfile.firstName} {userProfile.lastName}
-              </Typography>
-              <Typography variant="caption" color="text.secondary" fontWeight={400}>
-                {userProfile.email}
-              </Typography>
-            </Stack>
-          </MenuItem>
-        </Box>
+    <Divider sx={{ my: 0 }} />
 
-        <Divider sx={{ my: 0 }} />
+    <Box p={1}>
+      {menuItems.map((item) => (
+        <MenuItem
+          key={item.id}
+          onClick={() => handleMenuItemClick(item.path)}
+          sx={{ 
+            py: 1, 
+            '&:hover': { borderRadius: 3, bgcolor: !darkModePref ? "gray.700" : "gray.200" }, // Reversed
+            bgcolor: !darkModePref ? "gray.800" : "white", // Reversed
+            color: !darkModePref ? "white" : "black" // Reversed
+          }}
+        >
+          <ListItemIcon 
+            sx={{ 
+              mr: 1, 
+              color: !darkModePref ? "white" : "text.secondary", // Reversed
+              fontSize: 'h5.fontSize' 
+            }}
+          >
+            <IconifyIcon icon={item.icon} />
+          </ListItemIcon>
+          <Typography 
+            variant="body2" 
+            fontWeight={500}
+            sx={{ color: !darkModePref ? "gray.300" : "text.secondary" }} // Reversed
+          >
+            {item.title}
+          </Typography>
+        </MenuItem>
+      ))}
+    </Box>
+  </Menu>
+</>
 
-        <Box p={1}>
-          {menuItems.map((item) => (
-            <MenuItem
-              key={item.id}
-              onClick={() => handleMenuItemClick(item.path)}
-              sx={{ py: 1 , '&:hover': { borderRadius: 3 } }}
-            >
-              <ListItemIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 'h5.fontSize' }}>
-                <IconifyIcon icon={item.icon} />
-              </ListItemIcon>
-              <Typography variant="body2" color="text.secondary" fontWeight={500}>
-                {item.title}
-              </Typography>
-            </MenuItem>
-          ))}
-        </Box>
-      </Menu>
-    </>
   );
 };
 
 ProfileMenu.propTypes = {
-  userProfile: PropTypes.any.isRequired
+  darkModePref: PropTypes.bool.isRequired,
 }
 
 export default ProfileMenu;
