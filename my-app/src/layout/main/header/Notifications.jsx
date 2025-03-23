@@ -165,19 +165,28 @@ const Notifications = ({ userProfile, darkModePref }) => {
                         darkModePref ? "border-gray-300" : "border-gray-600"
                     } flex items-center justify-between`}
                     >
-                        <Typography sx={{ fontSize: 17, color: "green" }}>Notification</Typography>
+                        <Typography sx={{ fontSize: 17, color: darkModePref ? "green" : "lightgreen" }}>
+                            Notification
+                        </Typography>
                         <div className="flex gap-1">
                             <button
-                                className="text-gray-600 hover:text-gray-800 transition-colors duration-300"
+                                className={`transition-colors duration-300 ${
+                                    !darkModePref ? "text-gray-300 hover:text-gray-100" : "text-gray-600 hover:text-gray-800"
+                                }`}
                                 onClick={markAllAsRead}
                             >
-                                <i className="fas fa-check-double"></i>
+                                <i className={`${!darkModePref ? "text-gray-100" : "text-gray-800"} fas fa-check-double`}></i>
                                 Mark all as read
                             </button>
-                            <button className="text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                            <button
+                                className={`transition-colors duration-300 ${
+                                    !darkModePref ? "text-gray-300 hover:text-gray-100" : "text-gray-600 hover:text-gray-800"
+                                }`}
+                            >
                                 <i className="fas fa-cog"></i>
                             </button>
                         </div>
+
                     </div>
                     <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700 py-1 px-6">
     <button
@@ -230,19 +239,21 @@ const Notifications = ({ userProfile, darkModePref }) => {
     </button>
 </div>
                     <div className={`max-h-[400px] overflow-y-auto ${
-                        darkModePref ? "text-gray-600" : "text-gray-200"
+                        darkModePref ? "text-gray-600" : " text-gray-200"
                     }`}
                     >
                         {filteredNotifications.length > 0 ? (
                             filteredNotifications.map((notification) => (
                                 <div
                                     key={notification.notificationId}
-                                    className={`p-4 flex items-start gap-3 ${
-                                        notification.isRead ? "bg-white" : "bg-blue-50"
-                                    } border-l-4 ${
-                                        notification.isRead ? "border-transparent" : "border-blue-500"
-                                    } hover:bg-gray-100 transition-colors duration-300`}
+                                    className={`p-4 flex items-start gap-3 
+                                        ${notification.isRead ? (darkModePref ? "bg-white" : "bg-gray-700") : (darkModePref ? "bg-blue-100" : "bg-gray-800")} 
+                                        border-l-4 
+                                        ${notification.isRead ? "border-transparent" : "border-blue-500"} 
+                                        hover:${darkModePref ? "bg-gray-100" : "bg-gray-500"} 
+                                        transition-colors duration-300`}
                                 >
+
                                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200">
                                         <i className={`${getIcon(notification.type)}`}></i>
                                     </div>
@@ -282,7 +293,7 @@ const Notifications = ({ userProfile, darkModePref }) => {
                         <Link to="/notifications" className="text-blue-500 hover:underline text-xs">
                             View All Notifications
                         </Link>
-                        <span className="text-xs text-gray-600">
+                        <span className={`text-xs ${darkModePref ? "text-gray-600" : "text-gray-200"}`}>
                             {notifications.filter((notification) => !notification.isRead).length} unread notifications
                         </span>
                     </div>
