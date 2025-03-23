@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import Thermometer from "react-thermometer-component";
 import API from "../../../../api/api";
 
-const Temperature = ({ temperature, darkModePref, npkId }) => {
+const Temperature = ({ temperature, darkModePref, id }) => {
     const NOTIFICATION_COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
     const lastNotificationTime = useRef(Number(localStorage.getItem("lastTemperatureNotif")) || 0);
 
@@ -21,6 +21,8 @@ const Temperature = ({ temperature, darkModePref, npkId }) => {
     useEffect(() => {
         console.log("📌 Current Temperature Value:", temperature);
         console.log(`📌 Last notification sent at: ${new Date(lastNotificationTime.current).toLocaleString()}`);
+        console.log(id);
+        
 
         if (temperature === 0 || temperature == null) return; // Skip if temp is 0 or null
         
@@ -34,14 +36,14 @@ const Temperature = ({ temperature, darkModePref, npkId }) => {
                 title: "🥶 Cold Stress Warning!",
                 messageBody: `Temperature dropped to ${temperature}°C. Pechay growth may slow down, and frost damage is possible! Take protective measures.`,
                 type: "alert",
-                npkReadings: {npkId},
+                npkReadings: {id},
             };
         } else if (temperature > 30) {
             newNotification = {
                 title: "🔥 Heat Stress Alert!",
                 messageBody: `Temperature reached ${temperature}°C. Pechay may start wilting or bolting. Provide shade and water adequately!`,
                 type: "alert",
-                npkReadings: {npkId},
+                npkReadings: { id },
             };
         }
 
@@ -67,7 +69,7 @@ const Temperature = ({ temperature, darkModePref, npkId }) => {
 Temperature.propTypes = {
     temperature: PropTypes.number.isRequired,
     darkModePref: PropTypes.bool.isRequired,
-    npkId: PropTypes.any.isRequired,
+    id: PropTypes.any.isRequired,
 };
 
 export default Temperature;

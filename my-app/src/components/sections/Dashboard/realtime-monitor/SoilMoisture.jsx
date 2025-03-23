@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import GaugeComponent from "react-gauge-component";
 import API from "../../../../api/api";
 
-const SoilMoisture = ({ soilMoisture, darkModePref, npkId }) => {
+const SoilMoisture = ({ soilMoisture, darkModePref, id }) => {
     const moistureLevel = soilMoisture <= 25 ? "dry" : soilMoisture <= 75 ? "moist" : "wet";
     const NOTIFICATION_COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
     const lastNotificationTime = useRef(Number(localStorage.getItem("lastSoilMoistureNotif")) || 0); // Persist last notification time
@@ -32,7 +32,7 @@ const SoilMoisture = ({ soilMoisture, darkModePref, npkId }) => {
                 title: "🚨 Soil Drought Alert!",
                 messageBody: `Soil moisture dropped to ${soilMoisture}%. The soil is in drought conditions! Water it immediately.`,
                 type: "alert",
-                npkReadings: {npkId},
+                npkReadings: {id},
             };
         }
 
@@ -96,7 +96,7 @@ const SoilMoisture = ({ soilMoisture, darkModePref, npkId }) => {
 SoilMoisture.propTypes = {
     soilMoisture: PropTypes.number.isRequired,
     darkModePref: PropTypes.bool.isRequired,
-    npkId: PropTypes.any.isRequired,
+    id: PropTypes.any.isRequired,
 };
 
 export default SoilMoisture;

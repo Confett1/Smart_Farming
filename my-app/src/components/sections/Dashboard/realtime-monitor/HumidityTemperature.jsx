@@ -17,7 +17,7 @@ const HumidityTemperature = ({readings, darkModePref, npkId}) => {
             <div className="flex mt-6 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
-                    <Temperature npkId={npkId} temperature={temperature} darkModePref={darkModePref} />
+                    <Temperature id={npkId} temperature={temperature} darkModePref={darkModePref} />
                     {/* <div className="w-[150px] h-[150px] rounded-full bg-black/30 relative overflow-hidden shadow-lg">
                         
                         <div className="absolute top-1/2 left-1/2 w-full h-full flex justify-center items-center">
@@ -43,7 +43,7 @@ const HumidityTemperature = ({readings, darkModePref, npkId}) => {
                 {/* Humidity Gauge */}
                 <div className="relative w-[45%] h-[200px] flex flex-col items-center">
                     <div className="m-6  shadow-lg rounded-full">
-                        <Humidity npkId={npkId} humidity={huimidity} darkModePref={darkModePref} />
+                        <Humidity id={npkId} humidity={huimidity} darkModePref={darkModePref} />
                     </div>
                 </div>  
             </div>

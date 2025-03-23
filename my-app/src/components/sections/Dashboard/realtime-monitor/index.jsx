@@ -11,9 +11,9 @@ import WaterLevel from './WaterLevel';
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
     const [latestNPKReading, setLatestNPKReading] = useState({
-        nitrogen: "--",
-        phosphorous: "--",
-        potassium: "--",
+        nitrogen: 0,
+        phosphorous: 0,
+        potassium: 0,
         soilMoisture: 0,
         humidity: 0,
         temperature: 0,
@@ -42,6 +42,7 @@ const RealTimeMonitor = () => {
         }
     }
 
+
     useEffect(() => {
         fetchLatestReading();
         fetchFiveLatestReadings();
@@ -52,6 +53,7 @@ const RealTimeMonitor = () => {
             }, 10000);
 
         return () => clearInterval(interval);
+        
     }, []); 
 
     return (
@@ -59,11 +61,10 @@ const RealTimeMonitor = () => {
         <section className={`monitoring ${darkModePref ? "bg-gray-200" : "bg-gray-800 text-gray-200"}`} >
             <Typography sx={{ textAlign: 'left', fontWeight: 600, mb: -1.5 }}>Real-Time Monitoring</Typography>
             <div className="monitoring-grid">
-                <NPKLatest darkModePref={darkModePref} />
-                <SoilMoisture npkId={latestNPKReading.id} soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} darkModePref={darkModePref} />
+                <NPKLatest id={latestNPKReading.id} nitrogen={latestNPKReading.nitrogen} phosphorus={latestNPKReading.phosphorous} potassium={latestNPKReading.potassium} darkModePref={darkModePref} />
+                <SoilMoisture id={latestNPKReading.id} soilMoisture={latestNPKReading?.soilMoisture? latestNPKReading.soilMoisture : 0} darkModePref={darkModePref} />
                 <HumidityTemperature npkId={latestNPKReading.id} readings={latestNPKReading} darkModePref={darkModePref}/>
                 <NpkChart readings={fiveLatestReadings} darkModePref={darkModePref} />
-                {/* <WaterLevel /> */}
                 <WeatherForecast darkModePref={darkModePref} />
                 <WaterLevel npkId={latestNPKReading.id} darkModePref={darkModePref} />
             </div>
