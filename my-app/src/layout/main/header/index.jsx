@@ -15,36 +15,9 @@ const Header = ({userProfile}) => {
                 <Typography variant='h6' className='pl-3'>SmartFarm Hub</Typography>
             </div>
             <div className="header-controls flex items-center gap-3">
-
-                <div className="search-bar">
-                    <Input
-                        placeholder="Search..."
-                        sx={{
-                            '--Input-focusedInset': 'var(--any, 0)',
-                            '--Input-focusedThickness': '0.25rem',
-                            '--Input-focusedHighlight': 'rgba(13,110,253,.25)',
-                            '& .MuiInput-underline:before': {
-                                borderBottomColor: '#F5F5F5',
-                            },
-                            '& .MuiInput-underline:after': {
-                                borderBottomColor: '#ff5733',
-                            },
-                            '&:focus-within': {
-                                borderColor: '#32CD32',
-                                color: "#138808"
-                            },
-                            backgroundColor: "#F5F5F5",
-                            borderRadius: 30,
-                            fontSize: 14,
-                            px: 2,
-                            py: 1,
-                            width: 250
-                        }}
-                    />
-                </div>
                 
                 <Notifications userProfile={userProfile} darkModePref={darkModePref} />
-                <ProfileMenu image={userProfile} userProfile={userProfile} />
+                <ProfileMenu darkModePref={darkModePref} image={userProfile} userProfile={userProfile} />
             </div>
         </header>
     );

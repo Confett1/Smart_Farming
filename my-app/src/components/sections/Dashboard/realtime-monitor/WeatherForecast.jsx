@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 const WeatherForecast = ({darkModePref}) => {
     const [weatherData, setWeatherData] = useState(null);
     const openWeatherApi = import.meta.env.VITE_OPENWEATHER_API_KEY;
-    const [notification, setNotification] = useState(null);
     const lastNotificationTime = useRef(localStorage.getItem("lastNotificationTime") || 0); // Persist last notification time
 
     const NOTIFICATION_COOLDOWN = 12 * 60 * 60 * 1000; 
@@ -42,7 +41,6 @@ const WeatherForecast = ({darkModePref}) => {
                     if (newNotification) {
                         const now = Date.now();
                         if (now - lastNotificationTime.current >= NOTIFICATION_COOLDOWN) {
-                            setNotification(newNotification);
                             notifyAdmins(newNotification);
                             lastNotificationTime.current = now;
                             localStorage.setItem("lastNotificationTime", now); // Store timestamp

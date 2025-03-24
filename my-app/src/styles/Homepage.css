@@ -25,7 +25,6 @@
 
 .card-header {
   padding: 15px;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -119,7 +118,6 @@ section {
 .card-header h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -353,7 +351,6 @@ section {
 
 /* Water Level Monitoring */
 .field-water-card {
-  background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
@@ -366,7 +363,6 @@ section {
 }
 
 .field-plot {
-  background: #f8f9fa;
   border-radius: 10px;
   padding: 15px;
 }
@@ -381,14 +377,13 @@ section {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  background: #e3f2fd;
 }
 
 .water-overlay {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(180deg, rgba(33, 150, 243, 0.4), rgba(33, 150, 243, 0.6));
+  /* background: ; */
   transition: height 1s ease-in-out;
 }
 
@@ -426,8 +421,6 @@ section {
 
 .mark {
   font-size: 0.8rem;
-  color: #666;
-  background: rgba(255, 255, 255, 0.8);
   padding: 2px 5px;
   border-radius: 3px;
 }
@@ -443,14 +436,9 @@ section {
 }
 
 .current-status {
-  padding: 3px 8px;
+  padding: 5px 10px;
   border-radius: 12px;
   font-size: 0.9rem;
-}
-
-.current-status.optimal {
-  background: #e8f5e9;
-  color: #2e7d32;
 }
 
 .drainage-status {
@@ -582,4 +570,132 @@ section {
   .status-card {
     padding: 20px;
   }
+}
+
+
+
+
+@media (min-width: 768px) {
+  .water-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .water-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .water-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tank-container, .moisture-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.tank-container {
+  background: linear-gradient(to bottom, #0a3b5c, #0d5c8c);
+}
+
+.moisture-container {
+  background: linear-gradient(to bottom, #6b3d1a, #8b5a2b);
+}
+
+.tank-fill, .moisture-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transition: height 1s ease-in-out;
+}
+
+.tank-fill {
+  background: linear-gradient(to bottom, rgba(0, 204, 255, 0.3), rgba(0, 68, 255, 0.8));
+}
+
+.moisture-fill {
+  background: linear-gradient(to bottom, rgba(0, 68, 255, 0.3), rgba(0, 68, 255, 0.8));
+}
+
+.tank-value, .moisture-value {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.tank-markers {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.tank-marker {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.tank-marker::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.tank-marker-label {
+  position: absolute;
+  right: 15px;
+  color: white;
+  font-size: 0.75rem;
+  transform: translateY(-50%);
+}
+
+.level-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: background-color 0.3s;
+}
+
+.level-card-header {
+  padding: 1rem 1.5rem 0.5rem;
+}
+
+.level-card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: 0.25rem;
+}
+
+.level-card-content {
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
 }

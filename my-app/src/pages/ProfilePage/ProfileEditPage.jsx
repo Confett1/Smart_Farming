@@ -23,7 +23,7 @@ const ProfileEditPage = () => {
             <div className={`${darkModePref? "" : "bg-gray-700"}`}>
                 <Stack p={2.7}>
                     <Breadcrumb PageName={"Edit Profile"}/>
-                    <EditProfile user={user} />
+                    <EditProfile user={user} darkModePref={darkModePref} />
                 </Stack>
             </div>
         </>

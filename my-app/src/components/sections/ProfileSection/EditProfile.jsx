@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import API from "../../../api/api";
 import { toast} from "../../../utils/toast";
 import { Divider } from "@mui/material";
-const EditProfile = ( {user} ) => {
+const EditProfile = ( {user, darkModePref} ) => {
     const [userDetails, setUserdetails] = useState({
       firstName: user.firstName,
       lastName: user.lastName,
@@ -73,192 +73,143 @@ const EditProfile = ( {user} ) => {
     }, [updateSuccess])
 
     return (
-          <form onSubmit={handleSave} className="relative mx-5  w-[screen] p-[50px] bg-white bg-opacity-13 backdrop-blur-sm border- border-white/10 rounded-md shadow-[0_0_3px_#6c746c]">
-            <h3 className="text-left text-2xl font-medium text-[#45c44b] pb-2">Profile</h3>
-            <Divider />
+      <form
+      onSubmit={handleSave}
+      className={`relative mx-5 w-[screen] p-[50px] ${
+        !darkModePref ? "bg-gray-900 text-white border-white/20" : "bg-white text-black border-gray-300"
+      } bg-opacity-13 backdrop-blur-sm border rounded-md shadow-[0_0_3px_#6c746c]`}
+    >
+      <h3 className={`text-left text-2xl font-medium ${
+        !darkModePref ? "text-green-400" : "text-[#45c44b]"
+      } pb-2`}>Profile</h3>
+      <Divider />
     
-            {/* First Group: Account Details */}
-            <div className="flex mt-3">
-              <div className="w-full grid gap-2">
-                <div className="w-full pr-2">
-                  <label htmlFor="firstName" className="block text-xs font-normal text-[#6c746c]">First Name</label>
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    id="firstName"
-                    value={userDetails.firstName || ""}
-                    onChange={handleChange}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required 
-                  />
-                </div>
-    
-                <div className="w-full pr-2">
-                  <label htmlFor="middleName" className="block text-xs font-normal text-[#6c746c]">Middle Name</label>
-                  <input
-                    type="text"
-                    placeholder="Middle Name"
-                    name="middleName"
-                    id="middleName"
-                    onChange={handleChange}
-                    value={userDetails?.middleName || ''}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                  
-                  />
-                </div>
-    
-                <div className="w-full pr-2">
-                  <label htmlFor="lastName" className="block text-xs font-normal text-[#6c746c]">Last Name</label>
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastName"
-                    id="lastName"
-                    onChange={handleChange}
-                    value={userDetails.lastName || ""}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required
-                  />
-                </div>
-    
-                <div className="w-full pr-2">
-                  <label htmlFor="suffix" className="block text-xs font-normal text-[#6c746c]">Suffix (Jr, Sr, etc.)</label>
-                  <input
-                    type="text"
-                    placeholder="Suffix"
-                    name="suffix"
-                    id="suffix"
-                    onChange={handleChange}
-                    value={userDetails?.suffix || '' }
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                  />
-                </div>
-    
-                <div className="w-full pr-2">
-                  <label htmlFor="birthday" className="block text-xs font-normal text-[#6c746c]">Birthday</label>
-                  <input
-                    type="date"
-                    name="birthday"
-                    id="birthday"
-                    onChange={handleChange}
-                    value={userDetails.birthday || ""}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required
-                  />
-                </div>
-              </div>
-    
-              {/* Second Group: Profile Image */}
-              <div className="w-full">
-                <div className="w-full pl-2">
-                  <label htmlFor="email" className="block text-xs font-normal text-[#6c746c]">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    id="email"
-                    onChange={handleChange}
-                    value={userDetails.email || ""}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required
-                  />
-                </div>
-                <div className="flex-column w-full pl-2 pt-2">
-                  <label htmlFor="barangay" className="block text-xs font-normal text-[#6c746c]">Address</label>
-                  <div className="flex">
-                    <input
-                      type="text"
-                      placeholder="Barangay"
-                      name="barangay"
-                      id="barangay"
-                      onChange={handleChange}
-                      value={userDetails.barangay || ''}
-                      className="mt-1 mr-3 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="Municipality"
-                      name="municipality"
-                      id="municipality"
-                      onChange={handleChange}
-                      value={userDetails.municipality || ''}
-                      className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="City / Province"
-                      name="province"
-                      id="province"
-                      onChange={handleChange}
-                      value={userDetails.province || ''}
-                      className="mt-1 ml-3 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                      required
-                    />
-                  </div>
-                </div>
-    
-                <div className="w-full pl-2 pt-2">
-                  <label htmlFor="phoneNumber" className="block text-xs font-normal text-[#6c746c]">Phone Number</label>
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    id="phoneNumber"
-                    onChange={handleChange}
-                    value={userDetails.phoneNumber || ''}
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required
-                  />
-                </div>
-                <div className="w-full pl-2 pt-2">
-                  <label htmlFor="bio" className="block text-xs font-normal text-[#6c746c]">Bio</label>
-                  <textarea
-                    type="text"
-                    name="bio"
-                    placeholder="Bio"
-                    id="bio"
-                    onChange={handleChange}
-                    rows={3}
-                    maxLength={250}
-                    value={userDetails.bio || ''}
-                    className="mt-1 block w-full py-5 px-5 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                    required
-                  />
-                </div>
-                <div className="pl-2 pt-2">
-                  <label htmlFor="profileImage" className="block text-xs font-normal text-[#6c746c]">Profile Image</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    id="profileImage"
-                    className="mt-1 block w-full py-3 px-3 bg-white bg-opacity-7 text-[#6c746c] text-sm font-light rounded-xl border border-gray-300 focus:outline-[#b0ffa5] focus:outline-offset-2 focus-within:border-green-400 focus:duration-50"
-                  />
-                </div>
-              </div>
+      {/* First Group: Account Details */}
+      <div className="flex mt-3">
+        <div className="w-full grid gap-2">
+          {["firstName", "middleName", "lastName", "suffix", "birthday"].map((field, index) => (
+            <div key={index} className="w-full pr-2">
+              <label htmlFor={field} className={`block text-xs font-normal ${
+                !darkModePref ? "text-gray-300" : "text-gray-700"
+              }`}>
+                {field.replace(/([A-Z])/g, " $1").trim()}
+              </label>
+              <input
+                type={field === "birthday" ? "date" : "text"}
+                placeholder={field.replace(/([A-Z])/g, " $1").trim()}
+                name={field}
+                id={field}
+                value={userDetails[field] || ""}
+                onChange={handleChange}
+                className={`mt-1 block w-full py-3 px-3 rounded-xl border focus:outline-green-400 focus:outline-offset-2 focus:duration-50 ${
+                  !darkModePref
+                    ? "bg-gray-800 text-gray-200 border-gray-600"
+                    : "bg-white text-gray-700 border-gray-300"
+                }`}
+                required={field !== "middleName" && field !== "suffix"}
+              />
             </div>
+          ))}
+        </div>
     
-            {/* Submit Button */}
-            <div className="flex justify-between">
-              <div className="text-xs text-center mt-6">
-                <p></p>
-              </div>
-              <button
-                type="submit"
-                className="mt-[15px] w-40 py-2 border bg-[#45c44b] text-[#f0f0f0] text-sm font-semibold rounded-full cursor-pointer duration-300 hover:bg-green-400 hover:duration-300"
-              >
-                Save changes
-              </button>
+        {/* Second Group: Profile Image and Address */}
+        <div className="w-full pl-2">
+          {["email", "phoneNumber", "bio"].map((field, index) => (
+            <div key={index} className="w-full pt-2">
+              <label htmlFor={field} className={`block text-xs font-normal ${
+                !darkModePref ? "text-gray-300" : "text-gray-700"
+              }`}>
+                {field.replace(/([A-Z])/g, " $1").trim()}
+              </label>
+              <input
+                type={field === "bio" ? "textarea" : field === "email" ? "email" : "text"}
+                placeholder={field.replace(/([A-Z])/g, " $1").trim()}
+                name={field}
+                id={field}
+                value={userDetails[field] || ""}
+                onChange={handleChange}
+                className={`mt-1 block w-full py-3 px-3 rounded-xl border focus:outline-green-400 focus:outline-offset-2 focus:duration-50 ${
+                  !darkModePref
+                    ? "bg-gray-800 text-gray-200 border-gray-600"
+                    : "bg-white text-gray-700 border-gray-300"
+                }`}
+                required
+              />
             </div>
-          </form>
+          ))}
+    
+          {/* Address */}
+          <div className="flex-column w-full pt-2">
+            <label className={`block text-xs font-normal ${
+              !darkModePref ? "text-gray-300" : "text-gray-700"
+            }`}>
+              Address
+            </label>
+            <div className="flex">
+              {["barangay", "municipality", "province"].map((field, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  placeholder={field.replace(/([A-Z])/g, " $1").trim()}
+                  name={field}
+                  id={field}
+                  onChange={handleChange}
+                  value={userDetails[field] || ""}
+                  className={`mt-1 mx-1 block w-full py-3 px-3 rounded-xl border focus:outline-green-400 focus:outline-offset-2 focus:duration-50 ${
+                    !darkModePref
+                      ? "bg-gray-800 text-gray-200 border-gray-600"
+                      : "bg-white text-gray-700 border-gray-300"
+                  }`}
+                  required
+                />
+              ))}
+            </div>
+          </div>
+    
+          {/* Profile Image */}
+          <div className="w-full pt-2">
+            <label htmlFor="profileImage" className={`block text-xs font-normal ${
+              !darkModePref ? "text-gray-300" : "text-gray-700"
+            }`}>
+              Profile Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              id="profileImage"
+              className={`mt-1 block w-full py-3 px-3 rounded-xl border focus:outline-green-400 focus:outline-offset-2 focus:duration-50 ${
+                !darkModePref
+                  ? "bg-gray-800 text-gray-200 border-gray-600"
+                  : "bg-white text-gray-700 border-gray-300"
+              }`}
+            />
+          </div>
+        </div>
+      </div>
+    
+      {/* Submit Button */}
+      <div className="flex justify-between mt-6">
+        <div className="text-xs text-center"></div>
+        <button
+          type="submit"
+          className={`w-40 py-2 border text-sm font-semibold rounded-full cursor-pointer duration-300 ${
+            !darkModePref
+              ? "bg-green-600 text-white hover:bg-green-500"
+              : "bg-[#45c44b] text-white hover:bg-green-400"
+          }`}
+        >
+          Save changes
+        </button>
+      </div>
+    </form>
+    
       );
 };
 
 EditProfile.propTypes = {
-  user: PropTypes.any.isRequired
+  user: PropTypes.any.isRequired,
+  darkModePref: PropTypes.bool.isRequired,
 }
 
 export default EditProfile;

@@ -1,26 +1,55 @@
 import { Divider } from "@mui/material";
 import PropTypes from "prop-types";
-// import GaugeChart from "react-gauge-chart";
+import { useEffect, useRef } from "react";
 import GaugeComponent from "react-gauge-component";
+import API from "../../../../api/api";
 
-const SoilMoisture = ({soilMoisture, darkModePref}) => {
-    const moistureLevel = soilMoisture <= 25 ? "dry" : soilMoisture <=75 ? "moist" : "wet";
+const SoilMoisture = ({ soilMoisture, darkModePref, id }) => {
+    const moistureLevel = soilMoisture <= 25 ? "dry" : soilMoisture <= 75 ? "moist" : "wet";
+    const NOTIFICATION_COOLDOWN = 4 * 60 * 60 * 1000; // 4 hours
+    const lastNotificationTime = useRef(Number(localStorage.getItem("lastSoilMoistureNotif")) || 0); // Persist last notification time
+
+    const notifyAdmins = async (notificationData) => {
+        try {
+            const response = await API.post('/notifications', notificationData);
+            console.log(response.data);
+            lastNotificationTime.current = Date.now();
+            localStorage.setItem('lastSoilMoistureNotif', lastNotificationTime.current);
+        } catch (error) {
+            console.error("Failed to send notification:", error);
+        }
+    };
+
+    useEffect(() => {
+        console.log(`📌 Last Soil Moisture Notification: ${new Date(lastNotificationTime.current).toLocaleString()}`);
+
+        if (soilMoisture === 0 || soilMoisture == null) return;
+        
+        let newNotification = null;
+
+        if (soilMoisture <= 25) {
+            newNotification = {
+                title: "🚨 Soil Drought Alert!",
+                messageBody: `Soil moisture dropped to ${soilMoisture}%. The soil is in drought conditions! Water it immediately.`,
+                type: "alert",
+                npkReadings: {id},
+            };
+        }
+
+        if (newNotification) {
+            const now = Date.now();
+            if (now - lastNotificationTime.current >= NOTIFICATION_COOLDOWN) {
+                notifyAdmins(newNotification);
+            }
+        }
+    }, [soilMoisture]); // ✅ Runs only when soilMoisture updates
+
     return (
-        <>
-            <div className={`shadow-md ${darkModePref ? "bg-gray-100" : "bg-gray-700"} hover:shadow-lg transition-all items-center justify-center p-5 rounded-lg`}>
-                <h3 className="font-bold mb-5 text-lg">Soil Moisture</h3>
-                <Divider />
-                <div className="flex justify-center items-center">
-                    <div className="w-full mt-5">
-                    {/* <GaugeChart
-                        id="soilMoisture"
-                        arcsLength={[0.25, 0.50, 0.25]}
-                        colors={["red", "orange", "blue"]}
-                        percent={percent}
-                        textColor="black"
-                        arcPadding={0.02}
-                        needleColor={"#5392ff"}
-                    /> */}
+        <div className={`shadow-md ${darkModePref ? "bg-gray-100" : "bg-gray-700"} hover:shadow-lg transition-all items-center justify-center p-5 rounded-lg`}>
+            <h3 className="font-bold mb-5 text-lg">Soil Moisture</h3>
+            <Divider />
+            <div className="flex justify-center items-center">
+                <div className="w-full mt-5">
                     <GaugeComponent
                         value={soilMoisture}
                         type="semicircle"
@@ -42,23 +71,8 @@ const SoilMoisture = ({soilMoisture, darkModePref}) => {
                                 },
                             }
                         }}
-
                         arc={{
                             colorArray: ["red", "blue"],
-                            // subArcs: [
-                            //     {
-                            //         color: "red",
-                            //         showTick: true,
-                            //     },
-                            //     {
-                            //         limit: 75,
-                            //         color: "orange"
-                            //     },
-                            //     {
-                            //         limit: 100,
-                            //         color: "blue"
-                            //     }
-                            // ],
                             padding: 0,
                             nbSubArcs: 300,
                             width: 0.2,
@@ -69,20 +83,20 @@ const SoilMoisture = ({soilMoisture, darkModePref}) => {
                         }}
                     />
                 </div>
-                </div>
-                <div className=" flex justify-around font-semibold w-full px-6">
-                    <span className={`text-red-500 ${moistureLevel === "dry" ? "text-[25px] font-bold" : "text-md" }`}>Dry</span>
-                    <span className={`text-orange-500 ${moistureLevel === "moist" ? "text-[25px] font-bold" : "text-md"}`}>Moist</span>
-                    <span className={`text-blue-500 ${moistureLevel === "wet" ? "text-[25px] font-bold" : "text-md"}`}>Wet</span>
-                </div>
             </div>
-        </>
+            <div className="flex justify-around font-semibold w-full px-6">
+                <span className={`text-red-500 ${moistureLevel === "dry" ? "text-[25px] font-bold" : "text-md"}`}>Dry</span>
+                <span className={`text-orange-500 ${moistureLevel === "moist" ? "text-[25px] font-bold" : "text-md"}`}>Moist</span>
+                <span className={`text-blue-500 ${moistureLevel === "wet" ? "text-[25px] font-bold" : "text-md"}`}>Wet</span>
+            </div>
+        </div>
     );
 };
 
 SoilMoisture.propTypes = {
-    soilMoisture: PropTypes.any.isRequired,
-    darkModePref: PropTypes.bool.isRequired
-}
+    soilMoisture: PropTypes.number.isRequired,
+    darkModePref: PropTypes.bool.isRequired,
+    id: PropTypes.any.isRequired,
+};
 
 export default SoilMoisture;

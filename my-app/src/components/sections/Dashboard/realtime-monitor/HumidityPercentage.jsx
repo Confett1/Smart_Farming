@@ -29,7 +29,8 @@ const Humidity = ({humidity, darkModePref}) => {
 
 Humidity.propTypes = {
     humidity: PropTypes.any.isRequired,
-    darkModePref: PropTypes.bool.isRequired
+    darkModePref: PropTypes.bool.isRequired,
+    npkId: PropTypes.any.isRequired,
 }
 
 export default Humidity;

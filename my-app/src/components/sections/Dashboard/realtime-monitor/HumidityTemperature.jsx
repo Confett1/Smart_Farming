@@ -3,10 +3,11 @@ import Humidity from "./HumidityPercentage";
 import Temperature from "./Temperature";
 import PropTypes from "prop-types";
 
-const HumidityTemperature = ({readings, darkModePref}) => {
+const HumidityTemperature = ({readings, darkModePref, npkId}) => {
 
-    const temperature = readings?.temperature || "";
-    const huimidity = readings?.humidity || "";
+    const temperature = readings?.temperature || 0;
+    const huimidity = readings?.humidity || 0;
+
 
     return (
         <>
@@ -16,7 +17,7 @@ const HumidityTemperature = ({readings, darkModePref}) => {
             <div className="flex mt-6 justify-around h-full">
                 
                 <div className="w-[45%] h-full flex flex-col items-center">
-                    <Temperature temperature={temperature} darkModePref={darkModePref} />
+                    <Temperature id={npkId} temperature={temperature} darkModePref={darkModePref} />
                     {/* <div className="w-[150px] h-[150px] rounded-full bg-black/30 relative overflow-hidden shadow-lg">
                         
                         <div className="absolute top-1/2 left-1/2 w-full h-full flex justify-center items-center">
@@ -42,7 +43,7 @@ const HumidityTemperature = ({readings, darkModePref}) => {
                 {/* Humidity Gauge */}
                 <div className="relative w-[45%] h-[200px] flex flex-col items-center">
                     <div className="m-6  shadow-lg rounded-full">
-                        <Humidity humidity={huimidity} darkModePref={darkModePref} />
+                        <Humidity id={npkId} humidity={huimidity} darkModePref={darkModePref} />
                     </div>
                 </div>  
             </div>
@@ -53,7 +54,8 @@ const HumidityTemperature = ({readings, darkModePref}) => {
 
 HumidityTemperature.propTypes = {
     readings: PropTypes.any.isRequired,
-    darkModePref: PropTypes.bool.isRequired
+    darkModePref: PropTypes.bool.isRequired,
+    npkId: PropTypes.any.isRequired,
 }
 
 export default HumidityTemperature;

@@ -70,6 +70,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../../utils/toast";
 import API from "../../../api/api";
+import Logo from "../../../assets/images/logo.png"
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -77,6 +78,8 @@ const LoginForm = () => {
     username: "",
     password: "",
   });
+
+  localStorage.setItem('darkmode', true);
 
   const login = [
     {
@@ -207,11 +210,11 @@ const LoginForm = () => {
             </form>
 
             {/* Background Image Section */}
-            <div className="relative hidden bg-muted md:block">
+            <div className="flex items-center justify-center w-full h-full bg-green-500/20 ">
               <img
-                src="/placeholder.svg?height=600&width=400"
+                src={Logo}
                 alt="Login background"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                className="w-75 object-contain"
               />
             </div>
           </div>
