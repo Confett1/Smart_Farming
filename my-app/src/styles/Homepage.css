@@ -61,14 +61,6 @@
   color: var(--text-secondary);
 }
 
-select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: white;
-}
-
 section {
   /* background-color: #fff; */
   /* border: 1px solid #ddd; */

@@ -37,13 +37,13 @@ const WaterLevel = ({ darkModePref }) => {
     useEffect(() => {
         console.log(`💧 Last Water Level Notification: ${new Date(lastNotificationTime.current).toLocaleString()}`);
 
-        if (waterLevel.waterLevel === 0 || waterLevel.waterLevel == null) return;
+        if (waterLevel?.waterLevel || 0     === 0 || waterLevel.waterLevel == null) return;
 
         let newNotification = null;
 
         if (
-            waterLevel.waterLevel <= getFiftyPercent(waterLevel.tankCapacity) &&
-            waterLevel.waterLevel > getTwentyPercent(waterLevel.tankCapacity)
+            waterLevel.waterLevel <= getFiftyPercent(waterLevel?.tankCapacity) &&
+            waterLevel.waterLevel > getTwentyPercent(waterLevel?.tankCapacity)
         ) {
             newNotification = {
                 title: "⚠️ Water Level Dropping!",
@@ -90,7 +90,7 @@ const WaterLevel = ({ darkModePref }) => {
                                 <div
                                     className="water-overlay"
                                     style={{
-                                        height: `${(waterLevel?.waterLevel / waterLevel.tankCapacity) * 100}%`,
+                                        height: `${(waterLevel?.waterLevel || 0 / waterLevel?.tankCapacity || 0) * 100}%`,
                                         transition: "height 1s ease-in-out",
                                         background: darkModePref
                                             ? "linear-gradient(180deg, rgba(33, 150, 243, 0.4), rgba(33, 150, 243, 0.6))"
@@ -102,13 +102,13 @@ const WaterLevel = ({ darkModePref }) => {
                                 <div className="level-indicator">
                                     <div className={`level-marks ${darkModePref ? "text-gray-700" : "text-gray-300"}`}>
                                         <span className={`mark ${darkModePref ? "bg-gray-100" : "bg-gray-700"}`}>
-                                            {waterLevel.tankCapacity} cm
+                                            {waterLevel?.tankCapacity || 15} cm
                                         </span>
                                         <span className={`mark ${darkModePref ? "bg-gray-100" : "bg-gray-700"}`}>
-                                            {getFiftyPercent(waterLevel.tankCapacity)} cm
+                                            {getFiftyPercent(waterLevel?.tankCapacity || 15)} cm
                                         </span>
                                         <span className={`mark ${darkModePref ? "bg-gray-100" : "bg-gray-700"}`}>
-                                            {getTwentyPercent(waterLevel.tankCapacity)} cm
+                                            {getTwentyPercent(waterLevel?.tankCapacity || 15)} cm
                                         </span>
                                     </div>
                                 </div>
