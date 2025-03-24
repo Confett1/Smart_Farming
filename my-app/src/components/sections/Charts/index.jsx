@@ -18,7 +18,7 @@ const ChartsComponent = () => {
                     <h2>Charts Statistics</h2>
                     <div className="controls">
                         <select 
-                            className="w-full p-2 border border-gray-300 rounded bg-white cursor-pointer text-sm text-gray-700"
+                            className={`"w-full p-2 border rounded-lg cursor-pointer text-sm  ${darkModePref ? "bg-white  border-gray-300 text-gray-700" : "bg-gray-800 border-gray-200 text-gray-200"}`}
                             id="period-select"
                             value={selectedPeriod}
                             onChange={(e) => setSelectedPeriod(e.target.value)}
@@ -29,7 +29,7 @@ const ChartsComponent = () => {
                             <option value="lastYear">Last Year</option>
                         </select>
                         <button 
-                            className="hover:bg-[var(--primary-color)] hover:text-white w-full bg-green-400 border-0 text-gray-700 py-1.8 mx-3 text-xs rounded cursor-pointer duration-300" 
+                            className="hover:bg-[var(--primary-color)] hover:text-white w-full bg-green-400 border text-gray-700 py-1.8 mx-3 text-sm rounded-lg cursor-pointer duration-300" 
                             id="export-btn"
                             onClick={handleExport} // Trigger export on click
                         >

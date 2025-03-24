@@ -146,8 +146,8 @@
 
 // export default Report;
 
-import React, { useEffect, useState } from 'react';
-import { CalendarIcon, X, Printer } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { X, Printer } from 'lucide-react';
 import logoicon from "../../../assets/images/logo.png";
 import "../../../styles/print.css";
 import PropTypes from "prop-types";
