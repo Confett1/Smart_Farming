@@ -1,25 +1,58 @@
-@media print {
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
   
-  body {
-      -webkit-print-color-adjust: exact; 
-      color-adjust: exact; 
-  }
-
- 
+  /* Main container styling */
   .print\:container {
-      width: 210mm; 
-      height: auto; 
-      margin: 0 auto; 
-      padding: 10mm; 
-      overflow: visible;
+    min-height: 90vh; /* Adjust height slightly */
+    width: 80%; /* Increase width */
+    max-width: 900px; /* Limit maximum width */
+    margin: 0 auto;
+    padding: 20px 40px; /* Add more padding */
+    background-color: white;
+    box-shadow: none;
   }
-
-
-  .print\:hidden {
-      display: none;
+  
+  /* Disable background scroll when report is open */
+  body.modal-open {
+    overflow: hidden;
   }
+  
+  /* Hide the scrollbar when printing */
+  @media print {
+    body {
+      visibility: hidden;
+    }
+  
+    .print\:container, .print\:container * {
+      visibility: visible;
+    }
+  
+    .print\:container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm; /* A4 width */
+      height: 280mm; /* Slightly shorter than A4 */
+      margin: 0 auto;
+      padding: 20mm;
+      overflow: hidden; /* Prevent scrollbar */
+    }
+  
+    ::-webkit-scrollbar {
+      display: none; /* Hide scrollbar */
+    }
+  
+    @page {
+      size: A4;
+      margin: 0; /* Remove page margins */
+    }
 
-  .print\:block {
-      display: block;
+    .recharts-tooltip-wrapper{
+      display: none !important;
+    }
   }
-}
+  

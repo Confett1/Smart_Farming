@@ -51,6 +51,8 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
                     return false;
                 });
 
+                filteredData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
                 const labels = filteredData.map((item) => new Date(item.timestamp).toLocaleDateString());
                 const values = filteredData.map((item) => item.value);
 
