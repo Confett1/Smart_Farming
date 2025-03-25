@@ -159,3 +159,85 @@ canvas {
     grid-template-columns: 1fr;
   }
 }
+
+.harvest-input-container {
+  position: relative; /* Enables absolute positioning for error */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns input and button */
+}
+
+.harvest-input-form {
+  display: flex;
+  align-items: center; /* Keeps input and button on the same line */
+  gap: 0.5rem;
+  margin-left: 380px;
+}
+
+.harvest-input {
+  width: 180px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.harvest-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.45rem 0.8rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #0da545;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  top: -18px; /* Position it directly above input */
+  left: 394px;
+  width: 100%;
+  text-align: left;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.1s ease-in-out;
+  pointer-events: none; /* Prevents interaction */
+}
+
+/* When an error exists, make it visible */
+.error-active .error-message {
+  opacity: 1;
+}
+
+.success-message {
+  color: green;
+  font-size: 12px;
+  position: absolute;
+  top: -18px;
+  left: 394px;
+  width: 100%;
+  text-align: left;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.success-active .success-message {
+  opacity: 1;
+}

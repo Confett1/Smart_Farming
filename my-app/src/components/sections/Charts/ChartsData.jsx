@@ -75,6 +75,8 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
             }
         };
 
+        fetchChartData("harvest");
+
         ["harvest", "water", "fertilizer"].forEach(fetchChartData);
     }, [selectedPeriod]);
 
