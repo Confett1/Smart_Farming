@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 const SystemStatus = ({darkModePref}) => {
     const [motorStatus, setMotorStatus] = useState({
+        motorStatusId: 0,
         irrigationMotorStatus: '0',
         nitrogenMotorStatus: '0',
         phosphorusMotorStatus: '0',

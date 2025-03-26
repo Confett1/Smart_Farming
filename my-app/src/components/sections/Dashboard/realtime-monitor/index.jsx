@@ -6,11 +6,12 @@ import WeatherForecast from './WeatherForecast';
 import HumidityTemperature from './HumidityTemperature';
 import NPKLatest from './NPKLatest';
 import SoilMoisture from './SoilMoisture';
-import WaterLevel from './WaterLevel';
+// import WaterLevel from './WaterLevel';
 
 const RealTimeMonitor = () => {
     const [fiveLatestReadings, setFiveLatestReadings] = useState([]);
     const [latestNPKReading, setLatestNPKReading] = useState({
+        id: 0,
         nitrogen: 0,
         phosphorous: 0,
         potassium: 0,
@@ -66,7 +67,7 @@ const RealTimeMonitor = () => {
                 <HumidityTemperature npkId={latestNPKReading.id} readings={latestNPKReading} darkModePref={darkModePref}/>
                 <NpkChart readings={fiveLatestReadings} darkModePref={darkModePref} />
                 <WeatherForecast darkModePref={darkModePref} />
-                <WaterLevel npkId={latestNPKReading.id} darkModePref={darkModePref} />
+                {/* <WaterLevel npkId={latestNPKReading.id} darkModePref={darkModePref} /> */}
             </div>
         </section>
         </>

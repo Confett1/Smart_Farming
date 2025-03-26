@@ -6,7 +6,7 @@ import Footer from '../../layout/main/footer';
 import RealTimeMonitor from '../../components/sections/Dashboard/realtime-monitor';
 import { Stack } from '@mui/material';
 import { signedIn } from '../../utils/toast';
-import SystemStatus from '../../components/sections/Dashboard/system-status';
+// import SystemStatus from '../../components/sections/Dashboard/system-status';
 
 const Dashboard = () => { 
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +32,7 @@ const Dashboard = () => {
           <div className={`page-name my-2 ${darkModePref ? "text-[#2c3e50]" : "text-gray-200"}`}>
               <h2>Dashboard</h2>
           </div> 
-          <SystemStatus darkModePref={darkModePref} />
+          {/* <SystemStatus darkModePref={darkModePref} /> */}
           <RealTimeMonitor />
         </Stack>
         <Footer />

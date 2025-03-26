@@ -69,7 +69,7 @@ const Temperature = ({ temperature, darkModePref, id }) => {
 Temperature.propTypes = {
     temperature: PropTypes.number.isRequired,
     darkModePref: PropTypes.bool.isRequired,
-    id: PropTypes.any.isRequired,
+    id: PropTypes.number.isRequired,
 };
 
 export default Temperature;
