@@ -12,7 +12,7 @@ const fetchChartData = async (category, selectedPeriod) => {
 
     const now = new Date();
 
-    return data.filter(item => {
+    const filteredData = data.filter(item => {
       const itemDate = new Date(item.timestamp);
 
       if (selectedPeriod === "currentWeek") {
@@ -63,15 +63,16 @@ const getLatestValue = (data) => data.length > 0 ? data[data.length - 1].value :
 export function Report({ selectedPeriod, onClose }) {
   const [reportData, setReportData] = useState({
     totalHarvest: 0,
-    waterUsage: 0,
-    fertilizerUsage: 0
+    nitrogenUsage: 0,
+    phosphorusUsage: 0,
+    potassiumUsage: 0
   });
 
   const [sums, setSums] = useState({
-    currentWeek: { harvest: 0, water: 0, fertilizer: 0 },
-    lastWeek: { harvest: 0, water: 0, fertilizer: 0 },
-    lastMonth: { harvest: 0, water: 0, fertilizer: 0 },
-    lastYear: { harvest: 0, water: 0, fertilizer: 0 }
+    currentWeek: { harvest: 0, nitrogen: 0, phosphorus: 0, potassium: 0 },
+    lastWeek: { harvest: 0, nitrogen: 0, phosphorus: 0, potassium: 0 },
+    lastMonth: { harvest: 0, nitrogen: 0, phosphorus: 0, potassium: 0 },
+    lastYear: { harvest: 0, nitrogen: 0, phosphorus: 0, potassium: 0 }
   });
 
   const [chartData, setChartData] = useState([]);
@@ -81,41 +82,62 @@ export function Report({ selectedPeriod, onClose }) {
 
     const formatDate = (timestamp) => {
       const date = new Date(timestamp);
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Two-digit month
-      const day = String(date.getDate()).padStart(2, '0'); // Two-digit day
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
       const year = date.getFullYear();
-      return `${month}/${day}/${year}`;
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${month}/${day}/${year} ${hours}:${minutes}`;
     };
 
     const data = await Promise.all(
       periods.map(async period => {
-        const [harvestData, waterData, fertilizerData] = await Promise.all([
+        const [harvestData, fertilizerData] = await Promise.all([
           fetchChartData("harvest", period),
-          fetchChartData("water", period),
           fetchChartData("fertilizer", period)
         ]);
+
+        // Combine all data points without date filling
+        const combinedData = [];
+        
+        // Add all harvest data points
+        harvestData.forEach(item => {
+          combinedData.push({
+            date: formatDate(item.timestamp),
+            sortableDate: new Date(item.timestamp),
+            harvest: item.value,
+            nitrogen: 0,
+            phosphorus: 0,
+            potassium: 0
+          });
+        });
+
+        // Add all fertilizer data points
+        fertilizerData.forEach(item => {
+          combinedData.push({
+            date: formatDate(item.timestamp),
+            sortableDate: new Date(item.timestamp),
+            harvest: 0,
+            nitrogen: item.nitrogen || 0,
+            phosphorus: item.phosphorus || 0,
+            potassium: item.potassium || 0
+          });
+        });
+
+        // Sort combined data by timestamp
+        combinedData.sort((a, b) => a.sortableDate - b.sortableDate);
 
         return {
           period,
           latestHarvest: getLatestValue(harvestData),
-          latestWater: getLatestValue(waterData),
           latestNitrogen: getLatestValue(fertilizerData.map(f => ({ value: f.nitrogen }))),
           latestPhosphorus: getLatestValue(fertilizerData.map(f => ({ value: f.phosphorus }))),
           latestPotassium: getLatestValue(fertilizerData.map(f => ({ value: f.potassium }))),
           sumHarvest: calculateSum(harvestData),
-          sumWater: calculateSum(waterData),
           sumNitrogen: calculateSum(fertilizerData.map(f => ({ value: f.nitrogen }))),
           sumPhosphorus: calculateSum(fertilizerData.map(f => ({ value: f.phosphorus }))),
           sumPotassium: calculateSum(fertilizerData.map(f => ({ value: f.potassium }))),
-          formattedData: harvestData.map(item => ({
-            date: formatDate(item.timestamp), // Display as MM/DD/YYYY
-            sortableDate: new Date(item.timestamp), // Hidden sorting field
-            harvest: item.value,
-            water: waterData.find(w => w.timestamp === item.timestamp)?.value || 0,
-            nitrogen: fertilizerData.find(f => f.timestamp === item.timestamp)?.nitrogen || 0,
-            phosphorus: fertilizerData.find(f => f.timestamp === item.timestamp)?.phosphorus || 0,
-            potassium: fertilizerData.find(f => f.timestamp === item.timestamp)?.potassium || 0
-          }))
+          formattedData: combinedData
         };
       })
     );
@@ -123,49 +145,27 @@ export function Report({ selectedPeriod, onClose }) {
     const sumsByPeriod = data.reduce((acc, item) => {
       acc[item.period] = {
         harvest: item.sumHarvest,
-        water: item.sumWater,
-        fertilizer: item.sumFertilizer
+        nitrogen: item.sumNitrogen,
+        phosphorus: item.sumPhosphorus,
+        potassium: item.sumPotassium
       };
       return acc;
     }, {});
 
     setSums(sumsByPeriod);
-    const sortedData = (data.find(item => item.period === selectedPeriod)?.formattedData || [])
-    .sort((a, b) => a.sortableDate - b.sortableDate);
-
-    // Function to generate all dates within the range
-    const generateDateRange = (startDate, endDate) => {
-      let dates = [];
-      let currentDate = new Date(startDate);
-      while (currentDate <= endDate) {
-        dates.push(formatDate(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-      return dates;
-    };
-
-    // Find the date range from the data
-    const startDate = sortedData.length > 0 ? new Date(sortedData[0].sortableDate) : new Date();
-    const endDate = sortedData.length > 0 ? new Date(sortedData[sortedData.length - 1].sortableDate) : new Date();
-    const allDates = generateDateRange(startDate, endDate);
-
-    // Fill missing dates with zero values
-    const filledData = allDates.map(date => {
-      const existing = sortedData.find(item => item.date === date);
-      return existing || { date, harvest: 0, water: 0, fertilizer: 0 };
-    });
-
-    // Update state with complete data
-    setChartData(filledData);
-
-
 
     const currentPeriodData = data.find(item => item.period === selectedPeriod);
-    setReportData({
-      totalHarvest: currentPeriodData.latestHarvest,
-      waterUsage: currentPeriodData.latestWater,
-      fertilizerUsage: currentPeriodData.latestFertilizer
-    });
+    if (currentPeriodData) {
+      setReportData({
+        totalHarvest: currentPeriodData.latestHarvest,
+        nitrogenUsage: currentPeriodData.latestNitrogen,
+        phosphorusUsage: currentPeriodData.latestPhosphorus,
+        potassiumUsage: currentPeriodData.latestPotassium
+      });
+      
+      // Use all data points directly without date filling
+      setChartData(currentPeriodData.formattedData);
+    }
   };
 
   useEffect(() => {
@@ -206,7 +206,6 @@ export function Report({ selectedPeriod, onClose }) {
           </p>
           <div className="space-y-2">
             <p>Total Harvest: {reportData.totalHarvest} kg</p>
-            <p>Water Usage: {reportData.waterUsage} liters</p>
             <p>Nitrogen Usage: {reportData.nitrogenUsage} kg</p>
             <p>Phosphorus Usage: {reportData.phosphorusUsage} kg</p>
             <p>Potassium Usage: {reportData.potassiumUsage} kg</p>
@@ -219,7 +218,6 @@ export function Report({ selectedPeriod, onClose }) {
           </p>
           <div className="space-y-2">
             <p>Harvest: {sums[selectedPeriod]?.harvest || 0} kg</p>
-            <p>Water: {sums[selectedPeriod]?.water || 0} liters</p>
             <p>Nitrogen: {sums[selectedPeriod]?.nitrogen || 0} kg</p>
             <p>Phosphorus: {sums[selectedPeriod]?.phosphorus || 0} kg</p>
             <p>Potassium: {sums[selectedPeriod]?.potassium || 0} kg</p>
@@ -237,32 +235,22 @@ export function Report({ selectedPeriod, onClose }) {
               <Line type="monotone" dataKey="harvest" stroke="#82ca9d" />
               </LineChart>
             </ResponsiveContainer>
-
-            <p className="text-lg text-blue-400">Water Usage</p>
-            <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 40 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="water" stroke="#8884d8" />
-              </LineChart>
-            </ResponsiveContainer>
             
-            <p className="text-lg text-orange-400">Fertilizer</p>
-            <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="nitrogen" stroke="#ff7300" name="Nitrogen" />
-              <Line type="monotone" dataKey="phosphorus" stroke="#4CAF50" name="Phosphorus" />
-              <Line type="monotone" dataKey="potassium" stroke="#2196F3" name="Potassium" />
-              </LineChart>
-            </ResponsiveContainer>
+            <div className="fertilizer-chart-container">
+              <p className="text-lg text-orange-400">Fertilizer</p>
+              <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="nitrogen" stroke="#ff7300" name="Nitrogen" />
+                <Line type="monotone" dataKey="phosphorus" stroke="#4CAF50" name="Phosphorus" />
+                <Line type="monotone" dataKey="potassium" stroke="#2196F3" name="Potassium" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-
 
           <div className="mt-8 pt-4 border-t text-sm text-gray-500 flex justify-end">Page 1 of 1</div>
         </div>

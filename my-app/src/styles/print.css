@@ -26,11 +26,16 @@ html, body {
     body {
       visibility: hidden;
     }
+
+    .fertilizer-chart-container {
+      break-before: page; /* Moves the fertilizer chart to a new page */
+      page-break-before: always;
+  }
   
     .print\:container, .print\:container * {
       visibility: visible;
     }
-  
+    
     .print\:container {
       position: absolute;
       left: 0;

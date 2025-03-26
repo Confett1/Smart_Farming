@@ -7,7 +7,6 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
     const [activeTab, setActiveTab] = useState("harvest");
     const [chartData, setChartData] = useState({
         harvest: { labels: [], data: [] },
-        water: { labels: [], data: [] },
         fertilizer: { labels: [], data: [] },
     });
 
@@ -77,7 +76,7 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
 
         fetchChartData("harvest");
 
-        ["harvest", "water", "fertilizer"].forEach(fetchChartData);
+        ["harvest", "fertilizer"].forEach(fetchChartData);
     }, [selectedPeriod]);
 
     useEffect(() => {
@@ -179,7 +178,7 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
     return (
         <>
             <div className="summary-cards">
-                {["harvest", "water", "fertilizer"].map((key) => {
+                {["harvest", "fertilizer"].map((key) => {
                     let latestValue = 0;
                     let unit = key === "harvest" ? "kg" : "L";
                     let percentageChange = "";
@@ -214,7 +213,7 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
                         }
                     }
 
-                    const Icon = key === "harvest" ? Wheat : key === "water" ? Droplet : Sprout;
+                    const Icon = key === "harvest" ? Wheat : Sprout;
 
                     return (
                         <div className={`chartCard ${darkModePref ? "bg-white" : "bg-[var(--card-background)]"}`} key={key}>
@@ -238,7 +237,7 @@ const ChartsContent = ({ selectedPeriod, darkModePref }) => {
             </div>
 
             <div className="tabs ">
-                {["harvest", "water", "fertilizer"].map((key) => (
+                {["harvest", "fertilizer"].map((key) => (
                     <button
                         key={key}
                         className={`tab-btn ${darkModePref ? "text-gray-500" : "text-[var(--muted-color)]"} ${activeTab === key ? "active" : ""}`}

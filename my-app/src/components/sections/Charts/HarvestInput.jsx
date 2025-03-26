@@ -74,6 +74,7 @@
 
 // HarvestInput.jsx
 import { useState, useEffect } from "react";
+import { toast } from "../../../utils/toast";
 
 const HarvestInput = ({ onSave }) => {
     const [harvestInput, setHarvestInput] = useState("");
@@ -94,7 +95,7 @@ const HarvestInput = ({ onSave }) => {
         }
     }, [success]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setSuccess(""); // ✅ Clear success message on new submission
@@ -114,25 +115,31 @@ const HarvestInput = ({ onSave }) => {
             return;
         }
 
-        fetch("http://localhost:8080/charts/harvest", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                type: "harvest",
-                value: value, 
-                timestamp: new Date().toISOString() 
-            }),
-        })
-        .then(response => {
+        try {
+            const response = await fetch("http://localhost:8080/charts/harvest", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    type: "harvest",
+                    value: value, 
+                    timestamp: new Date().toISOString() 
+                }),
+            });
+    
             if (!response.ok) throw new Error("Failed to save");
+    
             setHarvestInput("");
             setSuccess("Data has been added successfully"); // ✅ Show success message
-            if (onSave) onSave(); // ✅ Notify parent to refresh charts
-        })
-        .catch(error => {
+    
+            const toastResponse = await toast("Data successfully recorded", "Harvest Record", "success");
+            
+            if (toastResponse.isConfirmed) {
+                window.location.reload();
+            }
+        } catch (error) {
             console.error("Error saving harvest:", error);
             setError("Failed to save");
-        });
+        }
     };
 
     return (
