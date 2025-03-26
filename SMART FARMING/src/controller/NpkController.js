@@ -3,10 +3,10 @@ const NPKService = require("../service/NpkService");
 class NPKController {
   static async addNPKData(req, res) {
     try {
-      const { n, p, k, temperature, humidity, moisture, water_level } = req.body;
-      await NPKService.saveNPKData(n, p, k, temperature, humidity, moisture, water_level);
+      const { n, p, k, temperature, humidity, moisture } = req.body;
+      await NPKService.saveNPKData(n, p, k, temperature, humidity, moisture);
       res.status(201).json({ message: "Data inserted successfully" });
-      console.log("Data inserted: " + n, p, k, temperature, humidity, moisture, water_level);
+      console.log("Data inserted: " + n, p, k, temperature, humidity, moisture);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

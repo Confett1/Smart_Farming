@@ -1,8 +1,8 @@
 const NPKRepository = require("../repositories/NpkRepository");
 
 class NPKService {
-  static async saveNPKData(nitrogen, phosphorous, potassium, temperature, humidity, soil_moisture, water_level) {
-    return await NPKRepository.insertNPKData(nitrogen, phosphorous, potassium, temperature, humidity, soil_moisture, water_level);
+  static async saveNPKData(nitrogen, phosphorous, potassium, temperature, humidity, soil_moisture) {
+    return await NPKRepository.insertNPKData(nitrogen, phosphorous, potassium, temperature, humidity, soil_moisture);
   }
 
   static async fetchAllNPKData() {
